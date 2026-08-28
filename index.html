@@ -339,7 +339,7 @@
 
         <!-- Navigation Menu -->
         <nav class="flex-1 px-4 py-6 space-y-2 overflow-y-auto" id="sidebar-nav">
-            <p class="text-[10px] font-bold text-[#7A828A] uppercase tracking-widest px-3 mb-3 sidebar-text">Master Data
+            <p class="text-[10px] font-bold text-[#7A828A] uppercase tracking-widest px-3 mb-3 sidebar-text">POTS
             </p>
 
             <a href="#" data-target="caring-dashboard"
@@ -373,6 +373,12 @@
                     <i class="fas fa-file-circle-check text-base"></i>
                 </div>
                 <span class="sidebar-text truncate">Data Claim</span>
+            </a>
+
+            <a href="#" data-target="pots-flagging"
+                class="nav-item flex items-center gap-3 px-3 py-3 rounded-xl font-medium text-sm text-[#7A828A] hover:text-white hover:bg-white/5 transition-all">
+                <div class="flex items-center justify-center w-5"><i class="fas fa-flag text-base"></i></div>
+                <span class="sidebar-text truncate">Data Flaging POTS</span>
             </a>
 
             <div class="pt-4">
@@ -1696,6 +1702,95 @@
             </section>
 
             <!-- ============================================== -->
+            <!-- MODULE: POTS FLAGGING                         -->
+            <!-- ============================================== -->
+            <section id="module-pots-flagging" class="space-y-8 hidden-module fade-in">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="bento-card grad-kpi-total p-7 flex items-center gap-5 border-none group">
+                        <div
+                            class="w-14 h-14 icon-bg-white-20 text-white rounded-2xl flex items-center justify-center text-xl shrink-0 shadow-inner-light">
+                            <i class="fas fa-database"></i>
+                        </div>
+                        <div>
+                            <p class="text-[11px] font-bold uppercase text-white/80 tracking-widest">Total Data</p>
+                            <p class="text-3xl font-poppins font-extrabold text-white mt-1" id="score-pots-flag-total">0
+                            </p>
+                        </div>
+                    </div>
+                    <div class="bento-card grad-kpi-lunas p-7 flex items-center gap-5 border-none group">
+                        <div
+                            class="w-14 h-14 icon-bg-white-20 text-white rounded-2xl flex items-center justify-center text-xl shrink-0 shadow-inner-light">
+                            <i class="fas fa-flag-checkered"></i>
+                        </div>
+                        <div>
+                            <p class="text-[11px] font-bold uppercase text-white/80 tracking-widest">Sudah Di-flag</p>
+                            <p class="text-3xl font-poppins font-extrabold text-white mt-1" id="score-pots-flagged">0
+                            </p>
+                        </div>
+                    </div>
+                    <div class="bento-card grad-kpi-belum p-7 flex items-center gap-5 border-none group">
+                        <div
+                            class="w-14 h-14 icon-bg-white-20 text-white rounded-2xl flex items-center justify-center text-xl shrink-0 shadow-inner-light">
+                            <i class="fas fa-flag"></i>
+                        </div>
+                        <div>
+                            <p class="text-[11px] font-bold uppercase text-white/80 tracking-widest">Belum Di-flag</p>
+                            <p class="text-3xl font-poppins font-extrabold text-white mt-1" id="score-pots-unflagged">0
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bento-card overflow-hidden flex flex-col bg-white">
+                    <div class="p-6 md:p-8 border-b border-borderLight">
+                        <h3
+                            class="text-base font-poppins font-bold mb-6 text-textMain uppercase tracking-wider flex items-center gap-3">
+                            <div
+                                class="w-10 h-10 bg-red-50 border border-red-100 text-primary rounded-xl flex items-center justify-center shadow-sm">
+                                <i class="fas fa-table text-base"></i>
+                            </div>Detail Data Flaging POTS
+                        </h3>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                            <div class="flex flex-col"><label
+                                    class="text-[10px] font-bold text-textMuted uppercase mb-2 ml-1 tracking-wider">Pencarian
+                                    Global</label>
+                                <div class="relative shadow-sm rounded-xl"><i
+                                        class="fas fa-search absolute left-4 top-1/2 transform -translate-y-1/2 text-textMuted text-xs"></i><input
+                                        type="text" id="search-pots-flag"
+                                        class="bento-input w-full pl-10 pr-4 py-3 text-sm font-medium"
+                                        placeholder="Cari nama, nomor internet, pelanggan..."></div>
+                            </div>
+                            <div class="flex flex-col"><label
+                                    class="text-[10px] font-bold text-primary uppercase mb-2 ml-1 tracking-wider">Status
+                                    Flag</label><select id="filter-pots-flag"
+                                    class="bento-input w-full px-4 py-3 text-sm font-bold cursor-pointer appearance-none border-primary/30 shadow-sm text-primary bg-red-50/30">
+                                    <option value="all">Semua Status</option>
+                                </select></div>
+                        </div>
+                    </div>
+                    <div class="table-scroll overflow-x-auto w-full">
+                        <table class="w-full whitespace-nowrap min-w-[1200px]">
+                            <thead id="thead-pots-flag"
+                                class="bg-surfaceAlt text-left text-[11px] font-bold text-textMuted uppercase tracking-wider border-b border-borderLight">
+                            </thead>
+                            <tbody id="tbody-pots-flag"
+                                class="text-sm divide-y divide-borderLight text-textMain bg-white"></tbody>
+                        </table>
+                    </div>
+                    <div class="p-5 border-t border-borderLight bg-surface flex justify-between items-center"><span
+                            id="page-info-pots-flag"
+                            class="text-xs font-bold text-textMuted bg-surfaceAlt border border-borderLight px-4 py-2 rounded-xl shadow-sm">Data:
+                            0</span>
+                        <div class="flex gap-3"><button id="btn-prev-pots-flag"
+                                class="bento-btn bg-white px-5 py-2.5 rounded-xl border border-borderLight hover:bg-gray-50 font-bold text-xs text-textMuted shadow-sm">Sebelumnya</button><button
+                                id="btn-next-pots-flag"
+                                class="bento-btn bg-primary hover:bg-primaryDark text-white px-5 py-2.5 rounded-xl font-bold text-xs shadow-md border border-transparent">Selanjutnya</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ============================================== -->
             <!-- MODULE: VISIT COLLECTION                       -->
             <!-- ============================================== -->
             <section id="module-visit-collection" class="space-y-8 hidden-module fade-in">
@@ -2943,7 +3038,8 @@
                 if (this.isLoaded && !force) return;
                 this.app.loader.show();
                 try {
-                    this.state.data = await DataService.fetchCSV(this.url);
+                    const rawData = await DataService.fetchCSV(this.url);
+                    this.state.data = rawData.filter(row => this.isTransactionRow(row));
                     this.state.filtered = [...this.state.data];
                     this.processData();
                     this.isLoaded = true;
@@ -3617,6 +3713,117 @@
                 if (!modal) return;
                 modal.classList.add('hidden');
                 modal.classList.remove('flex');
+            }
+        }
+
+        // --- POTS FLAGGING MODULE ---
+        class ModulePotsFlagging extends BaseModule {
+            constructor(app) {
+                super('pots-flagging');
+                this.app = app;
+                this.url = 'https://docs.google.com/spreadsheets/d/1CVGSTFXpCRZReTmmwHfOK8nZDrcGxQOhyS1D4kykbnM/export?format=csv&gid=733124272';
+                this.columns = [];
+                this.initEvents();
+            }
+
+            initEvents() {
+                document.getElementById('search-pots-flag').addEventListener('input', Utils.debounce(() => this.applyFilters(), 300));
+                document.getElementById('filter-pots-flag').addEventListener('change', () => this.applyFilters());
+                document.getElementById('tbody-pots-flag').addEventListener('click', event => {
+                    const button = event.target.closest('[data-pots-flag-detail]');
+                    if (button) this.openDetail(Number(button.dataset.potsFlagDetail));
+                });
+                TableManager.setupPagination('pots-flag', this.state, () => this.renderTable());
+            }
+
+            async load(force = false) {
+                if (this.isLoaded && !force) return;
+                this.app.loader.show();
+                try {
+                    const rawData = await DataService.fetchCSV(this.url);
+                    this.state.data = rawData.filter(row => this.isTransactionRow(row));
+                    this.state.filtered = [...this.state.data];
+                    this.columns = [...new Set(this.state.data.flatMap(row => Object.keys(row)))].filter(Boolean);
+                    this.processData();
+                    this.isLoaded = true;
+                    this.app.notify.show('Data Flaging POTS Loaded');
+                } catch (error) {
+                    console.error('POTS Flaging Error:', error);
+                    this.app.notify.show('Gagal memuat Data Flaging POTS', 'error');
+                } finally {
+                    this.app.loader.hide();
+                }
+            }
+
+            getValue(row, keys) { return Utils.getDynamicValue(row, keys); }
+
+            isTransactionRow(row) {
+                return ['nama', 'no inet', 'nama pelanggan', 'bulan', 'nominal flagging', 'total flagging', 'total tunai', 'keterangan', 'tanggal di rc', 'payment id', 'tanggal ca', 'status flag']
+                    .some(key => this.getValue(row, [key]) !== '');
+            }
+
+            getStatus(row) { return this.getValue(row, ['status flag', 'status flagging', 'flagging', 'flaging', 'status']); }
+
+            isFlagged(row) {
+                const value = this.getStatus(row).toLowerCase().replace(/[\s_-]+/g, '');
+                return value.includes('done') || value.includes('flag') || value.includes('sudah') || value === 'ya' || value === 'yes' || value === 'true' || value === '1';
+            }
+
+            getMonth(row) {
+                const value = this.getValue(row, ['bulan', 'month']);
+                if (value) return value.toUpperCase();
+                const date = this.getValue(row, ['tanggal ca', 'tanggal flagging', 'tanggal']);
+                const match = date.match(/\d{1,2}[\/-](\d{1,2})[\/-]\d{4}/);
+                return match ? new Intl.DateTimeFormat('id-ID', { month: 'short' }).format(new Date(2026, Number(match[1]) - 1, 1)).toUpperCase() : '';
+            }
+
+            processData() {
+                const total = this.state.data.length;
+                const flagged = this.state.data.filter(row => this.isFlagged(row)).length;
+                Utils.animateValue('score-pots-flag-total', 0, total, 900);
+                Utils.animateValue('score-pots-flagged', 0, flagged, 900);
+                Utils.animateValue('score-pots-unflagged', 0, total - flagged, 900);
+
+                const statuses = new Set(this.state.data.map(row => this.getStatus(row)).filter(Boolean));
+                TableManager.populateSelect('filter-pots-flag', statuses, 'Semua Status');
+                this.renderTable();
+            }
+
+            applyFilters() {
+                const query = document.getElementById('search-pots-flag').value.toLowerCase().trim();
+                const status = document.getElementById('filter-pots-flag').value.toLowerCase();
+                this.state.filtered = this.state.data.filter(row => {
+                    const searchable = Object.values(row).join(' ').toLowerCase();
+                    return (query === '' || searchable.includes(query)) && (status === 'all' || this.getStatus(row).toLowerCase() === status);
+                });
+                this.state.page = 1;
+                this.renderTable();
+            }
+
+            getVisibleColumns() {
+                const preferred = ['nama', 'no inet', 'nama pelanggan', 'bulan', 'nominal flagging', 'total flagging', 'deviasi', 'status flag'];
+                return preferred.map(name => this.columns.find(column => column.toLowerCase().trim() === name)).filter(Boolean);
+            }
+
+            renderTable() {
+                const thead = document.getElementById('thead-pots-flag');
+                const tbody = document.getElementById('tbody-pots-flag');
+                const columns = this.getVisibleColumns();
+                thead.innerHTML = `<tr>${columns.map(column => `<th class="px-7 py-5">${Utils.escapeHtml(column)}</th>`).join('')}<th class="px-7 py-5 text-center">Detail</th></tr>`;
+                const start = (this.state.page - 1) * this.state.limit;
+                const rows = this.state.filtered.slice(start, start + this.state.limit);
+                tbody.innerHTML = rows.length ? rows.map((row, index) => `<tr class="hover:bg-surfaceAlt transition-colors font-medium">${columns.map(column => `<td class="px-7 py-4"><div class="max-w-48 truncate" title="${Utils.escapeHtml(row[column] || '-')}">${Utils.escapeHtml(row[column] || '-')}</div></td>`).join('')}<td class="px-7 py-4 text-center"><button type="button" data-pots-flag-detail="${start + index}" aria-label="Lihat detail flaging POTS" class="bento-btn h-9 w-9 rounded-xl bg-red-50 text-primary hover:bg-red-100"><i class="fas fa-eye text-xs"></i></button></td></tr>`).join('') : `<tr><td colspan="${columns.length + 1}" class="text-center py-10 font-bold text-textMuted">Tidak ada data.</td></tr>`;
+                TableManager.updatePaginationUI('pots-flag', this.state);
+            }
+
+            openDetail(index) {
+                const row = this.state.filtered[index];
+                const content = document.getElementById('flag-detail-content');
+                const modal = document.getElementById('flag-detail-modal');
+                if (!row || !content || !modal) return;
+                content.innerHTML = this.columns.map(column => `<div class="rounded-xl border border-borderLight bg-surfaceAlt p-4"><p class="mb-1 text-[10px] font-bold uppercase tracking-wider text-textMuted">${Utils.escapeHtml(column)}</p><p class="break-words text-sm font-semibold text-textMain">${Utils.escapeHtml(row[column]) || '-'}</p></div>`).join('');
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
             }
         }
 
@@ -4344,6 +4551,7 @@
                     'pranpc-dashboard': new ModulePRANPC(this),
                     'visit-collection': new ModuleVisit(this),
                     'claim': new ModuleClaim(this),
+                    'pots-flagging': new ModulePotsFlagging(this),
                     'nonpots': new ModuleNonPots(this)
                 };
 
@@ -4379,6 +4587,7 @@
 
                     if (this.activeModuleId === 'nonpots-performance') this.modules['nonpots'].load(true);
                     else if (this.activeModuleId === 'nonpots-flagging') this.modules['nonpots'].loadFlagging(true);
+                    else if (this.activeModuleId === 'pots-flagging') this.modules['pots-flagging'].load(true);
                     else if (this.modules[this.activeModuleId]) this.modules[this.activeModuleId].load(true);
                     this.updateClock();
                 });
@@ -4454,7 +4663,7 @@
                     if (el.getAttribute('data-target') === targetId) el.classList.add('nav-item-active');
                 });
 
-                ['module-c3mr-dashboard', 'module-caring-dashboard', 'module-billper-dashboard', 'module-pranpc-dashboard', 'module-visit-collection', 'module-nonpots-dashboard', 'module-nonpots-performance', 'module-nonpots-flagging'].forEach(id => {
+                ['module-c3mr-dashboard', 'module-caring-dashboard', 'module-billper-dashboard', 'module-pranpc-dashboard', 'module-visit-collection', 'module-claim', 'module-pots-flagging', 'module-nonpots-dashboard', 'module-nonpots-performance', 'module-nonpots-flagging'].forEach(id => {
                     document.getElementById(id).classList.add('hidden-module');
                 });
 
@@ -4464,6 +4673,7 @@
                     'billper-dashboard': 'Data Billper',
                     'pranpc-dashboard': 'Data PRANPC',
                     'claim': 'Data Claim',
+                    'pots-flagging': 'Data Flaging POTS',
                     'visit-collection': 'Monitoring Visit Collection',
                     'nonpots-dashboard': 'Monitoring Non-POTS',
                     'nonpots-performance': 'Performance AM Non-POTS',
@@ -4481,6 +4691,7 @@
                 if (targetId === 'pranpc-dashboard') logicModule = this.modules['pranpc-dashboard'];
                 if (targetId === 'visit-collection') logicModule = this.modules['visit-collection'];
                 if (targetId === 'claim') logicModule = this.modules['claim'];
+                if (targetId === 'pots-flagging') logicModule = this.modules['pots-flagging'];
                 if (targetId === 'nonpots-dashboard' || targetId === 'nonpots-performance') logicModule = this.modules['nonpots'];
 
                 if (targetId === 'nonpots-flagging') {
