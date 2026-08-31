@@ -2156,6 +2156,19 @@
             <!-- MODULE: NON-POTS FLAGGING                      -->
             <!-- ============================================== -->
             <section id="module-nonpots-flagging" class="space-y-8 hidden-module fade-in">
+                <div class="bento-card overflow-hidden flex flex-col bg-white mb-6">
+                    <div class="p-5 md:p-6 border-b border-borderLight">
+                        <div class="max-w-md">
+                            <label class="text-[10px] font-bold text-primary uppercase mb-2 ml-1 tracking-wider">Filter
+                                Segment</label>
+                            <select id="filter-segment-nonpots-flag"
+                                class="bento-input w-full px-4 py-3 text-sm font-bold cursor-pointer appearance-none border-primary/30 shadow-sm text-primary bg-red-50/30">
+                                <option value="all">Semua Segment</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                     <div class="bento-card grad-kpi-total p-7 flex items-center gap-5 border-none group">
                         <div
@@ -2220,12 +2233,6 @@
                                         class="bento-input w-full pl-10 pr-4 py-3 text-sm font-medium"
                                         placeholder="Cari AM..."></div>
                             </div>
-                            <div class="flex flex-col"><label
-                                    class="text-[10px] font-bold text-primary uppercase mb-2 ml-1 tracking-wider">Segment</label><select
-                                    id="filter-segment-nonpots-flag"
-                                    class="bento-input w-full px-4 py-3 text-sm font-bold cursor-pointer appearance-none border-primary/30 shadow-sm text-primary bg-red-50/30">
-                                    <option value="all">Semua Segment</option>
-                                </select></div>
                             <div class="flex flex-col"><label
                                     class="text-[10px] font-bold text-primary uppercase mb-2 ml-1 tracking-wider">Status
                                     Flag</label><select id="filter-nonpots-flag"
@@ -4334,17 +4341,20 @@
                     normalized.includes('terflag');
             }
 
-            processFlaggingData() {
-                const total = this.flagState.data.length;
-                const flagged = this.flagState.data.filter(row => this.isFlagged(row)).length;
+            updateFlagSummary(rows) {
+                const total = rows.length;
+                const flagged = rows.filter(row => this.isFlagged(row)).length;
                 Utils.animateValue('score-nonpots-flag-total', 0, total, 900);
                 Utils.animateValue('score-nonpots-flagged', 0, flagged, 900);
                 Utils.animateValue('score-nonpots-unflagged', 0, total - flagged, 900);
+            }
 
+            processFlaggingData() {
                 const statuses = new Set(this.flagState.data.map(row => this.getFlagValue(row)).filter(Boolean));
                 const segments = new Set(this.flagState.data.map(row => Utils.getDynamicValue(row, ['segmen', 'segment', 'segmentasi'])).filter(Boolean));
                 TableManager.populateSelect('filter-nonpots-flag', statuses, 'Semua Status');
                 TableManager.populateSelect('filter-segment-nonpots-flag', segments, 'Semua Segment');
+                this.updateFlagSummary(this.flagState.data);
                 this.renderFlagTable();
             }
 
@@ -4368,6 +4378,7 @@
                     return matchQuery && matchAm && matchSegment && matchStatus;
                 });
                 this.flagState.page = 1;
+                this.updateFlagSummary(this.flagState.filtered);
                 this.renderFlagTable();
             }
 
