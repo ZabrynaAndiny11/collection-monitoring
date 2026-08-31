@@ -2221,14 +2221,11 @@
                                         placeholder="Cari AM..."></div>
                             </div>
                             <div class="flex flex-col"><label
-                                    class="text-[10px] font-bold text-primary uppercase mb-2 ml-1 tracking-wider">Cari
-                                    Segment</label>
-                                <div class="relative shadow-sm rounded-xl"><i
-                                        class="fas fa-layer-group absolute left-4 top-1/2 transform -translate-y-1/2 text-textMuted text-xs"></i><input
-                                        type="text" id="search-segment-nonpots-flag"
-                                        class="bento-input w-full pl-10 pr-4 py-3 text-sm font-medium"
-                                        placeholder="Cari Segment..."></div>
-                            </div>
+                                    class="text-[10px] font-bold text-primary uppercase mb-2 ml-1 tracking-wider">Segment</label><select
+                                    id="filter-segment-nonpots-flag"
+                                    class="bento-input w-full px-4 py-3 text-sm font-bold cursor-pointer appearance-none border-primary/30 shadow-sm text-primary bg-red-50/30">
+                                    <option value="all">Semua Segment</option>
+                                </select></div>
                             <div class="flex flex-col"><label
                                     class="text-[10px] font-bold text-primary uppercase mb-2 ml-1 tracking-wider">Status
                                     Flag</label><select id="filter-nonpots-flag"
@@ -4270,7 +4267,7 @@
 
                 document.getElementById('search-nonpots-flag').addEventListener('input', Utils.debounce(() => this.applyFlagFilters(), 300));
                 document.getElementById('search-am-nonpots-flag').addEventListener('input', Utils.debounce(() => this.applyFlagFilters(), 300));
-                document.getElementById('search-segment-nonpots-flag').addEventListener('input', Utils.debounce(() => this.applyFlagFilters(), 300));
+                document.getElementById('filter-segment-nonpots-flag').addEventListener('change', () => this.applyFlagFilters());
                 document.getElementById('filter-nonpots-flag').addEventListener('change', () => this.applyFlagFilters());
                 document.getElementById('tbody-nonpots-flag').addEventListener('click', event => {
                     const button = event.target.closest('[data-flag-detail]');
@@ -4345,14 +4342,16 @@
                 Utils.animateValue('score-nonpots-unflagged', 0, total - flagged, 900);
 
                 const statuses = new Set(this.flagState.data.map(row => this.getFlagValue(row)).filter(Boolean));
+                const segments = new Set(this.flagState.data.map(row => Utils.getDynamicValue(row, ['segmen', 'segment', 'segmentasi'])).filter(Boolean));
                 TableManager.populateSelect('filter-nonpots-flag', statuses, 'Semua Status');
+                TableManager.populateSelect('filter-segment-nonpots-flag', segments, 'Semua Segment');
                 this.renderFlagTable();
             }
 
             applyFlagFilters() {
                 const query = document.getElementById('search-nonpots-flag').value.toLowerCase().trim();
                 const amQuery = document.getElementById('search-am-nonpots-flag').value.toLowerCase().trim();
-                const segmentQuery = document.getElementById('search-segment-nonpots-flag').value.toLowerCase().trim();
+                const segment = document.getElementById('filter-segment-nonpots-flag').value.toLowerCase();
                 const status = document.getElementById('filter-nonpots-flag').value.toLowerCase();
 
                 this.flagState.filtered = this.flagState.data.filter(row => {
@@ -4363,7 +4362,7 @@
 
                     const matchQuery = query === '' || searchable.includes(query);
                     const matchAm = amQuery === '' || amValue.includes(amQuery);
-                    const matchSegment = segmentQuery === '' || segmentValue.includes(segmentQuery);
+                    const matchSegment = segment === 'all' || segmentValue === segment;
                     const matchStatus = status === 'all' || rowStatus === status;
 
                     return matchQuery && matchAm && matchSegment && matchStatus;
