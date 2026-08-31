@@ -2201,7 +2201,7 @@
                                 <i class="fas fa-flag text-base"></i>
                             </div>Detail Data Flaging Non-POTS
                         </h3>
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5">
                             <div class="flex flex-col"><label
                                     class="text-[10px] font-bold text-textMuted uppercase mb-2 ml-1 tracking-wider">Pencarian
                                     Global</label>
@@ -2210,6 +2210,24 @@
                                         type="text" id="search-nonpots-flag"
                                         class="bento-input w-full pl-10 pr-4 py-3 text-sm font-medium"
                                         placeholder="Cari data..."></div>
+                            </div>
+                            <div class="flex flex-col"><label
+                                    class="text-[10px] font-bold text-primary uppercase mb-2 ml-1 tracking-wider">Cari
+                                    AM</label>
+                                <div class="relative shadow-sm rounded-xl"><i
+                                        class="fas fa-user absolute left-4 top-1/2 transform -translate-y-1/2 text-textMuted text-xs"></i><input
+                                        type="text" id="search-am-nonpots-flag"
+                                        class="bento-input w-full pl-10 pr-4 py-3 text-sm font-medium"
+                                        placeholder="Cari AM..."></div>
+                            </div>
+                            <div class="flex flex-col"><label
+                                    class="text-[10px] font-bold text-primary uppercase mb-2 ml-1 tracking-wider">Cari
+                                    Segment</label>
+                                <div class="relative shadow-sm rounded-xl"><i
+                                        class="fas fa-layer-group absolute left-4 top-1/2 transform -translate-y-1/2 text-textMuted text-xs"></i><input
+                                        type="text" id="search-segment-nonpots-flag"
+                                        class="bento-input w-full pl-10 pr-4 py-3 text-sm font-medium"
+                                        placeholder="Cari Segment..."></div>
                             </div>
                             <div class="flex flex-col"><label
                                     class="text-[10px] font-bold text-primary uppercase mb-2 ml-1 tracking-wider">Status
@@ -3085,6 +3103,7 @@
                 Utils.animateValue('score-visit-belum', 0, belum, 1500);
 
                 // 3. Mengurutkan dan mengambil Top 5
+
                 const topReasons = Object.entries(reasonMap)
                     .sort((a, b) => b[1] - a[1]) // Urutkan descending (terbesar ke terkecil)
                     .slice(0, 5); // Ambil 5 teratas
@@ -4250,6 +4269,8 @@
                 }, 300));
 
                 document.getElementById('search-nonpots-flag').addEventListener('input', Utils.debounce(() => this.applyFlagFilters(), 300));
+                document.getElementById('search-am-nonpots-flag').addEventListener('input', Utils.debounce(() => this.applyFlagFilters(), 300));
+                document.getElementById('search-segment-nonpots-flag').addEventListener('input', Utils.debounce(() => this.applyFlagFilters(), 300));
                 document.getElementById('filter-nonpots-flag').addEventListener('change', () => this.applyFlagFilters());
                 document.getElementById('tbody-nonpots-flag').addEventListener('click', event => {
                     const button = event.target.closest('[data-flag-detail]');
@@ -4330,21 +4351,42 @@
 
             applyFlagFilters() {
                 const query = document.getElementById('search-nonpots-flag').value.toLowerCase().trim();
+                const amQuery = document.getElementById('search-am-nonpots-flag').value.toLowerCase().trim();
+                const segmentQuery = document.getElementById('search-segment-nonpots-flag').value.toLowerCase().trim();
                 const status = document.getElementById('filter-nonpots-flag').value.toLowerCase();
+
                 this.flagState.filtered = this.flagState.data.filter(row => {
                     const searchable = Object.values(row).join(' ').toLowerCase();
                     const rowStatus = this.getFlagValue(row).toLowerCase();
-                    return (query === '' || searchable.includes(query)) && (status === 'all' || rowStatus === status);
+                    const amValue = Utils.getDynamicValue(row, ['nama am', 'am', 'nama_am', 'account manager']).toLowerCase();
+                    const segmentValue = Utils.getDynamicValue(row, ['segmen', 'segment', 'segmentasi']).toLowerCase();
+
+                    const matchQuery = query === '' || searchable.includes(query);
+                    const matchAm = amQuery === '' || amValue.includes(amQuery);
+                    const matchSegment = segmentQuery === '' || segmentValue.includes(segmentQuery);
+                    const matchStatus = status === 'all' || rowStatus === status;
+
+                    return matchQuery && matchAm && matchSegment && matchStatus;
                 });
                 this.flagState.page = 1;
                 this.renderFlagTable();
             }
 
             getFlagVisibleColumns() {
-                const flagColumn = this.flagState.columns.find(column => /flag|status/i.test(column));
-                const columns = this.flagState.columns.slice(0, 5);
-                if (flagColumn && !columns.includes(flagColumn)) columns.push(flagColumn);
-                return columns.slice(0, 6);
+                const normalize = value => String(value || '').toLowerCase().replace(/[^a-z0-9]+/g, '');
+                const preferred = ['nama am', 'am', 'nama_am', 'segment', 'segmen', 'segmentasi', 'status flag', 'status flagging', 'flagging', 'flaging'];
+                const ordered = [];
+
+                preferred.forEach(key => {
+                    const match = this.flagState.columns.find(column => normalize(column) === normalize(key));
+                    if (match && !ordered.includes(match)) ordered.push(match);
+                });
+
+                this.flagState.columns.forEach(column => {
+                    if (!ordered.includes(column)) ordered.push(column);
+                });
+
+                return ordered.slice(0, 6);
             }
 
             renderFlagTable() {
