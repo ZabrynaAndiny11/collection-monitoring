@@ -3034,6 +3034,11 @@
                 TableManager.setupPagination('visit', this.state, () => this.renderTable());
             }
 
+            isTransactionRow(row) {
+                return ['activity id', 'activity scenario', 'ncli', 'snd', 'nama perusahaan', 'nama', 'activity status', 'activity reason', 'address']
+                    .some(key => Utils.getDynamicValue(row, [key]) !== '');
+            }
+
             async load(force = false) {
                 if (this.isLoaded && !force) return;
                 this.app.loader.show();
