@@ -55,6 +55,12 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
     <style>
+        /* Hide native browser password-reveal icons so they don't double up with our custom toggle */
+        #login-password::-ms-reveal,
+        #login-password::-ms-clear {
+            display: none;
+        }
+
         /* ==========================================================================
             Visual Variables & Modern Theme Defaults
         ========================================================================== */
@@ -228,6 +234,49 @@
 
 <body class="antialiased h-screen w-full flex selection:bg-primary selection:text-white overflow-hidden">
     <!-- ============================================== -->
+    <!-- LOGIN SCREEN                                   -->
+    <!-- ============================================== -->
+    <div id="login-screen"
+        class="fixed inset-0 z-[200] bg-gradient-to-br from-primary via-primaryDark to-[#7A0000] flex items-center justify-center p-4 overflow-hidden">
+        <img src="logo-telkom.svg" alt=""
+            class="absolute w-[420px] md:w-[620px] max-w-none opacity-10 pointer-events-none select-none"
+            style="filter: brightness(0) invert(1);">
+        <div class="relative w-full max-w-sm bg-white rounded-3xl shadow-2xl p-8 md:p-10">
+            <div class="flex flex-col items-center mb-8">
+                <img src="logo-telkom.svg" alt="Logo Telkom" class="h-12 mb-4">
+                <h1 class="font-poppins font-extrabold text-lg text-textMain text-center">Collection Monitoring</h1>
+                <p class="text-[11px] font-bold text-primary uppercase tracking-widest mt-1">Witel Sulbagsel</p>
+            </div>
+            <form id="login-form" class="space-y-4" autocomplete="off">
+                <div>
+                    <label
+                        class="text-[10px] font-bold text-textMuted uppercase mb-2 ml-1 tracking-wider block">Username</label>
+                    <input type="text" id="login-username" autocomplete="username" required
+                        class="bento-input w-full px-4 py-3 text-sm font-medium" placeholder="Masukkan username">
+                </div>
+                <div>
+                    <label
+                        class="text-[10px] font-bold text-textMuted uppercase mb-2 ml-1 tracking-wider block">Password</label>
+                    <div class="relative">
+                        <input type="password" id="login-password" autocomplete="current-password" required
+                            class="bento-input w-full px-4 py-3 pr-11 text-sm font-medium" placeholder="Masukkan password">
+                        <button type="button" id="login-password-toggle" tabindex="-1"
+                            aria-label="Tampilkan password"
+                            class="absolute right-3 top-1/2 -translate-y-1/2 text-textMuted hover:text-textMain">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                </div>
+                <p id="login-error"
+                    class="hidden text-xs font-bold text-primary bg-red-50 border border-red-100 rounded-xl px-4 py-2.5">
+                </p>
+                <button type="submit" id="login-submit-btn"
+                    class="bento-btn w-full bg-primary hover:bg-primaryDark text-white py-3 rounded-xl font-bold text-sm shadow-md">Masuk</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ============================================== -->
     <!-- OVERLAYS (Loader & Toast)                      -->
     <!-- ============================================== -->
     <div id="global-loader"
@@ -276,6 +325,45 @@
             </div>
             <div id="flag-detail-content"
                 class="grid max-h-[calc(90vh-90px)] grid-cols-1 gap-4 overflow-y-auto p-6 sm:grid-cols-2"></div>
+        </div>
+    </div>
+
+    <div id="voc-edit-modal"
+        class="fixed inset-0 z-[96] hidden items-center justify-center bg-black/50 p-4 backdrop-blur-sm">
+        <div class="bg-white w-full max-w-md overflow-hidden rounded-2xl shadow-2xl">
+            <div class="flex items-center justify-between border-b border-borderLight px-6 py-5">
+                <div>
+                    <p class="text-[10px] font-bold uppercase tracking-widest text-primary">Edit VOC</p>
+                    <h3 class="font-poppins text-lg font-bold text-textMain" id="voc-edit-name">-</h3>
+                </div>
+                <button id="btn-close-voc-edit" type="button" aria-label="Tutup edit VOC"
+                    class="bento-btn h-10 w-10 rounded-xl border border-borderLight text-textMuted hover:bg-surfaceAlt">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <form id="voc-edit-form" class="p-6 space-y-4">
+                <div>
+                    <label class="text-[10px] font-bold text-textMuted uppercase mb-2 ml-1 tracking-wider block">Kolom
+                        VOC di Sheet</label>
+                    <p id="voc-edit-column"
+                        class="bento-input w-full px-4 py-3 text-sm font-bold bg-surfaceAlt text-textMuted">-</p>
+                </div>
+                <div>
+                    <label class="text-[10px] font-bold text-textMuted uppercase mb-2 ml-1 tracking-wider block">Isi
+                        VOC</label>
+                    <select id="voc-edit-value"
+                        class="bento-input w-full px-4 py-3 text-sm font-medium cursor-pointer appearance-none"></select>
+                </div>
+                <p id="voc-edit-error"
+                    class="hidden text-xs font-bold text-primary bg-red-50 border border-red-100 rounded-xl px-4 py-2.5">
+                </p>
+                <div class="flex gap-3">
+                    <button type="button" id="btn-cancel-voc-edit"
+                        class="bento-btn flex-1 bg-white border border-borderLight text-textMuted py-3 rounded-xl font-bold text-sm">Batal</button>
+                    <button type="submit" id="btn-save-voc-edit"
+                        class="bento-btn flex-1 bg-primary hover:bg-primaryDark text-white py-3 rounded-xl font-bold text-sm shadow-md">Simpan</button>
+                </div>
+            </form>
         </div>
     </div>
 
@@ -450,13 +538,13 @@
             </div>
 
             <div class="flex items-center gap-3 p-1">
-                <div
+                <div id="sidebar-profile-initial"
                     class="w-9 h-9 bg-primary/20 text-primary border border-primary/20 rounded-full flex items-center justify-center font-bold text-sm shrink-0">
-                    WS
+                    -
                 </div>
                 <div class="min-w-0 sidebar-text">
-                    <p class="text-xs font-semibold text-white truncate">Witel Sulbagsel</p>
-                    <p class="text-[10px] text-[#7A828A] truncate">admin.sulbagsel@telkom.co.id</p>
+                    <p class="text-xs font-semibold text-white truncate" id="sidebar-profile-name">-</p>
+                    <p class="text-[10px] text-[#7A828A] truncate" id="sidebar-profile-role">-</p>
                 </div>
             </div>
         </div>
@@ -490,10 +578,20 @@
                     <p class="text-textMain font-bold text-xs mt-0.5" id="last-update-global">Memuat...</p>
                 </div>
 
+                <div
+                    class="hidden sm:flex items-center gap-2 bg-surfaceAlt border border-borderLight rounded-xl px-3 py-2">
+                    <i class="fas fa-user-circle text-primary text-sm"></i>
+                    <span class="text-xs font-bold text-textMain" id="current-user-label">-</span>
+                </div>
+
                 <div class="flex items-center gap-3">
                     <button id="btn-sync-data"
                         class="bento-btn bg-primary hover:bg-primaryDark w-10 h-10 rounded-xl flex items-center justify-center text-white relative z-50 shadow-md transition-all border border-[#C50000]">
                         <i class="fas fa-sync-alt text-sm pointer-events-none"></i>
+                    </button>
+                    <button id="btn-logout" type="button" aria-label="Keluar"
+                        class="bento-btn bg-white hover:bg-surfaceAlt w-10 h-10 rounded-xl flex items-center justify-center text-textMuted border border-borderLight shadow-sm transition-all">
+                        <i class="fas fa-right-from-bracket text-sm"></i>
                     </button>
                 </div>
             </div>
@@ -2117,7 +2215,7 @@
                     </div>
 
                     <div class="table-scroll overflow-x-auto w-full">
-                        <table class="w-full whitespace-nowrap min-w-[1000px]">
+                        <table class="w-full whitespace-nowrap min-w-[1100px]">
                             <thead
                                 class="bg-surfaceAlt text-left text-[11px] font-bold text-textMuted uppercase tracking-wider border-b border-borderLight">
                                 <tr>
@@ -2131,6 +2229,7 @@
                                     <th class="px-7 py-5">Status CR</th>
                                     <th class="px-7 py-5">L11 CR</th>
                                     <th class="px-7 py-5">L11 CYC</th>
+                                    <th class="px-7 py-5 text-center">Detail</th>
                                 </tr>
                             </thead>
                             <tbody id="tbody-nonpots"
@@ -2160,10 +2259,10 @@
                     <div class="p-5 md:p-6 border-b border-borderLight">
                         <div class="max-w-md">
                             <label class="text-[10px] font-bold text-primary uppercase mb-2 ml-1 tracking-wider">Filter
-                                Data UBIS</label>
+                                UBIS</label>
                             <select id="filter-segment-nonpots-flag"
                                 class="bento-input w-full px-4 py-3 text-sm font-bold cursor-pointer appearance-none border-primary/30 shadow-sm text-primary bg-red-50/30">
-                                <option value="all">Semua Data UBIS</option>
+                                <option value="all">All</option>
                             </select>
                         </div>
                     </div>
@@ -2187,7 +2286,7 @@
                             <i class="fas fa-flag-checkered"></i>
                         </div>
                         <div>
-                            <p class="text-[11px] font-bold uppercase text-white/80 tracking-widest">Lunas</p>
+                            <p class="text-[11px] font-bold uppercase text-white/80 tracking-widest">Sudah Flag</p>
                             <p class="text-3xl font-poppins font-extrabold text-white mt-1" id="score-nonpots-flagged">0
                             </p>
                         </div>
@@ -2198,9 +2297,67 @@
                             <i class="fas fa-flag"></i>
                         </div>
                         <div>
-                            <p class="text-[11px] font-bold uppercase text-white/80 tracking-widest">Belum Lunas</p>
+                            <p class="text-[11px] font-bold uppercase text-white/80 tracking-widest">Belum Flag</p>
                             <p class="text-3xl font-poppins font-extrabold text-white mt-1"
                                 id="score-nonpots-unflagged">0</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                    <div id="card-realisasi-nonpots-flag"
+                        class="bento-card p-7 flex flex-col justify-between lg:col-span-4 min-h-[300px]">
+                        <div class="flex justify-between items-center pb-5 border-b border-borderLight">
+                            <h3 class="font-poppins font-bold text-sm text-textMain uppercase tracking-wider">Realisasi
+                                Flagging Non-POTS</h3>
+                        </div>
+                        <div class="space-y-7 py-6 flex-1 flex flex-col justify-center">
+                            <div>
+                                <div class="flex justify-between items-end mb-2.5"><span
+                                        class="text-xs font-bold text-textMuted uppercase tracking-wider flex items-center gap-2">
+                                        <div class="w-2 h-2 rounded-full bg-emerald-500"></div> Sudah Flag
+                                    </span><span class="text-xl font-extrabold text-textMain"><span
+                                            id="pct-flagged-info-np">0</span>%</span></div>
+                                <div
+                                    class="w-full bg-surfaceAlt border border-borderLight rounded-full h-3.5 overflow-hidden p-[2px] shadow-inner">
+                                    <div id="bar-flagged-np"
+                                        class="h-full bg-gradient-to-r from-emerald-400 to-emerald-600 rounded-full bar-transition w-0 shadow-sm">
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between items-end mb-2.5"><span
+                                        class="text-xs font-bold text-textMuted uppercase tracking-wider flex items-center gap-2">
+                                        <div class="w-2 h-2 rounded-full bg-primary"></div> Belum Flag
+                                    </span><span class="text-xl font-extrabold text-textMain"><span
+                                            id="pct-unflagged-info-np">0</span>%</span></div>
+                                <div
+                                    class="w-full bg-surfaceAlt border border-borderLight rounded-full h-3.5 overflow-hidden p-[2px] shadow-inner">
+                                    <div id="bar-unflagged-np"
+                                        class="h-full bg-gradient-to-r from-[#E70000] to-[#C50000] rounded-full bar-transition w-0 shadow-sm">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bento-card p-7 flex flex-col lg:col-span-8">
+                        <div
+                            class="flex flex-col sm:flex-row justify-between sm:items-center mb-6 pb-4 border-b border-borderLight gap-4">
+                            <div class="flex items-center gap-3">
+                                <div class="w-8 h-8 rounded-lg bg-red-50 text-primary flex items-center justify-center">
+                                    <i class="fas fa-chart-bar text-sm"></i>
+                                </div>
+                                <h3 class="text-sm font-poppins font-bold text-textMain uppercase tracking-wider">
+                                    Sebaran UBIS</h3>
+                            </div>
+                            <select id="filter-chart-nonpots-flag"
+                                class="bento-input appearance-none bg-white px-4 py-2 rounded-xl text-xs font-bold cursor-pointer w-full sm:w-52 text-primary">
+                                <option value="all">All</option>
+                                <option value="sudah flag">Sudah Flag</option>
+                                <option value="belum flag">Belum Flag</option>
+                            </select>
+                        </div>
+                        <div class="relative w-full flex-1 min-h-[260px]"><canvas id="barChartNonPotsFlag"></canvas>
                         </div>
                     </div>
                 </div>
@@ -2235,9 +2392,15 @@
                             </div>
                             <div class="flex flex-col"><label
                                     class="text-[10px] font-bold text-primary uppercase mb-2 ml-1 tracking-wider">Status
-                                    Pembayaran</label><select id="filter-nonpots-flag"
+                                    Flag TREG</label><select id="filter-nonpots-flag"
                                     class="bento-input w-full px-4 py-3 text-sm font-bold cursor-pointer appearance-none border-primary/30 shadow-sm text-primary bg-red-50/30">
                                     <option value="all">Semua Status</option>
+                                </select></div>
+                            <div class="flex flex-col"><label
+                                    class="text-[10px] font-bold text-primary uppercase mb-2 ml-1 tracking-wider">Status
+                                    Lunas</label><select id="filter-nonpots-lunas"
+                                    class="bento-input w-full px-4 py-3 text-sm font-bold cursor-pointer appearance-none border-primary/30 shadow-sm text-primary bg-red-50/30">
+                                    <option value="all">Semua Status Lunas</option>
                                 </select></div>
                         </div>
                     </div>
@@ -2296,7 +2459,8 @@
                         <div class="min-w-0">
                             <p class="text-[11px] font-bold uppercase text-white/80 tracking-widest">Peringkat Terbaik
                             </p>
-                            <p class="text-xl font-poppins font-extrabold text-white truncate mt-1" id="stat-am-best">-
+                            <p class="text-xl font-poppins font-extrabold text-white break-words mt-1"
+                                id="stat-am-best">-
                             </p>
                         </div>
                     </div>
@@ -2394,6 +2558,21 @@
                     if (found && row[found] != null && row[found] !== '') return String(row[found]).trim();
                 }
                 return '';
+            }
+
+            static getLatestDynamicValue(row, substring) {
+                const rowKeys = Object.keys(row).filter(k => k.toLowerCase().includes(substring.toLowerCase()));
+                if (rowKeys.length === 0) return '';
+                for (let i = rowKeys.length - 1; i >= 0; i--) {
+                    const value = row[rowKeys[i]];
+                    if (value != null && String(value).trim() !== '') return String(value).trim();
+                }
+                return '';
+            }
+
+            static getLatestDynamicKey(row, substring) {
+                const rowKeys = Object.keys(row).filter(k => k.toLowerCase().includes(substring.toLowerCase()));
+                return rowKeys.length ? rowKeys[rowKeys.length - 1] : '';
             }
 
             static escapeHtml(value) {
@@ -2811,8 +2990,8 @@
                         tbody.innerHTML += `
                                     <tr class="hover:bg-surfaceAlt transition-colors font-medium">
                                         <td class="px-7 py-4 font-bold text-primary">${Utils.getDynamicValue(r, ['snd'])}</td>
-                                        <td class="px-7 py-4"><div class="truncate w-40" title="${Utils.getDynamicValue(r, ['nama'])}">${Utils.getDynamicValue(r, ['nama'])}</div></td>
-                                        <td class="px-7 py-4"><div class="truncate w-48 text-xs text-textMuted">${Utils.getDynamicValue(r, ['alamat'])}</div></td>
+                                        <td class="px-7 py-4" title="${Utils.getDynamicValue(r, ['nama'])}">${Utils.getDynamicValue(r, ['nama'])}</td>
+                                        <td class="px-7 py-4"><div class="max-w-[220px] whitespace-normal break-words text-xs text-textMuted">${Utils.getDynamicValue(r, ['alamat'])}</div></td>
                                         <td class="px-7 py-4">${Utils.getDynamicValue(r, ['datel'])}</td>
                                         <td class="px-7 py-4 font-bold">${Utils.getDynamicValue(r, ['ubis'])}</td>
                                         <td class="px-7 py-4">${Utils.getNeoBadge(paid)}</td>
@@ -3025,11 +3204,11 @@
                         tbody.innerHTML += `
                                     <tr class="hover:bg-surfaceAlt transition-colors font-medium">
                                         <td class="px-7 py-4 font-bold text-primary">${Utils.getDynamicValue(r, ['snd'])}</td>
-                                        <td class="px-7 py-4"><div class="truncate w-40" title="${Utils.getDynamicValue(r, ['nama'])}">${Utils.getDynamicValue(r, ['nama'])}</div></td>
+                                        <td class="px-7 py-4" title="${Utils.getDynamicValue(r, ['nama'])}">${Utils.getDynamicValue(r, ['nama'])}</td>
                                         <td class="px-7 py-4 text-textMuted">${Utils.getDynamicValue(r, ['desc_newbill', 'newbill'])}</td>
                                         <td class="px-7 py-4 font-semibold">${Utils.getDynamicValue(r, ['ubis', 'sektor'])}</td>
                                         <td class="px-7 py-4">${Utils.getDynamicValue(r, ['datel/ro', 'datel', 'ro'])}</td>
-                                        <td class="px-7 py-4 font-bold"><div class="truncate w-32" title="${Utils.getDynamicValue(r, ['voc call', 'voc'])}">${Utils.getDynamicValue(r, ['voc call', 'voc'])}</div></td>
+                                        <td class="px-7 py-4 font-bold"><div class="max-w-[180px] whitespace-normal break-words">${Utils.getDynamicValue(r, ['voc call', 'voc'])}</div></td>
                                         <td class="px-7 py-4">${Utils.getNeoBadge(isLunas, status || 'BELUM LUNAS')}</td>
                                         <td class="px-7 py-4 text-center"><button type="button" data-global-detail="caring:${start + index}" aria-label="Lihat detail data Caring" class="bento-btn h-9 w-9 rounded-xl bg-red-50 text-primary hover:bg-red-100"><i class="fas fa-eye text-xs"></i></button></td>
                                     </tr>
@@ -3163,8 +3342,8 @@
                         tbody.innerHTML += `
                                     <tr class="hover:bg-surfaceAlt transition-colors font-medium">
                                         <td class="px-7 py-4 font-bold text-primary">${Utils.getDynamicValue(r, ['snd'])}</td>
-                                        <td class="px-7 py-4"><div class="truncate w-40" title="${Utils.getDynamicValue(r, ['nama'])}">${Utils.getDynamicValue(r, ['nama perusahaan', 'nama'])}</div></td>
-                                        <td class="px-7 py-4"><div class="truncate w-48 text-xs text-textMuted">${Utils.getDynamicValue(r, ['address'])}</div></td>
+                                        <td class="px-7 py-4" title="${Utils.getDynamicValue(r, ['nama perusahaan', 'nama'])}">${Utils.getDynamicValue(r, ['nama perusahaan', 'nama'])}</td>
+                                        <td class="px-7 py-4"><div class="max-w-[220px] whitespace-normal break-words text-xs text-textMuted">${Utils.getDynamicValue(r, ['address'])}</div></td>
                                         <td class="px-7 py-4">${badge}</td>
                                         <td class="px-7 py-4 font-semibold text-textMain">${Utils.getDynamicValue(r, ['activity reason'])}</td>
                                         <td class="px-7 py-4 text-center"><button type="button" data-global-detail="visit:${(this.state.page - 1) * this.state.limit + index}" aria-label="Lihat detail data Visit Collection" class="bento-btn h-9 w-9 rounded-xl bg-red-50 text-primary hover:bg-red-100"><i class="fas fa-eye text-xs"></i></button></td>
@@ -3840,7 +4019,7 @@
                 thead.innerHTML = `<tr>${columns.map(column => `<th class="px-7 py-5">${Utils.escapeHtml(column)}</th>`).join('')}<th class="px-7 py-5 text-center">Detail</th></tr>`;
                 const start = (this.state.page - 1) * this.state.limit;
                 const rows = this.state.filtered.slice(start, start + this.state.limit);
-                tbody.innerHTML = rows.length ? rows.map((row, index) => `<tr class="hover:bg-surfaceAlt transition-colors font-medium">${columns.map(column => `<td class="px-7 py-4"><div class="max-w-48 truncate" title="${Utils.escapeHtml(row[column] || '-')}">${Utils.escapeHtml(row[column] || '-')}</div></td>`).join('')}<td class="px-7 py-4 text-center"><button type="button" data-pots-flag-detail="${start + index}" aria-label="Lihat detail flaging POTS" class="bento-btn h-9 w-9 rounded-xl bg-red-50 text-primary hover:bg-red-100"><i class="fas fa-eye text-xs"></i></button></td></tr>`).join('') : `<tr><td colspan="${columns.length + 1}" class="text-center py-10 font-bold text-textMuted">Tidak ada data.</td></tr>`;
+                tbody.innerHTML = rows.length ? rows.map((row, index) => `<tr class="hover:bg-surfaceAlt transition-colors font-medium">${columns.map(column => { const val = Utils.escapeHtml(row[column] || '-'); return `<td class="px-7 py-4"><div class="max-w-[220px] whitespace-normal break-words">${val}</div></td>`; }).join('')}<td class="px-7 py-4 text-center"><button type="button" data-pots-flag-detail="${start + index}" aria-label="Lihat detail flaging POTS" class="bento-btn h-9 w-9 rounded-xl bg-red-50 text-primary hover:bg-red-100"><i class="fas fa-eye text-xs"></i></button></td></tr>`).join('') : `<tr><td colspan="${columns.length + 1}" class="text-center py-10 font-bold text-textMuted">Tidak ada data.</td></tr>`;
                 TableManager.updatePaginationUI('pots-flag', this.state);
             }
 
@@ -4063,8 +4242,8 @@
                         tbody.innerHTML += `
                                     <tr class="hover:bg-surfaceAlt transition-colors font-medium">
                                         <td class="px-7 py-4 font-bold text-primary">${Utils.getDynamicValue(r, ['snd'])}</td>
-                                        <td class="px-7 py-4"><div class="truncate w-40" title="${Utils.getDynamicValue(r, ['nama'])}">${Utils.getDynamicValue(r, ['nama'])}</div></td>
-                                        <td class="px-7 py-4"><div class="truncate w-48 text-xs text-textMuted">${Utils.getDynamicValue(r, ['alamat'])}</div></td>
+                                        <td class="px-7 py-4" title="${Utils.getDynamicValue(r, ['nama'])}">${Utils.getDynamicValue(r, ['nama'])}</td>
+                                        <td class="px-7 py-4"><div class="max-w-[220px] whitespace-normal break-words text-xs text-textMuted">${Utils.getDynamicValue(r, ['alamat'])}</div></td>
                                         <td class="px-7 py-4">${Utils.getDynamicValue(r, ['datel'])}</td>
                                         <td class="px-7 py-4 font-bold">${Utils.getDynamicValue(r, ['ubis'])}</td>
                                         <td class="px-7 py-4">${Utils.getNeoBadge(paid, statusStr.toUpperCase())}</td>
@@ -4222,8 +4401,8 @@
                         tbody.innerHTML += `
                                     <tr class="hover:bg-surfaceAlt transition-colors font-medium">
                                         <td class="px-7 py-4 font-bold text-primary">${Utils.getDynamicValue(r, ['snd'])}</td>
-                                        <td class="px-7 py-4"><div class="truncate w-40" title="${Utils.getDynamicValue(r, ['nama'])}">${Utils.getDynamicValue(r, ['nama'])}</div></td>
-                                        <td class="px-7 py-4"><div class="truncate w-48 text-xs text-textMuted">${Utils.getDynamicValue(r, ['alamat'])}</div></td>
+                                        <td class="px-7 py-4" title="${Utils.getDynamicValue(r, ['nama'])}">${Utils.getDynamicValue(r, ['nama'])}</td>
+                                        <td class="px-7 py-4"><div class="max-w-[220px] whitespace-normal break-words text-xs text-textMuted">${Utils.getDynamicValue(r, ['alamat'])}</div></td>
                                         <td class="px-7 py-4">${Utils.getDynamicValue(r, ['datel'])}</td>
                                         <td class="px-7 py-4 font-bold">${Utils.getDynamicValue(r, ['ubis'])}</td>
                                         <td class="px-7 py-4">${Utils.getNeoBadge(paid, statusStr.toUpperCase())}</td>
@@ -4238,6 +4417,47 @@
         }
 
         // --- NON-POTS MODULE (Combines Dashboard & Performance) ---
+        // Edit VOC writes back to the Google Sheet through an Apps Script Web App bridge.
+        // Deploy the Apps Script (see project notes), then fill in the URL + secret below.
+        const VOC_EDIT_CONFIG = {
+            webAppUrl: 'https://script.google.com/macros/s/AKfycbzJbQdRXSi_iVMnQkMjVJNpEu-hQPf3gJGXEu1lScNFsse3RntTkfBfmPTyB_-JvCNn/exec',
+            secret: 'akhlak'
+        };
+
+        // Kolom VOC di sheet punya Data Validation (dropdown tetap) — daftar ini harus persis sama
+        // dengan pilihan validasi di sheet, kalau tidak, penyimpanan akan ditolak Google Sheets.
+        const VOC_OPTIONS = [
+            'Contacted | Sudah Cabut',
+            'Contacted | Pindah Rumah',
+            'Contacted | Klaim Tagihan',
+            'Contacted | Kendala Keuangan',
+            'Contacted | Tagihan tidak sesuai',
+            'Contacted | Minta Diangsur/Cicilan',
+            'Contacted | Minta Jemput Tagihan',
+            'Contacted | Gangguan Jaringan/Internet Putus/LOS',
+            'Contacted | Tidak Bisa Connect',
+            'Contacted | Janji Bayar tgl 1-10',
+            'Contacted | Janji Bayar tgl 11-20',
+            'Contacted | Janji Bayar tgl 21-31',
+            'Lunas',
+            'Contacted | Lunas Sebagian / blm ada Bupot',
+            'Contacted | Ingin Bermohon Cabut',
+            'Not Contacted | Nada Sibuk',
+            'Not Contacted | RNA',
+            'Not Contacted | Tidak Aktif/Diluar Jangkauan',
+            'Contacted | Proses Rekon',
+            'Contacted | Belum Jatuh Tempo',
+            'Contacted | Potensi Koreksi',
+            'Contacted | Kontrak habis, tidak lanjut tapi billing masih muncul',
+            'Contacted | Sisa Pajak',
+            'Contacted | Kontrak habis, lanjut tapi ada selisih billing',
+            'Contacted | DO tidak backdate',
+            'Contacted | Kelebihan input billing',
+            'Contacted | Sulit ditagih',
+            'Contacted | Belum Terima Invoice',
+            'Contacted | Menunggu Faktur Pajak'
+        ];
+
         class ModuleNonPots extends BaseModule {
             constructor(app) {
                 super('nonpots-dashboard');
@@ -4246,6 +4466,7 @@
                 this.perfState = { data: [], filtered: [], page: 1, limit: 50 };
                 this.flagUrl = 'https://docs.google.com/spreadsheets/d/1K82wN91piAbwRwMNF1vXnLz0znQbfP_P9t75pcUzTbU/export?format=csv&gid=2061822618';
                 this.flagState = { data: [], filtered: [], columns: [], page: 1, limit: 50, isLoaded: false };
+                this.vocEditIndex = null;
                 this.initEvents();
             }
 
@@ -4276,6 +4497,8 @@
                 document.getElementById('search-am-nonpots-flag').addEventListener('input', Utils.debounce(() => this.applyFlagFilters(), 300));
                 document.getElementById('filter-segment-nonpots-flag').addEventListener('change', () => this.applyFlagFilters());
                 document.getElementById('filter-nonpots-flag').addEventListener('change', () => this.applyFlagFilters());
+                document.getElementById('filter-nonpots-lunas').addEventListener('change', () => this.applyFlagFilters());
+                document.getElementById('filter-chart-nonpots-flag').addEventListener('change', () => this.renderFlagUbisChart());
                 document.getElementById('tbody-nonpots-flag').addEventListener('click', event => {
                     const button = event.target.closest('[data-flag-detail]');
                     if (button) this.openFlagDetail(Number(button.dataset.flagDetail));
@@ -4285,6 +4508,20 @@
                     if (event.target.id === 'flag-detail-modal') this.closeFlagDetail();
                 });
                 TableManager.setupPagination('nonpots-flag', this.flagState, () => this.renderFlagTable());
+
+                document.getElementById('tbody-nonpots').addEventListener('click', event => {
+                    const button = event.target.closest('[data-edit-voc]');
+                    if (button) this.openVocEdit(Number(button.dataset.editVoc));
+                });
+                document.getElementById('btn-close-voc-edit').addEventListener('click', () => this.closeVocEdit());
+                document.getElementById('btn-cancel-voc-edit').addEventListener('click', () => this.closeVocEdit());
+                document.getElementById('voc-edit-modal').addEventListener('click', event => {
+                    if (event.target.id === 'voc-edit-modal') this.closeVocEdit();
+                });
+                document.getElementById('voc-edit-form').addEventListener('submit', event => {
+                    event.preventDefault();
+                    this.saveVocEdit();
+                });
             }
 
             async load(force = false) {
@@ -4324,7 +4561,12 @@
             }
 
             getFlagValue(row) {
-                return Utils.getDynamicValue(row, ['status flag', 'status', 'flaging', 'flagging', 'status flagging', 'flag']);
+                return Utils.getDynamicValue(row, ['status flag treg']);
+            }
+
+            getFlagStatus(row) {
+                const value = this.getFlagValue(row).toLowerCase().trim();
+                return value.includes('belum') ? 'Belum Flag' : value ? 'Sudah Flag' : 'Belum Flag';
             }
 
             getUbisValue(row) {
@@ -4332,48 +4574,80 @@
             }
 
             getPaymentStatus(row) {
-                return this.getFlagValue(row).toLowerCase().trim().includes('belum') ? 'Belum Lunas' : 'Lunas';
+                const value = Utils.getDynamicValue(row, ['status lunas', 'cek lunas', 'payment status']).trim();
+                return value || '-';
             }
 
             isFlagged(row) {
-                return this.getPaymentStatus(row) === 'Lunas';
+                return this.getFlagStatus(row) === 'Sudah Flag';
             }
 
             updateFlagSummary(rows) {
                 const total = rows.length;
                 const flagged = rows.filter(row => this.isFlagged(row)).length;
+                const flaggedPercent = total ? Math.round((flagged / total) * 100) : 0;
                 Utils.animateValue('score-nonpots-flag-total', 0, total, 900);
                 Utils.animateValue('score-nonpots-flagged', 0, flagged, 900);
                 Utils.animateValue('score-nonpots-unflagged', 0, total - flagged, 900);
+                document.getElementById('pct-flagged-info-np').innerText = flaggedPercent;
+                document.getElementById('pct-unflagged-info-np').innerText = 100 - flaggedPercent;
+                document.getElementById('bar-flagged-np').style.width = `${flaggedPercent}%`;
+                document.getElementById('bar-unflagged-np').style.width = `${100 - flaggedPercent}%`;
             }
 
             processFlaggingData() {
-                const statuses = new Set(this.flagState.data.map(row => this.getPaymentStatus(row)));
+                const statuses = new Set(this.flagState.data.map(row => this.getFlagStatus(row)));
+                const paymentStatuses = new Set(this.flagState.data.map(row => this.getPaymentStatus(row)).filter(value => value !== '-'));
                 const segments = new Set(this.flagState.data.map(row => this.getUbisValue(row)).filter(Boolean));
-                TableManager.populateSelect('filter-nonpots-flag', statuses, 'Semua Status');
-                TableManager.populateSelect('filter-segment-nonpots-flag', segments, 'Semua Data UBIS');
+                TableManager.populateSelect('filter-nonpots-flag', statuses, 'All');
+                TableManager.populateSelect('filter-nonpots-lunas', paymentStatuses, 'All');
+                TableManager.populateSelect('filter-segment-nonpots-flag', segments, 'All');
                 this.updateFlagSummary(this.flagState.data);
                 this.renderFlagTable();
+                this.renderFlagUbisChart();
+            }
+
+            renderFlagUbisChart() {
+                const chartFilter = document.getElementById('filter-chart-nonpots-flag').value;
+                const ubisMap = {};
+                this.flagState.data.forEach(row => {
+                    if (chartFilter !== 'all' && this.getFlagStatus(row).toLowerCase() !== chartFilter) return;
+                    const ubis = this.getUbisValue(row) || 'Tidak Terdefinisi';
+                    ubisMap[ubis] = (ubisMap[ubis] || 0) + 1;
+                });
+                const topUbis = Object.entries(ubisMap).sort((a, b) => b[1] - a[1]).slice(0, 10);
+                const canvas = document.getElementById('barChartNonPotsFlag');
+                if (!canvas) return;
+                if (this.charts.flagUbis) this.charts.flagUbis.destroy();
+                this.charts.flagUbis = ChartManager.createBarChart(
+                    canvas.getContext('2d'),
+                    topUbis.map(item => item[0]),
+                    topUbis.map(item => item[1]),
+                    true
+                );
             }
 
             applyFlagFilters() {
                 const query = document.getElementById('search-nonpots-flag').value.toLowerCase().trim();
                 const amQuery = document.getElementById('search-am-nonpots-flag').value.toLowerCase().trim();
                 const ubis = document.getElementById('filter-segment-nonpots-flag').value.toLowerCase();
-                const status = document.getElementById('filter-nonpots-flag').value.toLowerCase();
+                const statusFlag = document.getElementById('filter-nonpots-flag').value.toLowerCase();
+                const statusLunas = document.getElementById('filter-nonpots-lunas').value.toLowerCase();
 
                 this.flagState.filtered = this.flagState.data.filter(row => {
                     const searchable = Object.values(row).join(' ').toLowerCase();
-                    const rowStatus = this.getPaymentStatus(row).toLowerCase();
+                    const rowStatusFlag = this.getFlagStatus(row).toLowerCase();
+                    const rowStatusLunas = this.getPaymentStatus(row).toLowerCase();
                     const amValue = Utils.getDynamicValue(row, ['nama am', 'am', 'nama_am', 'account manager']).toLowerCase();
                     const ubisValue = this.getUbisValue(row).toLowerCase();
 
                     const matchQuery = query === '' || searchable.includes(query);
                     const matchAm = amQuery === '' || amValue.includes(amQuery);
                     const matchUbis = ubis === 'all' || ubisValue === ubis;
-                    const matchStatus = status === 'all' || rowStatus === status;
+                    const matchStatusFlag = statusFlag === 'all' || rowStatusFlag === statusFlag;
+                    const matchStatusLunas = statusLunas === 'all' || rowStatusLunas === statusLunas;
 
-                    return matchQuery && matchAm && matchUbis && matchStatus;
+                    return matchQuery && matchAm && matchUbis && matchStatusFlag && matchStatusLunas;
                 });
                 this.flagState.page = 1;
                 this.updateFlagSummary(this.flagState.filtered);
@@ -4382,7 +4656,7 @@
 
             getFlagVisibleColumns() {
                 const normalize = value => String(value || '').toLowerCase().replace(/[^a-z0-9]+/g, '');
-                const preferred = ['nama am', 'am', 'nama_am', 'ubis', 'data ubis', 'status flag', 'status'];
+                const preferred = ['nama am', 'am', 'nama_am', 'ubis', 'data ubis', 'billing amount', 'ppn', 'total amount', 'status flag treg', 'status lunas', 'status flag', 'status'];
                 const ordered = [];
 
                 preferred.forEach(key => {
@@ -4394,7 +4668,7 @@
                     if (!ordered.includes(column)) ordered.push(column);
                 });
 
-                return ordered.slice(0, 6);
+                return ordered.slice(0, 10);
             }
 
             renderFlagTable() {
@@ -4402,13 +4676,13 @@
                 const tbody = document.getElementById('tbody-nonpots-flag');
                 if (!thead || !tbody) return;
                 const visibleColumns = this.getFlagVisibleColumns();
-                thead.innerHTML = `<tr>${visibleColumns.map(column => `<th class="px-7 py-5">${Utils.escapeHtml(column.toLowerCase() === 'status flag' ? 'Status' : column)}</th>`).join('')}<th class="px-7 py-5 text-center">Detail</th></tr>`;
+                thead.innerHTML = `<tr>${visibleColumns.map(column => `<th class="px-7 py-5">${Utils.escapeHtml(column.toLowerCase() === 'status flag treg' ? 'Status Flag TREG' : column.toLowerCase() === 'status lunas' ? 'Status Lunas' : column)}</th>`).join('')}<th class="px-7 py-5 text-center">Detail</th></tr>`;
                 const start = (this.flagState.page - 1) * this.flagState.limit;
                 const paginated = this.flagState.filtered.slice(start, start + this.flagState.limit);
                 if (paginated.length === 0) {
                     tbody.innerHTML = `<tr><td colspan="${Math.max(visibleColumns.length + 1, 1)}" class="text-center py-10 font-bold text-textMuted">Tidak ada data.</td></tr>`;
                 } else {
-                    tbody.innerHTML = paginated.map((row, index) => `<tr class="hover:bg-surfaceAlt transition-colors font-medium">${visibleColumns.map(column => { const value = ['status flag', 'status'].includes(column.toLowerCase()) ? this.getPaymentStatus(row) : row[column]; return `<td class="px-7 py-4"><div class="max-w-48 truncate" title="${Utils.escapeHtml(value || '-')}">${Utils.escapeHtml(value || '-')}</div></td>`; }).join('')}<td class="px-7 py-4 text-center"><button type="button" data-flag-detail="${start + index}" aria-label="Lihat detail flaging" class="bento-btn h-9 w-9 rounded-xl bg-red-50 text-primary hover:bg-red-100"><i class="fas fa-eye text-xs"></i></button></td></tr>`).join('');
+                    tbody.innerHTML = paginated.map((row, index) => `<tr class="hover:bg-surfaceAlt transition-colors font-medium">${visibleColumns.map(column => { const normalizedColumn = column.toLowerCase(); const value = normalizedColumn === 'status flag treg' || normalizedColumn === 'status flag' ? this.getFlagStatus(row) : normalizedColumn === 'status lunas' ? this.getPaymentStatus(row) : row[column]; const val = Utils.escapeHtml(value || '-'); return `<td class="px-7 py-4"><div class="max-w-[220px] whitespace-normal break-words">${val}</div></td>`; }).join('')}<td class="px-7 py-4 text-center"><button type="button" data-flag-detail="${start + index}" aria-label="Lihat detail flaging" class="bento-btn h-9 w-9 rounded-xl bg-red-50 text-primary hover:bg-red-100"><i class="fas fa-eye text-xs"></i></button></td></tr>`).join('');
                 }
                 TableManager.updatePaginationUI('nonpots-flag', this.flagState);
             }
@@ -4421,7 +4695,7 @@
                 content.innerHTML = this.flagState.columns.map(column => `
                     <div class="rounded-xl border border-borderLight bg-surfaceAlt p-4">
                         <p class="mb-1 text-[10px] font-bold uppercase tracking-wider text-textMuted">${Utils.escapeHtml(column)}</p>
-                        <p class="break-words text-sm font-semibold text-textMain">${Utils.escapeHtml(['status flag', 'status'].includes(column.toLowerCase()) ? this.getPaymentStatus(row) : row[column]) || '-'}</p>
+                        <p class="break-words text-sm font-semibold text-textMain">${Utils.escapeHtml(['status flag treg', 'status flag'].includes(column.toLowerCase()) ? this.getFlagStatus(row) : column.toLowerCase() === 'status lunas' ? this.getPaymentStatus(row) : row[column]) || '-'}</p>
                     </div>
                 `).join('');
                 modal.classList.remove('hidden');
@@ -4455,7 +4729,7 @@
                     let seg = (segRaw === '' || segRaw === '-' || segRaw === 'N/A') ? 'TIDAK TERDEFINISI' : segRaw;
                     segmenMap[seg] = (segmenMap[seg] || 0) + 1;
 
-                    const vocRaw = Utils.getDynamicValue(r, ['update voc', 'voc']).trim().toUpperCase();
+                    const vocRaw = Utils.getLatestDynamicValue(r, 'voc').trim().toUpperCase();
                     const invalidVoc = ['', '-', 'N/A', '#N/A', 'TIDAK TERDEFINISI'];
                     if (vocRaw && !invalidVoc.includes(vocRaw)) {
                         vocMap[vocRaw] = (vocMap[vocRaw] || 0) + 1;
@@ -4539,26 +4813,134 @@
 
             renderTable() {
                 const tbody = document.getElementById('tbody-nonpots'); tbody.innerHTML = '';
-                const paginated = this.state.filtered.slice((this.state.page - 1) * this.state.limit, this.state.page * this.state.limit);
+                const start = (this.state.page - 1) * this.state.limit;
+                const paginated = this.state.filtered.slice(start, start + this.state.limit);
 
-                if (paginated.length === 0) tbody.innerHTML = `<tr><td colspan="9" class="text-center py-10 font-bold text-textMuted">Tidak ada data.</td></tr>`;
-                else paginated.forEach(r => {
+                if (paginated.length === 0) tbody.innerHTML = `<tr><td colspan="11" class="text-center py-10 font-bold text-textMuted">Tidak ada data.</td></tr>`;
+                else paginated.forEach((r, i) => {
                     tbody.innerHTML += `
-                                <tr class="hover:bg-surfaceAlt transition-colors font-medium">
+                                <tr class="group hover:bg-surfaceAlt transition-colors font-medium">
                                     <td class="px-7 py-4 font-bold text-primary">${Utils.getDynamicValue(r, ['id'])}</td>
-                                    <td class="px-7 py-4"><div class="truncate w-32" title="${Utils.getDynamicValue(r, ['nama'])}">${Utils.getDynamicValue(r, ['nama'])}</div></td>
+                                    <td class="px-7 py-4" title="${Utils.getDynamicValue(r, ['nama'])}">${Utils.getDynamicValue(r, ['nama'])}</td>
                                     <td class="px-7 py-4 font-bold">${Utils.getDynamicValue(r, ['nama am'])}</td>
                                     <td class="px-7 py-4 text-textMuted">${Utils.getDynamicValue(r, ['segmen'])}</td>
                                     <td class="px-7 py-4">${Utils.getDynamicValue(r, ['datel'])}</td>
-                                    <td class="px-7 py-4 text-[11px] text-textMuted"><div class="truncate w-24">${Utils.getDynamicValue(r, ['voc', 'update voc'])}</div></td>
+                                    <td class="px-7 py-4 text-[11px] text-textMuted"><div class="flex items-start gap-2"><div class="max-w-[140px] whitespace-normal break-words">${Utils.getLatestDynamicValue(r, 'voc') || '-'}</div><button type="button" data-edit-voc="${start + i}" aria-label="Edit VOC" class="shrink-0 bento-btn h-7 w-7 rounded-lg bg-red-50 text-primary hover:bg-red-100 opacity-0 group-hover:opacity-100 focus:opacity-100 transition-opacity"><i class="fas fa-pen text-[10px]"></i></button></div></td>
                                     <td class="px-7 py-4 font-bold text-xs">${Utils.getDynamicValue(r, ['bayar cr', 'cek_bayar cr'])}</td>
                                     <td class="px-7 py-4">${Utils.getNeoBadge(Utils.isPaid(r))}</td>
                                     <td class="px-7 py-4 font-bold text-xs">${Utils.getDynamicValue(r, ['l11 cr', 'l11 saldo cr'])}</td>
                                     <td class="px-7 py-4 font-bold text-xs">${Utils.getDynamicValue(r, ['l11 cyc', 'l11 saldo cyc'])}</td>
+                                    <td class="px-7 py-4 text-center"><button type="button" data-global-detail="nonpots:${start + i}" aria-label="Lihat detail data" class="bento-btn h-9 w-9 rounded-xl bg-red-50 text-primary hover:bg-red-100"><i class="fas fa-eye text-xs"></i></button></td>
                                 </tr>
                             `;
                 });
                 TableManager.updatePaginationUI('nonpots', this.state);
+            }
+
+            openVocEdit(index) {
+                const row = this.state.filtered[index];
+                if (!row) return;
+                this.vocEditIndex = index;
+                const column = Utils.getLatestDynamicKey(row, 'voc');
+                const nameLabel = Utils.getDynamicValue(row, ['nama']) || Utils.getDynamicValue(row, ['id number', 'id']);
+                document.getElementById('voc-edit-name').innerText = nameLabel || 'Detail Pelanggan';
+                document.getElementById('voc-edit-column').innerText = column || 'Belum ada kolom VOC bulan ini di sheet';
+
+                const currentValue = column ? String(row[column] || '').trim() : '';
+                const select = document.getElementById('voc-edit-value');
+                const options = [...VOC_OPTIONS];
+                if (currentValue && !options.includes(currentValue)) options.unshift(currentValue);
+                if (!currentValue) options.unshift('');
+                select.innerHTML = options.map(opt => `<option value="${Utils.escapeHtml(opt)}">${Utils.escapeHtml(opt) || '(Kosong)'}</option>`).join('');
+                select.value = currentValue;
+
+                document.getElementById('voc-edit-error').classList.add('hidden');
+                const modal = document.getElementById('voc-edit-modal');
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+            }
+
+            closeVocEdit() {
+                const modal = document.getElementById('voc-edit-modal');
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+                this.vocEditIndex = null;
+            }
+
+            async saveVocEdit() {
+                const row = this.state.filtered[this.vocEditIndex];
+                const errorEl = document.getElementById('voc-edit-error');
+                errorEl.classList.add('hidden');
+                if (!row) return;
+
+                const column = Utils.getLatestDynamicKey(row, 'voc');
+                if (!column) {
+                    errorEl.innerText = 'Kolom VOC bulan ini belum ada di sheet. Tambahkan dulu kolomnya di Google Sheet.';
+                    errorEl.classList.remove('hidden');
+                    return;
+                }
+
+                const idValue = Utils.getDynamicValue(row, ['id number', 'id']);
+                if (!idValue) {
+                    errorEl.innerText = 'Baris ini tidak punya ID yang bisa dijadikan acuan update.';
+                    errorEl.classList.remove('hidden');
+                    return;
+                }
+
+                if (!VOC_EDIT_CONFIG.webAppUrl || VOC_EDIT_CONFIG.webAppUrl.includes('PASTE_YOUR')) {
+                    errorEl.innerText = 'Endpoint penyimpanan belum diatur. Hubungi admin dashboard.';
+                    errorEl.classList.remove('hidden');
+                    return;
+                }
+
+                const newValue = document.getElementById('voc-edit-value').value;
+                const saveBtn = document.getElementById('btn-save-voc-edit');
+                saveBtn.disabled = true;
+                saveBtn.innerText = 'Menyimpan...';
+
+                try {
+                    const params = new URLSearchParams({
+                        secret: VOC_EDIT_CONFIG.secret,
+                        idColumn: 'ID NUMBER',
+                        id: idValue,
+                        column: column,
+                        value: newValue
+                    });
+
+                    // Apps Script Web App tidak mengirim header CORS, jadi respons tidak bisa dibaca
+                    // dari sini (browser akan menolaknya walau request sebenarnya sukses di server).
+                    // Kirim dengan mode no-cors, lalu verifikasi dengan membaca ulang sheet-nya.
+                    await fetch(`${VOC_EDIT_CONFIG.webAppUrl}?${params.toString()}`, { mode: 'no-cors' });
+
+                    let freshData = null;
+                    let matched = false;
+                    for (let attempt = 1; attempt <= 4 && !matched; attempt++) {
+                        saveBtn.innerText = `Memverifikasi (${attempt}/4)...`;
+                        await new Promise(resolve => setTimeout(resolve, 2500));
+
+                        const cacheBustUrl = this.url + (this.url.includes('?') ? '&' : '?') + '_cb=' + Date.now();
+                        freshData = await DataService.fetchCSV(cacheBustUrl);
+                        const freshRow = freshData.find(r => Utils.getDynamicValue(r, ['id number', 'id']) === idValue);
+                        const savedValue = freshRow ? String(freshRow[column] || '').trim() : null;
+                        if (savedValue === newValue.trim()) matched = true;
+                    }
+
+                    if (!matched) {
+                        throw new Error('Perubahan belum terverifikasi tersimpan di sheet. Coba lagi, atau cek langsung di sheet.');
+                    }
+
+                    this.state.data = freshData;
+                    this.applyFilters();
+                    this.app.notify.show('VOC berhasil diperbarui di sheet');
+                    this.closeVocEdit();
+                } catch (error) {
+                    console.error('VOC Edit Error:', error);
+                    errorEl.innerText = 'Gagal menyimpan ke sheet: ' + error.message;
+                    errorEl.classList.remove('hidden');
+                } finally {
+                    saveBtn.disabled = false;
+                    saveBtn.innerText = 'Simpan';
+                }
             }
 
             renderAmTable() {
@@ -4669,7 +5051,8 @@
                     caring: 'caring-dashboard',
                     billper: 'billper-dashboard',
                     pranpc: 'pranpc-dashboard',
-                    visit: 'visit-collection'
+                    visit: 'visit-collection',
+                    nonpots: 'nonpots'
                 };
                 const module = this.modules[moduleKeys[moduleId]];
                 const row = module && module.state.filtered[index];
@@ -4682,7 +5065,8 @@
                     caring: 'Detail Caring',
                     billper: 'Detail Billper',
                     pranpc: 'Detail PRANPC',
-                    visit: 'Detail Visit Collection'
+                    visit: 'Detail Visit Collection',
+                    nonpots: 'Detail Non-POTS'
                 };
                 document.getElementById('data-detail-module').innerText = labels[moduleId] || 'Detail Data';
                 content.innerHTML = Object.entries(row).map(([key, value]) => `
@@ -4763,9 +5147,115 @@
             }
         }
 
+        // --- AUTH (accounts managed directly in a Google Sheet "Users" tab) ---
+        const Auth = {
+            STORAGE_KEY: 'cm_auth_session',
+            // Sheet "Users" columns: username | password | role | name
+            USERS_CSV_URL: 'https://docs.google.com/spreadsheets/d/1MrZHT4_JSPjqOJFuy5fDHCpC3d5-WG3LteOKjRjj6FY/export?format=csv&gid=0',
+            getSession() {
+                try { return JSON.parse(sessionStorage.getItem(this.STORAGE_KEY)); } catch (e) { return null; }
+            },
+            isLoggedIn() { return !!this.getSession(); },
+            async fetchUsers() {
+                const rows = await DataService.fetchCSV(this.USERS_CSV_URL);
+                return rows
+                    .map(r => ({
+                        username: (r.username || '').trim(),
+                        password: (r.password || '').trim(),
+                        role: (r.role || '').trim(),
+                        name: (r.name || '').trim()
+                    }))
+                    .filter(u => u.username);
+            },
+            async login(username, password) {
+                const users = await this.fetchUsers();
+                const user = users.find(u => u.username === username.trim() && u.password === password.trim());
+                if (!user) return false;
+                sessionStorage.setItem(this.STORAGE_KEY, JSON.stringify({ username: user.username, role: user.role, name: user.name }));
+                return true;
+            },
+            logout() {
+                sessionStorage.removeItem(this.STORAGE_KEY);
+                window.location.reload();
+            }
+        };
+
         // Initialize Application
         document.addEventListener('DOMContentLoaded', () => {
-            window.neoApp = new App();
+            const loginScreen = document.getElementById('login-screen');
+            const loginForm = document.getElementById('login-form');
+            const loginError = document.getElementById('login-error');
+
+            const ROLE_LABELS = { admin: 'Admin', AM: 'Account Manager' };
+
+            const startApp = () => {
+                const session = Auth.getSession();
+                loginScreen.remove();
+                if (session) {
+                    const displayName = session.name || session.username;
+                    const roleLabel = ROLE_LABELS[session.role] || session.role;
+
+                    const userLabel = document.getElementById('current-user-label');
+                    if (userLabel) userLabel.innerText = displayName;
+
+                    const profileName = document.getElementById('sidebar-profile-name');
+                    if (profileName) profileName.innerText = displayName;
+
+                    const profileRole = document.getElementById('sidebar-profile-role');
+                   if (profileRole) profileRole.innerText = roleLabel;
+
+                    const profileInitial = document.getElementById('sidebar-profile-initial');
+                    if (profileInitial) {
+                        const initials = displayName.trim().split(/\s+/).map(w => w[0]).join('').slice(0, 2).toUpperCase();
+                        profileInitial.innerText = initials || '?';
+                    }
+                }
+                window.neoApp = new App();
+            };
+
+            document.getElementById('btn-logout').addEventListener('click', () => Auth.logout());
+
+            if (Auth.isLoggedIn()) {
+                startApp();
+                return;
+            }
+
+            const loginSubmitBtn = document.getElementById('login-submit-btn');
+            const loginPasswordInput = document.getElementById('login-password');
+            const loginPasswordToggle = document.getElementById('login-password-toggle');
+
+            loginPasswordToggle.addEventListener('click', () => {
+                const isHidden = loginPasswordInput.type === 'password';
+                loginPasswordInput.type = isHidden ? 'text' : 'password';
+                loginPasswordToggle.querySelector('i').classList.toggle('fa-eye', !isHidden);
+                loginPasswordToggle.querySelector('i').classList.toggle('fa-eye-slash', isHidden);
+                loginPasswordToggle.setAttribute('aria-label', isHidden ? 'Sembunyikan password' : 'Tampilkan password');
+            });
+
+            loginForm.addEventListener('submit', async (event) => {
+                event.preventDefault();
+                const username = document.getElementById('login-username').value;
+                const password = document.getElementById('login-password').value;
+
+                loginError.classList.add('hidden');
+                loginSubmitBtn.disabled = true;
+                loginSubmitBtn.innerText = 'Memeriksa...';
+
+                try {
+                    if (await Auth.login(username, password)) {
+                        startApp();
+                        return;
+                    }
+                    loginError.innerText = 'Username atau password salah.';
+                    loginError.classList.remove('hidden');
+                } catch (e) {
+                    loginError.innerText = 'Gagal memuat data akun. Cek koneksi internet lalu coba lagi.';
+                    loginError.classList.remove('hidden');
+                } finally {
+                    loginSubmitBtn.disabled = false;
+                    loginSubmitBtn.innerText = 'Masuk';
+                }
+            });
         });
     </script>
 </body>
