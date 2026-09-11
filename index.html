@@ -2259,7 +2259,7 @@
                     <div class="p-5 md:p-6 border-b border-borderLight">
                         <div class="max-w-md">
                             <label class="text-[10px] font-bold text-primary uppercase mb-2 ml-1 tracking-wider">Filter
-                                UBIS</label>
+                                Collection Agent</label>
                             <select id="filter-segment-nonpots-flag"
                                 class="bento-input w-full px-4 py-3 text-sm font-bold cursor-pointer appearance-none border-primary/30 shadow-sm text-primary bg-red-50/30">
                                 <option value="all">All</option>
@@ -2286,7 +2286,7 @@
                             <i class="fas fa-flag-checkered"></i>
                         </div>
                         <div>
-                            <p class="text-[11px] font-bold uppercase text-white/80 tracking-widest">Sudah Flag</p>
+                            <p class="text-[11px] font-bold uppercase text-white/80 tracking-widest">Lunas</p>
                             <p class="text-3xl font-poppins font-extrabold text-white mt-1" id="score-nonpots-flagged">0
                             </p>
                         </div>
@@ -2297,7 +2297,7 @@
                             <i class="fas fa-flag"></i>
                         </div>
                         <div>
-                            <p class="text-[11px] font-bold uppercase text-white/80 tracking-widest">Belum Flag</p>
+                            <p class="text-[11px] font-bold uppercase text-white/80 tracking-widest">Belum Lunas</p>
                             <p class="text-3xl font-poppins font-extrabold text-white mt-1"
                                 id="score-nonpots-unflagged">0</p>
                         </div>
@@ -2315,7 +2315,7 @@
                             <div>
                                 <div class="flex justify-between items-end mb-2.5"><span
                                         class="text-xs font-bold text-textMuted uppercase tracking-wider flex items-center gap-2">
-                                        <div class="w-2 h-2 rounded-full bg-emerald-500"></div> Sudah Flag
+                                        <div class="w-2 h-2 rounded-full bg-emerald-500"></div> Lunas
                                     </span><span class="text-xl font-extrabold text-textMain"><span
                                             id="pct-flagged-info-np">0</span>%</span></div>
                                 <div
@@ -2328,7 +2328,7 @@
                             <div>
                                 <div class="flex justify-between items-end mb-2.5"><span
                                         class="text-xs font-bold text-textMuted uppercase tracking-wider flex items-center gap-2">
-                                        <div class="w-2 h-2 rounded-full bg-primary"></div> Belum Flag
+                                        <div class="w-2 h-2 rounded-full bg-primary"></div> Belum Lunas
                                     </span><span class="text-xl font-extrabold text-textMain"><span
                                             id="pct-unflagged-info-np">0</span>%</span></div>
                                 <div
@@ -2348,13 +2348,13 @@
                                     <i class="fas fa-chart-bar text-sm"></i>
                                 </div>
                                 <h3 class="text-sm font-poppins font-bold text-textMain uppercase tracking-wider">
-                                    Sebaran UBIS</h3>
+                                    Sebaran Collection Agent</h3>
                             </div>
                             <select id="filter-chart-nonpots-flag"
                                 class="bento-input appearance-none bg-white px-4 py-2 rounded-xl text-xs font-bold cursor-pointer w-full sm:w-52 text-primary">
                                 <option value="all">All</option>
-                                <option value="sudah flag">Sudah Flag</option>
-                                <option value="belum flag">Belum Flag</option>
+                                <option value="lunas">Lunas</option>
+                                <option value="belum lunas">Belum Lunas</option>
                             </select>
                         </div>
                         <div class="relative w-full flex-1 min-h-[260px]"><canvas id="barChartNonPotsFlag"></canvas>
@@ -2371,7 +2371,7 @@
                                 <i class="fas fa-flag text-base"></i>
                             </div>Detail Data Flaging Non-POTS
                         </h3>
-                        <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-5">
                             <div class="flex flex-col"><label
                                     class="text-[10px] font-bold text-textMuted uppercase mb-2 ml-1 tracking-wider">Pencarian
                                     Global</label>
@@ -2392,15 +2392,9 @@
                             </div>
                             <div class="flex flex-col"><label
                                     class="text-[10px] font-bold text-primary uppercase mb-2 ml-1 tracking-wider">Status
-                                    Flag TREG</label><select id="filter-nonpots-flag"
+                                    Flag</label><select id="filter-nonpots-flag"
                                     class="bento-input w-full px-4 py-3 text-sm font-bold cursor-pointer appearance-none border-primary/30 shadow-sm text-primary bg-red-50/30">
                                     <option value="all">Semua Status</option>
-                                </select></div>
-                            <div class="flex flex-col"><label
-                                    class="text-[10px] font-bold text-primary uppercase mb-2 ml-1 tracking-wider">Status
-                                    Lunas</label><select id="filter-nonpots-lunas"
-                                    class="bento-input w-full px-4 py-3 text-sm font-bold cursor-pointer appearance-none border-primary/30 shadow-sm text-primary bg-red-50/30">
-                                    <option value="all">Semua Status Lunas</option>
                                 </select></div>
                         </div>
                     </div>
@@ -3362,8 +3356,7 @@
                 this.app = app;
 
                 this.urls = [
-                    'https://docs.google.com/spreadsheets/d/1c0-OAoHQJL6tje23p6EqB_64PmxltnRjPFYS3ruAtIk/export?format=csv&gid=0',
-                    'https://docs.google.com/spreadsheets/d/1c0-OAoHQJL6tje23p6EqB_64PmxltnRjPFYS3ruAtIk/export?format=csv&gid=1136792349'
+                    'https://docs.google.com/spreadsheets/d/1c0-OAoHQJL6tje23p6EqB_64PmxltnRjPFYS3ruAtIk/export?format=csv&gid=1997865654'
                 ];
 
                 this.initEvents();
@@ -4464,7 +4457,7 @@
                 this.app = app;
                 this.url = 'https://docs.google.com/spreadsheets/d/1K82wN91piAbwRwMNF1vXnLz0znQbfP_P9t75pcUzTbU/export?format=csv&gid=943874303';
                 this.perfState = { data: [], filtered: [], page: 1, limit: 50 };
-                this.flagUrl = 'https://docs.google.com/spreadsheets/d/1K82wN91piAbwRwMNF1vXnLz0znQbfP_P9t75pcUzTbU/export?format=csv&gid=2061822618';
+                this.flagUrl = 'https://docs.google.com/spreadsheets/d/1CVGSTFXpCRZReTmmwHfOK8nZDrcGxQOhyS1D4kykbnM/export?format=csv&gid=350718291';
                 this.flagState = { data: [], filtered: [], columns: [], page: 1, limit: 50, isLoaded: false };
                 this.vocEditIndex = null;
                 this.initEvents();
@@ -4497,7 +4490,6 @@
                 document.getElementById('search-am-nonpots-flag').addEventListener('input', Utils.debounce(() => this.applyFlagFilters(), 300));
                 document.getElementById('filter-segment-nonpots-flag').addEventListener('change', () => this.applyFlagFilters());
                 document.getElementById('filter-nonpots-flag').addEventListener('change', () => this.applyFlagFilters());
-                document.getElementById('filter-nonpots-lunas').addEventListener('change', () => this.applyFlagFilters());
                 document.getElementById('filter-chart-nonpots-flag').addEventListener('change', () => this.renderFlagUbisChart());
                 document.getElementById('tbody-nonpots-flag').addEventListener('click', event => {
                     const button = event.target.closest('[data-flag-detail]');
@@ -4561,25 +4553,20 @@
             }
 
             getFlagValue(row) {
-                return Utils.getDynamicValue(row, ['status flag treg']);
+                return Utils.getDynamicValue(row, ['status flag treg', 'status flag']);
             }
 
             getFlagStatus(row) {
                 const value = this.getFlagValue(row).toLowerCase().trim();
-                return value.includes('belum') ? 'Belum Flag' : value ? 'Sudah Flag' : 'Belum Flag';
+                return value.includes('belum') ? 'Belum Lunas' : value ? 'Lunas' : 'Belum Lunas';
             }
 
             getUbisValue(row) {
-                return Utils.getDynamicValue(row, ['ubis', 'data ubis']);
-            }
-
-            getPaymentStatus(row) {
-                const value = Utils.getDynamicValue(row, ['status lunas', 'cek lunas', 'payment status']).trim();
-                return value || '-';
+                return Utils.getDynamicValue(row, ['collection agent', 'ubis', 'data ubis']);
             }
 
             isFlagged(row) {
-                return this.getFlagStatus(row) === 'Sudah Flag';
+                return this.getFlagStatus(row) === 'Lunas';
             }
 
             updateFlagSummary(rows) {
@@ -4597,10 +4584,8 @@
 
             processFlaggingData() {
                 const statuses = new Set(this.flagState.data.map(row => this.getFlagStatus(row)));
-                const paymentStatuses = new Set(this.flagState.data.map(row => this.getPaymentStatus(row)).filter(value => value !== '-'));
                 const segments = new Set(this.flagState.data.map(row => this.getUbisValue(row)).filter(Boolean));
                 TableManager.populateSelect('filter-nonpots-flag', statuses, 'All');
-                TableManager.populateSelect('filter-nonpots-lunas', paymentStatuses, 'All');
                 TableManager.populateSelect('filter-segment-nonpots-flag', segments, 'All');
                 this.updateFlagSummary(this.flagState.data);
                 this.renderFlagTable();
@@ -4632,22 +4617,19 @@
                 const amQuery = document.getElementById('search-am-nonpots-flag').value.toLowerCase().trim();
                 const ubis = document.getElementById('filter-segment-nonpots-flag').value.toLowerCase();
                 const statusFlag = document.getElementById('filter-nonpots-flag').value.toLowerCase();
-                const statusLunas = document.getElementById('filter-nonpots-lunas').value.toLowerCase();
 
                 this.flagState.filtered = this.flagState.data.filter(row => {
                     const searchable = Object.values(row).join(' ').toLowerCase();
                     const rowStatusFlag = this.getFlagStatus(row).toLowerCase();
-                    const rowStatusLunas = this.getPaymentStatus(row).toLowerCase();
-                    const amValue = Utils.getDynamicValue(row, ['nama am', 'am', 'nama_am', 'account manager']).toLowerCase();
+                    const amValue = Utils.getDynamicValue(row, ['collection agent', 'nama am', 'am', 'nama_am', 'account manager']).toLowerCase();
                     const ubisValue = this.getUbisValue(row).toLowerCase();
 
                     const matchQuery = query === '' || searchable.includes(query);
                     const matchAm = amQuery === '' || amValue.includes(amQuery);
                     const matchUbis = ubis === 'all' || ubisValue === ubis;
                     const matchStatusFlag = statusFlag === 'all' || rowStatusFlag === statusFlag;
-                    const matchStatusLunas = statusLunas === 'all' || rowStatusLunas === statusLunas;
 
-                    return matchQuery && matchAm && matchUbis && matchStatusFlag && matchStatusLunas;
+                    return matchQuery && matchAm && matchUbis && matchStatusFlag;
                 });
                 this.flagState.page = 1;
                 this.updateFlagSummary(this.flagState.filtered);
@@ -4656,19 +4638,15 @@
 
             getFlagVisibleColumns() {
                 const normalize = value => String(value || '').toLowerCase().replace(/[^a-z0-9]+/g, '');
-                const preferred = ['nama am', 'am', 'nama_am', 'ubis', 'data ubis', 'billing amount', 'ppn', 'total amount', 'status flag treg', 'status lunas', 'status flag', 'status'];
-                const ordered = [];
+                const visibleKeys = ['nojastel', 'contraccountdetail', 'billperiod', 'paymentdate', 'collectionagent', 'totalamount', 'statusflag'];
+                return this.flagState.columns.filter(column => visibleKeys.includes(normalize(column)));
+            }
 
-                preferred.forEach(key => {
-                    const match = this.flagState.columns.find(column => normalize(column) === normalize(key));
-                    if (match && !ordered.includes(match)) ordered.push(match);
-                });
-
-                this.flagState.columns.forEach(column => {
-                    if (!ordered.includes(column)) ordered.push(column);
-                });
-
-                return ordered.slice(0, 10);
+            getColumnLabel(column) {
+                const normalizedColumn = column.toLowerCase();
+                if (normalizedColumn === 'status flag treg') return 'Status Flag TREG';
+                if (normalizedColumn === 'status flag') return 'Status Flag';
+                return column;
             }
 
             renderFlagTable() {
@@ -4676,13 +4654,13 @@
                 const tbody = document.getElementById('tbody-nonpots-flag');
                 if (!thead || !tbody) return;
                 const visibleColumns = this.getFlagVisibleColumns();
-                thead.innerHTML = `<tr>${visibleColumns.map(column => `<th class="px-7 py-5">${Utils.escapeHtml(column.toLowerCase() === 'status flag treg' ? 'Status Flag TREG' : column.toLowerCase() === 'status lunas' ? 'Status Lunas' : column)}</th>`).join('')}<th class="px-7 py-5 text-center">Detail</th></tr>`;
+                thead.innerHTML = `<tr>${visibleColumns.map(column => `<th class="px-7 py-5">${Utils.escapeHtml(this.getColumnLabel(column))}</th>`).join('')}<th class="px-7 py-5 text-center">Detail</th></tr>`;
                 const start = (this.flagState.page - 1) * this.flagState.limit;
                 const paginated = this.flagState.filtered.slice(start, start + this.flagState.limit);
                 if (paginated.length === 0) {
                     tbody.innerHTML = `<tr><td colspan="${Math.max(visibleColumns.length + 1, 1)}" class="text-center py-10 font-bold text-textMuted">Tidak ada data.</td></tr>`;
                 } else {
-                    tbody.innerHTML = paginated.map((row, index) => `<tr class="hover:bg-surfaceAlt transition-colors font-medium">${visibleColumns.map(column => { const normalizedColumn = column.toLowerCase(); const value = normalizedColumn === 'status flag treg' || normalizedColumn === 'status flag' ? this.getFlagStatus(row) : normalizedColumn === 'status lunas' ? this.getPaymentStatus(row) : row[column]; const val = Utils.escapeHtml(value || '-'); return `<td class="px-7 py-4"><div class="max-w-[220px] whitespace-normal break-words">${val}</div></td>`; }).join('')}<td class="px-7 py-4 text-center"><button type="button" data-flag-detail="${start + index}" aria-label="Lihat detail flaging" class="bento-btn h-9 w-9 rounded-xl bg-red-50 text-primary hover:bg-red-100"><i class="fas fa-eye text-xs"></i></button></td></tr>`).join('');
+                    tbody.innerHTML = paginated.map((row, index) => `<tr class="hover:bg-surfaceAlt transition-colors font-medium">${visibleColumns.map(column => { const normalizedColumn = column.toLowerCase(); const value = normalizedColumn === 'status flag treg' || normalizedColumn === 'status flag' ? this.getFlagStatus(row) : row[column]; const val = Utils.escapeHtml(value || '-'); return `<td class="px-7 py-4"><div class="max-w-[220px] whitespace-normal break-words">${val}</div></td>`; }).join('')}<td class="px-7 py-4 text-center"><button type="button" data-flag-detail="${start + index}" aria-label="Lihat detail flaging" class="bento-btn h-9 w-9 rounded-xl bg-red-50 text-primary hover:bg-red-100"><i class="fas fa-eye text-xs"></i></button></td></tr>`).join('');
                 }
                 TableManager.updatePaginationUI('nonpots-flag', this.flagState);
             }
@@ -4694,8 +4672,8 @@
                 if (!row || !content || !modal) return;
                 content.innerHTML = this.flagState.columns.map(column => `
                     <div class="rounded-xl border border-borderLight bg-surfaceAlt p-4">
-                        <p class="mb-1 text-[10px] font-bold uppercase tracking-wider text-textMuted">${Utils.escapeHtml(column)}</p>
-                        <p class="break-words text-sm font-semibold text-textMain">${Utils.escapeHtml(['status flag treg', 'status flag'].includes(column.toLowerCase()) ? this.getFlagStatus(row) : column.toLowerCase() === 'status lunas' ? this.getPaymentStatus(row) : row[column]) || '-'}</p>
+                        <p class="mb-1 text-[10px] font-bold uppercase tracking-wider text-textMuted">${Utils.escapeHtml(this.getColumnLabel(column))}</p>
+                        <p class="break-words text-sm font-semibold text-textMain">${Utils.escapeHtml(['status flag treg', 'status flag'].includes(column.toLowerCase()) ? this.getFlagStatus(row) : row[column]) || '-'}</p>
                     </div>
                 `).join('');
                 modal.classList.remove('hidden');
