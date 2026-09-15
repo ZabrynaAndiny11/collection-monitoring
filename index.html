@@ -2597,7 +2597,7 @@
          * SERVICES
          */
         class DataService {
-            static async fetchCSV(url) {
+            static _fetchRaw(url) {
                 return new Promise((resolve, reject) => {
                     Papa.parse(url, {
                         download: true, header: true, skipEmptyLines: true,
@@ -2605,6 +2605,44 @@
                         error: (error) => reject(error)
                     });
                 });
+            }
+
+            static _cacheKey(url) {
+                return 'cm_csv_cache:' + url;
+            }
+
+            static _writeCache(url, data) {
+                try { localStorage.setItem(this._cacheKey(url), JSON.stringify({ time: Date.now(), data })); }
+                catch (e) { /* storage full/unavailable, skip caching */ }
+            }
+
+            static _readCache(url) {
+                try {
+                    const raw = localStorage.getItem(this._cacheKey(url));
+                    return raw ? JSON.parse(raw) : null;
+                } catch (e) { return null; }
+            }
+
+            // Fetches a Google Sheet as CSV, cached in localStorage. Stale cache is
+            // still returned instantly (so reloads/tab switches never block on it),
+            // and silently refreshed in the background so the NEXT read is fresh.
+            static async fetchCSV(url, { force = false } = {}) {
+                const cacheTtlMs = 5 * 60 * 1000;
+                const cacheable = !url.includes('_cb=');
+
+                if (cacheable && !force) {
+                    const cached = this._readCache(url);
+                    if (cached) {
+                        if (Date.now() - cached.time > cacheTtlMs) {
+                            this._fetchRaw(url).then(data => this._writeCache(url, data)).catch(() => { });
+                        }
+                        return cached.data;
+                    }
+                }
+
+                const data = await this._fetchRaw(url);
+                if (cacheable) this._writeCache(url, data);
+                return data;
             }
         }
 
@@ -2880,7 +2918,7 @@
                 if (this.isLoaded && !force) return;
                 this.app.loader.show();
                 try {
-                    const rawData = await DataService.fetchCSV(this.url);
+                    const rawData = await DataService.fetchCSV(this.url, { force });
                     this.state.data = rawData;
                     this.state.filtered = [...rawData];
                     this.processData();
@@ -3033,7 +3071,7 @@
                 if (this.isLoaded && !force) return;
                 this.app.loader.show();
                 try {
-                    const rawData = await DataService.fetchCSV(this.url);
+                    const rawData = await DataService.fetchCSV(this.url, { force });
                     this.state.data = rawData;
                     this.state.filtered = [...rawData];
                     this.processInitialData();
@@ -3238,7 +3276,7 @@
                 if (this.isLoaded && !force) return;
                 this.app.loader.show();
                 try {
-                    const rawData = await DataService.fetchCSV(this.url);
+                    const rawData = await DataService.fetchCSV(this.url, { force });
                     this.state.data = rawData.filter(row => this.isTransactionRow(row));
                     this.state.filtered = [...this.state.data];
                     this.processData();
@@ -3435,7 +3473,7 @@
 
                 try {
                     const sheetResults = await Promise.allSettled(
-                        this.urls.map(url => DataService.fetchCSV(url))
+                        this.urls.map(url => DataService.fetchCSV(url, { force }))
                     );
                     const successfulSheets = sheetResults
                         .filter(result => result.status === 'fulfilled')
@@ -3940,7 +3978,7 @@
                 if (this.isLoaded && !force) return;
                 this.app.loader.show();
                 try {
-                    const rawData = await DataService.fetchCSV(this.url);
+                    const rawData = await DataService.fetchCSV(this.url, { force });
                     this.state.data = rawData.filter(row => this.isTransactionRow(row));
                     this.state.filtered = [...this.state.data];
                     this.columns = [...new Set(this.state.data.flatMap(row => Object.keys(row)))].filter(Boolean);
@@ -4058,7 +4096,7 @@
                 if (this.isLoaded && !force) return;
                 this.app.loader.show();
                 try {
-                    const rawData = await DataService.fetchCSV(this.url);
+                    const rawData = await DataService.fetchCSV(this.url, { force });
                     this.state.data = rawData;
                     this.state.filtered = [...rawData];
                     this.processData();
@@ -4281,7 +4319,7 @@
                 if (this.isLoaded && !force) return;
                 this.app.loader.show();
                 try {
-                    const rawData = await DataService.fetchCSV(this.url);
+                    const rawData = await DataService.fetchCSV(this.url, { force });
                     this.state.data = rawData;
                     this.state.filtered = [...rawData];
                     this.processData();
@@ -4520,7 +4558,7 @@
                 if (this.isLoaded && !force) return;
                 this.app.loader.show();
                 try {
-                    const d = await DataService.fetchCSV(this.url);
+                    const d = await DataService.fetchCSV(this.url, { force });
                     this.state.data = d; this.state.filtered = [...d];
                     this.processData();
                     this.processAmData();
@@ -4537,7 +4575,7 @@
                 if (this.flagState.isLoaded && !force) return;
                 this.app.loader.show();
                 try {
-                    const data = await DataService.fetchCSV(this.flagUrl);
+                    const data = await DataService.fetchCSV(this.flagUrl, { force });
                     this.flagState.data = data;
                     this.flagState.filtered = [...data];
                     this.flagState.columns = [...new Set(data.flatMap(row => Object.keys(row)))].filter(Boolean);
@@ -4977,6 +5015,30 @@
                 this.switchPage('caring-dashboard');
                 this.updateClock();
                 setInterval(() => this.updateClock(), 60000);
+                this.schedulePrefetch();
+            }
+
+            // Warms the CSV cache for every other tab in the background so switching
+            // to them later resolves instantly instead of waiting on a live fetch.
+            schedulePrefetch() {
+                const urls = [];
+                Object.entries(this.modules).forEach(([id, module]) => {
+                    if (id === 'caring-dashboard') return; // already loaded eagerly on startup
+                    if (module.url) urls.push(module.url);
+                    if (Array.isArray(module.urls)) urls.push(...module.urls);
+                    if (module.flagUrl) urls.push(module.flagUrl);
+                });
+                const uniqueUrls = [...new Set(urls)];
+
+                let i = 0;
+                const prefetchNext = () => {
+                    if (i >= uniqueUrls.length) return;
+                    const url = uniqueUrls[i++];
+                    DataService.fetchCSV(url).catch(() => { }).finally(() => {
+                        setTimeout(prefetchNext, 400);
+                    });
+                };
+                setTimeout(prefetchNext, 1500);
             }
 
             initSidebar() {
@@ -5135,7 +5197,7 @@
             },
             isLoggedIn() { return !!this.getSession(); },
             async fetchUsers() {
-                const rows = await DataService.fetchCSV(this.USERS_CSV_URL);
+                const rows = await DataService.fetchCSV(this.USERS_CSV_URL, { force: true });
                 return rows
                     .map(r => ({
                         username: (r.username || '').trim(),
