@@ -2178,7 +2178,7 @@
                             </div>
                             Detail Data Non-POTS
                         </h3>
-                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5" id="filters-nonpots">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-5" id="filters-nonpots">
                             <div class="flex flex-col">
                                 <label
                                     class="text-[10px] font-bold text-textMuted uppercase mb-2 ml-1 tracking-wider">Pencarian
@@ -2202,6 +2202,12 @@
                                     id="filter-datel-nonpots"
                                     class="bento-input w-full px-4 py-3 text-sm font-medium cursor-pointer appearance-none shadow-sm">
                                     <option value="all">Semua Datel</option>
+                                </select></div>
+                            <div class="flex flex-col"><label
+                                    class="text-[10px] font-bold text-textMuted uppercase mb-2 ml-1 tracking-wider">Segmen</label><select
+                                    id="filter-segmen-nonpots"
+                                    class="bento-input w-full px-4 py-3 text-sm font-medium cursor-pointer appearance-none shadow-sm">
+                                    <option value="all">Semua Segmen</option>
                                 </select></div>
                             <div class="flex flex-col"><label
                                     class="text-[10px] font-bold text-primary uppercase mb-2 ml-1 tracking-wider">Status</label><select
@@ -4504,7 +4510,7 @@
             initEvents() {
                 const searchHandler = Utils.debounce(() => this.applyFilters(), 300);
                 document.getElementById('search-nonpots').addEventListener('input', searchHandler);
-                ['filter-am-nonpots', 'filter-datel-nonpots', 'filter-status-nonpots'].forEach(id => {
+                ['filter-am-nonpots', 'filter-datel-nonpots', 'filter-segmen-nonpots', 'filter-status-nonpots'].forEach(id => {
                     document.getElementById(id).addEventListener('change', () => this.applyFilters());
                 });
                 TableManager.setupPagination('nonpots', this.state, () => this.renderTable());
@@ -4766,6 +4772,7 @@
 
                 TableManager.populateSelect('filter-am-nonpots', amSet, 'Semua AM');
                 TableManager.populateSelect('filter-datel-nonpots', datelSet, 'Semua Datel');
+                TableManager.populateSelect('filter-segmen-nonpots', new Set(Object.keys(segmenMap)), 'Semua Segmen');
 
                 const topVoc = Object.entries(vocMap).sort((a, b) => b[1] - a[1]).slice(0, 5);
                 const ctxBar = document.getElementById('barChartNonPots').getContext('2d');
@@ -4806,6 +4813,7 @@
                 const q = document.getElementById('search-nonpots').value.toLowerCase();
                 const a = document.getElementById('filter-am-nonpots').value;
                 const d = document.getElementById('filter-datel-nonpots').value;
+                const sg = document.getElementById('filter-segmen-nonpots').value;
                 const s = document.getElementById('filter-status-nonpots').value;
 
                 this.state.filtered = this.state.data.filter(r => {
@@ -4819,9 +4827,13 @@
                     let dtRaw = Utils.getDynamicValue(r, ['datel']).toUpperCase();
                     let dtVal = (dtRaw === '' || dtRaw === '-' || dtRaw === 'N/A') ? 'TIDAK TERDEFINISI' : dtRaw;
 
+                    let segRaw = Utils.getDynamicValue(r, ['segmen']).toUpperCase();
+                    let segVal = (segRaw === '' || segRaw === '-' || segRaw === 'N/A') ? 'TIDAK TERDEFINISI' : segRaw;
+
                     return (q === '' || id.includes(q) || nm.includes(q)) &&
                         (a === 'all' || amVal === a) &&
                         (d === 'all' || dtVal === d) &&
+                        (sg === 'all' || segVal === sg) &&
                         (s === 'all' || (s === 'lunas' ? isP : !isP));
                 });
                 this.state.page = 1; this.renderTable();
