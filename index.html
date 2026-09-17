@@ -354,6 +354,12 @@
                     <select id="voc-edit-value"
                         class="bento-input w-full px-4 py-3 text-sm font-medium cursor-pointer appearance-none"></select>
                 </div>
+                <div id="voc-edit-keterangan-wrapper">
+                    <label class="text-[10px] font-bold text-textMuted uppercase mb-2 ml-1 tracking-wider block">Keterangan</label>
+                    <textarea id="voc-edit-keterangan" rows="3"
+                        class="bento-input w-full px-4 py-3 text-sm font-medium resize-none"
+                        placeholder="Tambahkan keterangan..."></textarea>
+                </div>
                 <p id="voc-edit-error"
                     class="hidden text-xs font-bold text-primary bg-red-50 border border-red-100 rounded-xl px-4 py-2.5">
                 </p>
@@ -2221,7 +2227,7 @@
                     </div>
 
                     <div class="table-scroll overflow-x-auto w-full">
-                        <table class="w-full whitespace-nowrap min-w-[1100px]">
+                        <table class="w-full whitespace-nowrap min-w-[1400px]">
                             <thead
                                 class="bg-surfaceAlt text-left text-[11px] font-bold text-textMuted uppercase tracking-wider border-b border-borderLight">
                                 <tr>
@@ -2231,6 +2237,7 @@
                                     <th class="px-7 py-5">Segmen</th>
                                     <th class="px-7 py-5">Datel</th>
                                     <th class="px-7 py-5">VOC</th>
+                                    <th class="px-7 py-5">Keterangan</th>
                                     <th class="px-7 py-5">Bayar CR</th>
                                     <th class="px-7 py-5">Status CR</th>
                                     <th class="px-7 py-5">L11 CR</th>
@@ -2486,15 +2493,24 @@
                         </div>
                     </div>
                     <div class="table-scroll overflow-x-auto w-full">
-                        <table class="w-full whitespace-nowrap min-w-[800px]">
+                        <table class="w-full whitespace-nowrap min-w-[1550px]">
                             <thead
-                                class="bg-surfaceAlt text-left text-xs font-bold text-textMuted uppercase tracking-wider border-b border-borderLight">
+                                class="bg-surfaceAlt text-left text-[11px] font-bold text-textMuted uppercase tracking-wider border-b border-borderLight">
                                 <tr>
-                                    <th class="px-7 py-5 text-center w-24">Peringkat</th>
-                                    <th class="px-7 py-5">Nama Account Manager</th>
-                                    <th class="px-7 py-5 text-center">Total Data</th>
-                                    <th class="px-7 py-5 text-center">Data Lunas</th>
-                                    <th class="px-7 py-5">Success Rate</th>
+                                    <th class="px-7 py-5 text-center w-24 align-middle border-r border-borderLight" rowspan="2">Peringkat</th>
+                                    <th class="px-7 py-5 align-middle border-r border-borderLight" rowspan="2">Nama Account Manager</th>
+                                    <th class="px-7 py-3 text-center border-b border-r border-borderLight" colspan="2">BELUM LUNAS</th>
+                                    <th class="px-7 py-3 text-center border-b border-r border-borderLight" colspan="2">LUNAS</th>
+                                    <th class="px-7 py-3 text-center border-b border-r border-borderLight" colspan="2">GRAND TOTAL</th>
+                                    <th class="px-7 py-5 align-middle" rowspan="2">Success Rate</th>
+                                </tr>
+                                <tr>
+                                    <th class="px-7 py-2 text-center border-r border-borderLight">Jumlah</th>
+                                    <th class="px-7 py-2 text-right border-r border-borderLight">Tagihan</th>
+                                    <th class="px-7 py-2 text-center border-r border-borderLight">Jumlah</th>
+                                    <th class="px-7 py-2 text-right border-r border-borderLight">Tagihan</th>
+                                    <th class="px-7 py-2 text-center border-r border-borderLight">Jumlah</th>
+                                    <th class="px-7 py-2 text-right border-r border-borderLight">Tagihan</th>
                                 </tr>
                             </thead>
                             <tbody id="tbody-am-perf"
@@ -4665,7 +4681,7 @@
                 this.flagState.filtered = this.flagState.data.filter(row => {
                     const searchable = Object.values(row).join(' ').toLowerCase();
                     const rowStatusFlag = this.getFlagStatus(row).toLowerCase();
-                    const amValue = Utils.getDynamicValue(row, ['collection agent', 'nama am', 'am', 'nama_am', 'account manager']).toLowerCase();
+                    const amValue = Utils.getDynamicValue(row, ['nama am', 'am', 'nama_am', 'account manager']).toLowerCase();
                     const ubisValue = this.getUbisValue(row).toLowerCase();
 
                     const matchQuery = query === '' || searchable.includes(query);
@@ -4682,7 +4698,7 @@
 
             getFlagVisibleColumns() {
                 const normalize = value => String(value || '').toLowerCase().replace(/[^a-z0-9]+/g, '');
-                const visibleKeys = ['nojastel', 'contraccountdetail', 'billperiod', 'paymentdate', 'collectionagent', 'totalamount', 'statusflag'];
+                const visibleKeys = ['nojastel', 'namaam', 'billperiod', 'paymentdate', 'collectionagent', 'totalamount', 'statusflag'];
                 return this.flagState.columns.filter(column => visibleKeys.includes(normalize(column)));
             }
 
@@ -4732,20 +4748,37 @@
             }
 
             processData() {
-                let lunas = 0, vocMap = {}, segmenMap = {};
-                const amSet = new Set(), datelSet = new Set();
-                const total = this.state.data.length;
+                const amSet = new Set(), datelSet = new Set(), segmenSet = new Set();
 
                 this.state.data.forEach(r => {
-                    if (Utils.isPaid(r)) lunas++;
-
                     let amRaw = Utils.getDynamicValue(r, ['nama am']);
-                    let am = (amRaw === '' || amRaw === '-' || amRaw === 'N/A') ? 'TIDAK TERDEFINISI' : amRaw;
-                    amSet.add(am);
+                    amSet.add((amRaw === '' || amRaw === '-' || amRaw === 'N/A') ? 'TIDAK TERDEFINISI' : amRaw);
 
                     let dtRaw = Utils.getDynamicValue(r, ['datel']).toUpperCase();
-                    let dt = (dtRaw === '' || dtRaw === '-' || dtRaw === 'N/A') ? 'TIDAK TERDEFINISI' : dtRaw;
-                    datelSet.add(dt);
+                    datelSet.add((dtRaw === '' || dtRaw === '-' || dtRaw === 'N/A') ? 'TIDAK TERDEFINISI' : dtRaw);
+
+                    let segRaw = Utils.getDynamicValue(r, ['segmen']).toUpperCase();
+                    segmenSet.add((segRaw === '' || segRaw === '-' || segRaw === 'N/A') ? 'TIDAK TERDEFINISI' : segRaw);
+                });
+
+                // Filter dropdowns always list every option from the full dataset,
+                // not just the currently filtered subset.
+                TableManager.populateSelect('filter-am-nonpots', amSet, 'Semua AM');
+                TableManager.populateSelect('filter-datel-nonpots', datelSet, 'Semua Datel');
+                TableManager.populateSelect('filter-segmen-nonpots', segmenSet, 'Semua Segmen');
+
+                this.updateSummary(this.state.data);
+                this.renderTable();
+            }
+
+            // KPI cards, progress bar, and charts — recomputed from whatever dataset
+            // is passed in, so applyFilters() can call this with the filtered subset.
+            updateSummary(dataset) {
+                let lunas = 0, vocMap = {}, segmenMap = {};
+                const total = dataset.length;
+
+                dataset.forEach(r => {
+                    if (Utils.isPaid(r)) lunas++;
 
                     let segRaw = Utils.getDynamicValue(r, ['segmen']).toUpperCase();
                     let seg = (segRaw === '' || segRaw === '-' || segRaw === 'N/A') ? 'TIDAK TERDEFINISI' : segRaw;
@@ -4770,10 +4803,6 @@
                     document.getElementById('bar-unpaid-n').style.width = (100 - pctL) + '%';
                 }, 100);
 
-                TableManager.populateSelect('filter-am-nonpots', amSet, 'Semua AM');
-                TableManager.populateSelect('filter-datel-nonpots', datelSet, 'Semua Datel');
-                TableManager.populateSelect('filter-segmen-nonpots', new Set(Object.keys(segmenMap)), 'Semua Segmen');
-
                 const topVoc = Object.entries(vocMap).sort((a, b) => b[1] - a[1]).slice(0, 5);
                 const ctxBar = document.getElementById('barChartNonPots').getContext('2d');
                 if (this.charts.bar) this.charts.bar.destroy();
@@ -4782,8 +4811,6 @@
                 const ctxDonut = document.getElementById('donutChartNonPots').getContext('2d');
                 if (this.charts.donut) this.charts.donut.destroy();
                 this.charts.donut = ChartManager.createDonutChart(ctxDonut, Object.keys(segmenMap), Object.values(segmenMap));
-
-                this.renderTable();
             }
 
             processAmData() {
@@ -4791,18 +4818,29 @@
                 this.state.data.forEach(r => {
                     let nRaw = Utils.getDynamicValue(r, ['nama am']);
                     let n = (nRaw === '' || nRaw === '-' || nRaw === 'N/A') ? 'TIDAK TERDEFINISI' : nRaw;
-                    if (!amG[n]) amG[n] = { name: n, total: 0, lunas: 0 };
-                    amG[n].total++; if (Utils.isPaid(r)) amG[n].lunas++;
+                    if (!amG[n]) amG[n] = { name: n, belumJml: 0, belumTag: 0, lunasJml: 0, lunasTag: 0 };
+
+                    const tagihan = Utils.parseCurrency(Utils.getDynamicValue(r, ['saldo', 'tagihan', 'amount', 'biaya']));
+                    if (Utils.isPaid(r)) {
+                        amG[n].lunasJml++;
+                        amG[n].lunasTag += tagihan;
+                    } else {
+                        amG[n].belumJml++;
+                        amG[n].belumTag += tagihan;
+                    }
                 });
 
                 this.perfState.data = Object.values(amG)
-                    .map(i => ({ ...i, sr: i.total ? Math.round((i.lunas / i.total) * 100) : 0 }))
+                    .map(i => {
+                        const total = i.belumJml + i.lunasJml;
+                        return { ...i, total, sr: total ? Math.round((i.lunasJml / total) * 100) : 0 };
+                    })
                     .sort((a, b) => b.sr !== a.sr ? b.sr - a.sr : b.total - a.total);
 
                 this.perfState.filtered = [...this.perfState.data];
 
                 document.getElementById('stat-am-active').innerText = this.perfState.data.filter(x => x.name !== 'Tanpa AM').length;
-                let gt = 0, gl = 0; this.perfState.data.forEach(x => { gt += x.total; gl += x.lunas; });
+                let gt = 0, gl = 0; this.perfState.data.forEach(x => { gt += x.total; gl += x.lunasJml; });
                 document.getElementById('stat-am-average').innerText = (gt ? Math.round((gl / gt) * 100) : 0) + '%';
                 if (this.perfState.data.length > 0) document.getElementById('stat-am-best').innerText = `${this.perfState.data[0].name}`;
 
@@ -4836,7 +4874,9 @@
                         (sg === 'all' || segVal === sg) &&
                         (s === 'all' || (s === 'lunas' ? isP : !isP));
                 });
-                this.state.page = 1; this.renderTable();
+                this.state.page = 1;
+                this.updateSummary(this.state.filtered);
+                this.renderTable();
             }
 
             renderTable() {
@@ -4844,8 +4884,11 @@
                 const start = (this.state.page - 1) * this.state.limit;
                 const paginated = this.state.filtered.slice(start, start + this.state.limit);
 
-                if (paginated.length === 0) tbody.innerHTML = `<tr><td colspan="11" class="text-center py-10 font-bold text-textMuted">Tidak ada data.</td></tr>`;
+                if (paginated.length === 0) tbody.innerHTML = `<tr><td colspan="12" class="text-center py-10 font-bold text-textMuted">Tidak ada data.</td></tr>`;
                 else paginated.forEach((r, i) => {
+                    const vocColumn = Utils.getLatestDynamicKey(r, 'voc');
+                    const keteranganColumn = this.getVocKeteranganColumn(r, vocColumn);
+                    const keteranganText = keteranganColumn ? (String(r[keteranganColumn] || '').trim() || '-') : '-';
                     tbody.innerHTML += `
                                 <tr class="group hover:bg-surfaceAlt transition-colors font-medium">
                                     <td class="px-7 py-4 font-bold text-primary">${Utils.getDynamicValue(r, ['id'])}</td>
@@ -4853,7 +4896,8 @@
                                     <td class="px-7 py-4 font-bold">${Utils.getDynamicValue(r, ['nama am'])}</td>
                                     <td class="px-7 py-4 text-textMuted">${Utils.getDynamicValue(r, ['segmen'])}</td>
                                     <td class="px-7 py-4">${Utils.getDynamicValue(r, ['datel'])}</td>
-                                    <td class="px-7 py-4 text-[11px] text-textMuted"><div class="flex items-start gap-2"><div class="max-w-[140px] whitespace-normal break-words">${Utils.getLatestDynamicValue(r, 'voc') || '-'}</div><button type="button" data-edit-voc="${start + i}" aria-label="Edit VOC" class="shrink-0 bento-btn h-7 w-7 rounded-lg bg-red-50 text-primary hover:bg-red-100 opacity-0 group-hover:opacity-100 focus:opacity-100 transition-opacity"><i class="fas fa-pen text-[10px]"></i></button></div></td>
+                                    <td class="px-7 py-4 text-[11px] text-textMuted"><div class="flex items-start gap-2"><div class="max-w-[260px] whitespace-normal break-words">${Utils.getLatestDynamicValue(r, 'voc') || '-'}</div><button type="button" data-edit-voc="${start + i}" aria-label="Edit VOC" class="shrink-0 bento-btn h-7 w-7 rounded-lg bg-red-50 text-primary hover:bg-red-100 opacity-0 group-hover:opacity-100 focus:opacity-100 transition-opacity"><i class="fas fa-pen text-[10px]"></i></button></div></td>
+                                    <td class="px-7 py-4 text-[11px] text-textMuted"><div class="max-w-[280px] whitespace-normal break-words">${Utils.escapeHtml(keteranganText)}</div></td>
                                     <td class="px-7 py-4 font-bold text-xs">${Utils.getDynamicValue(r, ['bayar cr', 'cek_bayar cr'])}</td>
                                     <td class="px-7 py-4">${Utils.getNeoBadge(Utils.isPaid(r))}</td>
                                     <td class="px-7 py-4 font-bold text-xs">${Utils.getDynamicValue(r, ['l11 cr', 'l11 saldo cr'])}</td>
@@ -4863,6 +4907,19 @@
                             `;
                 });
                 TableManager.updatePaginationUI('nonpots', this.state);
+            }
+
+            // Di sheet, kolom keterangan tiap bulan selalu persis di sebelah kanan
+            // kolom "UPDATE VOC <bulan>"-nya (namanya sendiri bisa beda-beda tiap bulan,
+            // mis. "KETERANGAN VOC AGUSTUS 2026" atau cuma "KETERANGAN"), jadi dicari
+            // berdasarkan posisi kolom, bukan nama persis.
+            getVocKeteranganColumn(row, vocColumn) {
+                if (!vocColumn) return null;
+                const keys = Object.keys(row);
+                const idx = keys.indexOf(vocColumn);
+                if (idx === -1 || idx + 1 >= keys.length) return null;
+                const nextKey = keys[idx + 1];
+                return nextKey.toLowerCase().includes('keterangan') ? nextKey : null;
             }
 
             openVocEdit(index) {
@@ -4881,6 +4938,19 @@
                 if (!currentValue) options.unshift('');
                 select.innerHTML = options.map(opt => `<option value="${Utils.escapeHtml(opt)}">${Utils.escapeHtml(opt) || '(Kosong)'}</option>`).join('');
                 select.value = currentValue;
+
+                const keteranganColumn = this.getVocKeteranganColumn(row, column);
+                const keteranganWrapper = document.getElementById('voc-edit-keterangan-wrapper');
+                const keteranganField = document.getElementById('voc-edit-keterangan');
+                if (keteranganColumn) {
+                    keteranganWrapper.classList.remove('hidden');
+                    keteranganField.disabled = false;
+                    keteranganField.value = String(row[keteranganColumn] || '').trim();
+                } else {
+                    keteranganWrapper.classList.add('hidden');
+                    keteranganField.disabled = true;
+                    keteranganField.value = '';
+                }
 
                 document.getElementById('voc-edit-error').classList.add('hidden');
                 const modal = document.getElementById('voc-edit-modal');
@@ -4922,23 +4992,29 @@
                 }
 
                 const newValue = document.getElementById('voc-edit-value').value;
+                const keteranganColumn = this.getVocKeteranganColumn(row, column);
+                const newKeterangan = document.getElementById('voc-edit-keterangan').value;
                 const saveBtn = document.getElementById('btn-save-voc-edit');
                 saveBtn.disabled = true;
                 saveBtn.innerText = 'Menyimpan...';
 
                 try {
-                    const params = new URLSearchParams({
-                        secret: VOC_EDIT_CONFIG.secret,
-                        idColumn: 'ID NUMBER',
-                        id: idValue,
-                        column: column,
-                        value: newValue
-                    });
-
                     // Apps Script Web App tidak mengirim header CORS, jadi respons tidak bisa dibaca
                     // dari sini (browser akan menolaknya walau request sebenarnya sukses di server).
                     // Kirim dengan mode no-cors, lalu verifikasi dengan membaca ulang sheet-nya.
-                    await fetch(`${VOC_EDIT_CONFIG.webAppUrl}?${params.toString()}`, { mode: 'no-cors' });
+                    const sendUpdate = (col, val) => {
+                        const params = new URLSearchParams({
+                            secret: VOC_EDIT_CONFIG.secret,
+                            idColumn: 'ID NUMBER',
+                            id: idValue,
+                            column: col,
+                            value: val
+                        });
+                        return fetch(`${VOC_EDIT_CONFIG.webAppUrl}?${params.toString()}`, { mode: 'no-cors' });
+                    };
+
+                    await sendUpdate(column, newValue);
+                    if (keteranganColumn) await sendUpdate(keteranganColumn, newKeterangan);
 
                     let freshData = null;
                     let matched = false;
@@ -4950,7 +5026,8 @@
                         freshData = await DataService.fetchCSV(cacheBustUrl);
                         const freshRow = freshData.find(r => Utils.getDynamicValue(r, ['id number', 'id']) === idValue);
                         const savedValue = freshRow ? String(freshRow[column] || '').trim() : null;
-                        if (savedValue === newValue.trim()) matched = true;
+                        const savedKeterangan = keteranganColumn && freshRow ? String(freshRow[keteranganColumn] || '').trim() : null;
+                        matched = savedValue === newValue.trim() && (!keteranganColumn || savedKeterangan === newKeterangan.trim());
                     }
 
                     if (!matched) {
@@ -4982,14 +5059,18 @@
 
                     tbody.innerHTML += `
                                 <tr class="hover:bg-surfaceAlt transition-colors font-medium">
-                                    <td class="px-7 py-5 text-center">${rank}</td>
-                                    <td class="px-7 py-5 font-bold text-textMain">${a.name}</td>
-                                    <td class="px-7 py-5 text-center text-textMuted">${a.total}</td>
-                                    <td class="px-7 py-5 text-center font-extrabold text-emerald-600">${a.lunas}</td>
+                                    <td class="px-7 py-5 text-center border-r border-borderLight">${rank}</td>
+                                    <td class="px-7 py-5 font-bold text-textMain border-r border-borderLight">${a.name}</td>
+                                    <td class="px-7 py-5 text-center border-r border-borderLight">${a.belumJml.toLocaleString('id-ID')}</td>
+                                    <td class="px-7 py-5 text-right border-r border-borderLight font-semibold">Rp ${a.belumTag.toLocaleString('id-ID')}</td>
+                                    <td class="px-7 py-5 text-center border-r border-borderLight">${a.lunasJml.toLocaleString('id-ID')}</td>
+                                    <td class="px-7 py-5 text-right border-r border-borderLight font-semibold">Rp ${a.lunasTag.toLocaleString('id-ID')}</td>
+                                    <td class="px-7 py-5 text-center border-r border-borderLight font-bold">${a.total.toLocaleString('id-ID')}</td>
+                                    <td class="px-7 py-5 text-right border-r border-borderLight font-bold text-primary">Rp ${(a.belumTag + a.lunasTag).toLocaleString('id-ID')}</td>
                                     <td class="px-7 py-5">
-                                        <div class="flex items-center gap-3">
+                                        <div class="flex items-center gap-3 min-w-[190px]">
                                             <span class="w-12 text-xs font-bold bg-white border border-borderLight px-1.5 py-1 rounded-lg text-center shadow-sm">${a.sr}%</span>
-                                            <div class="flex-1 max-w-[150px] bg-surfaceAlt border border-borderLight rounded-full h-3 overflow-hidden p-[2px] shadow-inner">
+                                            <div class="flex-1 max-w-[200px] bg-surfaceAlt border border-borderLight rounded-full h-3 overflow-hidden p-[2px] shadow-inner">
                                                 <div class="${barColor} h-full rounded-full shadow-sm" style="width:${a.sr}%"></div>
                                             </div>
                                         </div>
