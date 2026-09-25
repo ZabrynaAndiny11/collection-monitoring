@@ -2184,7 +2184,7 @@
                             </div>
                             Detail Data Non-POTS
                         </h3>
-                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-5" id="filters-nonpots">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5" id="filters-nonpots">
                             <div class="flex flex-col">
                                 <label
                                     class="text-[10px] font-bold text-textMuted uppercase mb-2 ml-1 tracking-wider">Pencarian
@@ -2214,6 +2214,12 @@
                                     id="filter-segmen-nonpots"
                                     class="bento-input w-full px-4 py-3 text-sm font-medium cursor-pointer appearance-none shadow-sm">
                                     <option value="all">Semua Segmen</option>
+                                </select></div>
+                            <div class="flex flex-col"><label
+                                    class="text-[10px] font-bold text-textMuted uppercase mb-2 ml-1 tracking-wider">VOC</label><select
+                                    id="filter-voc-nonpots"
+                                    class="bento-input w-full px-4 py-3 text-sm font-medium cursor-pointer appearance-none shadow-sm">
+                                    <option value="all">Semua VOC</option>
                                 </select></div>
                             <div class="flex flex-col"><label
                                     class="text-[10px] font-bold text-primary uppercase mb-2 ml-1 tracking-wider">Status</label><select
@@ -3044,7 +3050,7 @@
                         tbody.innerHTML += `
                                     <tr class="hover:bg-surfaceAlt transition-colors font-medium">
                                         <td class="px-7 py-4 font-bold text-primary">${Utils.getDynamicValue(r, ['snd'])}</td>
-                                        <td class="px-7 py-4" title="${Utils.getDynamicValue(r, ['nama'])}">${Utils.getDynamicValue(r, ['nama'])}</td>
+                                        <td class="px-7 py-4" title="${Utils.escapeHtml(Utils.getDynamicValue(r, ['nama']))}"><div class="max-w-[240px] whitespace-normal break-words">${Utils.escapeHtml(Utils.getDynamicValue(r, ['nama']))}</div></td>
                                         <td class="px-7 py-4"><div class="max-w-[220px] whitespace-normal break-words text-xs text-textMuted">${Utils.getDynamicValue(r, ['alamat'])}</div></td>
                                         <td class="px-7 py-4">${Utils.getDynamicValue(r, ['datel'])}</td>
                                         <td class="px-7 py-4 font-bold">${Utils.getDynamicValue(r, ['ubis'])}</td>
@@ -3258,7 +3264,7 @@
                         tbody.innerHTML += `
                                     <tr class="hover:bg-surfaceAlt transition-colors font-medium">
                                         <td class="px-7 py-4 font-bold text-primary">${Utils.getDynamicValue(r, ['snd'])}</td>
-                                        <td class="px-7 py-4" title="${Utils.getDynamicValue(r, ['nama'])}">${Utils.getDynamicValue(r, ['nama'])}</td>
+                                        <td class="px-7 py-4" title="${Utils.escapeHtml(Utils.getDynamicValue(r, ['nama']))}"><div class="max-w-[240px] whitespace-normal break-words">${Utils.escapeHtml(Utils.getDynamicValue(r, ['nama']))}</div></td>
                                         <td class="px-7 py-4 text-textMuted">${Utils.getDynamicValue(r, ['desc_newbill', 'newbill'])}</td>
                                         <td class="px-7 py-4 font-semibold">${Utils.getDynamicValue(r, ['ubis', 'sektor'])}</td>
                                         <td class="px-7 py-4">${Utils.getDynamicValue(r, ['datel/ro', 'datel', 'ro'])}</td>
@@ -4295,7 +4301,7 @@
                         tbody.innerHTML += `
                                     <tr class="hover:bg-surfaceAlt transition-colors font-medium">
                                         <td class="px-7 py-4 font-bold text-primary">${Utils.getDynamicValue(r, ['snd'])}</td>
-                                        <td class="px-7 py-4" title="${Utils.getDynamicValue(r, ['nama'])}">${Utils.getDynamicValue(r, ['nama'])}</td>
+                                        <td class="px-7 py-4" title="${Utils.escapeHtml(Utils.getDynamicValue(r, ['nama']))}"><div class="max-w-[240px] whitespace-normal break-words">${Utils.escapeHtml(Utils.getDynamicValue(r, ['nama']))}</div></td>
                                         <td class="px-7 py-4"><div class="max-w-[220px] whitespace-normal break-words text-xs text-textMuted">${Utils.getDynamicValue(r, ['alamat'])}</div></td>
                                         <td class="px-7 py-4">${Utils.getDynamicValue(r, ['datel'])}</td>
                                         <td class="px-7 py-4 font-bold">${Utils.getDynamicValue(r, ['ubis'])}</td>
@@ -4454,7 +4460,7 @@
                         tbody.innerHTML += `
                                     <tr class="hover:bg-surfaceAlt transition-colors font-medium">
                                         <td class="px-7 py-4 font-bold text-primary">${Utils.getDynamicValue(r, ['snd'])}</td>
-                                        <td class="px-7 py-4" title="${Utils.getDynamicValue(r, ['nama'])}">${Utils.getDynamicValue(r, ['nama'])}</td>
+                                        <td class="px-7 py-4" title="${Utils.escapeHtml(Utils.getDynamicValue(r, ['nama']))}"><div class="max-w-[240px] whitespace-normal break-words">${Utils.escapeHtml(Utils.getDynamicValue(r, ['nama']))}</div></td>
                                         <td class="px-7 py-4"><div class="max-w-[220px] whitespace-normal break-words text-xs text-textMuted">${Utils.getDynamicValue(r, ['alamat'])}</div></td>
                                         <td class="px-7 py-4">${Utils.getDynamicValue(r, ['datel'])}</td>
                                         <td class="px-7 py-4 font-bold">${Utils.getDynamicValue(r, ['ubis'])}</td>
@@ -4526,7 +4532,7 @@
             initEvents() {
                 const searchHandler = Utils.debounce(() => this.applyFilters(), 300);
                 document.getElementById('search-nonpots').addEventListener('input', searchHandler);
-                ['filter-am-nonpots', 'filter-datel-nonpots', 'filter-segmen-nonpots', 'filter-status-nonpots'].forEach(id => {
+                ['filter-am-nonpots', 'filter-datel-nonpots', 'filter-segmen-nonpots', 'filter-voc-nonpots', 'filter-status-nonpots'].forEach(id => {
                     document.getElementById(id).addEventListener('change', () => this.applyFilters());
                 });
                 TableManager.setupPagination('nonpots', this.state, () => this.renderTable());
@@ -4748,7 +4754,7 @@
             }
 
             processData() {
-                const amSet = new Set(), datelSet = new Set(), segmenSet = new Set();
+                const amSet = new Set(), datelSet = new Set(), segmenSet = new Set(), vocSet = new Set();
 
                 this.state.data.forEach(r => {
                     let amRaw = Utils.getDynamicValue(r, ['nama am']);
@@ -4759,6 +4765,11 @@
 
                     let segRaw = Utils.getDynamicValue(r, ['segmen']).toUpperCase();
                     segmenSet.add((segRaw === '' || segRaw === '-' || segRaw === 'N/A') ? 'TIDAK TERDEFINISI' : segRaw);
+
+                    // Nama kolom VOC berganti tiap bulan ("UPDATE VOC SEPTEMBER 2026"), jadi
+                    // dipakai kolom VOC terakhir yang terisi — sama seperti tabel dan chart.
+                    const vocRaw = Utils.getLatestDynamicValue(r, 'voc').trim().toUpperCase();
+                    vocSet.add((vocRaw === '' || vocRaw === '-' || vocRaw === 'N/A' || vocRaw === '#N/A') ? 'TIDAK TERDEFINISI' : vocRaw);
                 });
 
                 // Filter dropdowns always list every option from the full dataset,
@@ -4766,6 +4777,7 @@
                 TableManager.populateSelect('filter-am-nonpots', amSet, 'Semua AM');
                 TableManager.populateSelect('filter-datel-nonpots', datelSet, 'Semua Datel');
                 TableManager.populateSelect('filter-segmen-nonpots', segmenSet, 'Semua Segmen');
+                TableManager.populateSelect('filter-voc-nonpots', vocSet, 'Semua VOC');
 
                 this.updateSummary(this.state.data);
                 this.renderTable();
@@ -4852,6 +4864,7 @@
                 const a = document.getElementById('filter-am-nonpots').value;
                 const d = document.getElementById('filter-datel-nonpots').value;
                 const sg = document.getElementById('filter-segmen-nonpots').value;
+                const v = document.getElementById('filter-voc-nonpots').value;
                 const s = document.getElementById('filter-status-nonpots').value;
 
                 this.state.filtered = this.state.data.filter(r => {
@@ -4868,10 +4881,14 @@
                     let segRaw = Utils.getDynamicValue(r, ['segmen']).toUpperCase();
                     let segVal = (segRaw === '' || segRaw === '-' || segRaw === 'N/A') ? 'TIDAK TERDEFINISI' : segRaw;
 
+                    const vocRaw = Utils.getLatestDynamicValue(r, 'voc').trim().toUpperCase();
+                    const vocVal = (vocRaw === '' || vocRaw === '-' || vocRaw === 'N/A' || vocRaw === '#N/A') ? 'TIDAK TERDEFINISI' : vocRaw;
+
                     return (q === '' || id.includes(q) || nm.includes(q)) &&
                         (a === 'all' || amVal === a) &&
                         (d === 'all' || dtVal === d) &&
                         (sg === 'all' || segVal === sg) &&
+                        (v === 'all' || vocVal === v) &&
                         (s === 'all' || (s === 'lunas' ? isP : !isP));
                 });
                 this.state.page = 1;
@@ -4892,7 +4909,7 @@
                     tbody.innerHTML += `
                                 <tr class="group hover:bg-surfaceAlt transition-colors font-medium">
                                     <td class="px-7 py-4 font-bold text-primary">${Utils.getDynamicValue(r, ['id'])}</td>
-                                    <td class="px-7 py-4" title="${Utils.getDynamicValue(r, ['nama'])}">${Utils.getDynamicValue(r, ['nama'])}</td>
+                                    <td class="px-7 py-4" title="${Utils.escapeHtml(Utils.getDynamicValue(r, ['nama']))}"><div class="max-w-[240px] whitespace-normal break-words">${Utils.escapeHtml(Utils.getDynamicValue(r, ['nama']))}</div></td>
                                     <td class="px-7 py-4 font-bold">${Utils.getDynamicValue(r, ['nama am'])}</td>
                                     <td class="px-7 py-4 text-textMuted">${Utils.getDynamicValue(r, ['segmen'])}</td>
                                     <td class="px-7 py-4">${Utils.getDynamicValue(r, ['datel'])}</td>
