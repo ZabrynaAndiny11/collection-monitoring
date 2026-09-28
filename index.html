@@ -1670,7 +1670,7 @@
                     <div class="bento-card p-7 lg:col-span-7 flex flex-col">
                         <div class="flex items-center gap-3 mb-6 pb-4 border-b border-borderLight">
                             <div class="w-8 h-8 rounded-lg bg-red-50 text-primary flex items-center justify-center">
-                                <i class="fas fa-chart-line text-sm"></i>
+                                <i class="fas fa-chart-column text-sm"></i>
                             </div>
                             <h3 class="text-sm font-poppins font-bold text-textMain uppercase tracking-wider">
                                 Kenaikan Claim per Bulan
@@ -2841,6 +2841,76 @@
                 });
             }
 
+            // datasets: [{ label, data, color }]; total per batang tampil di atas tumpukan teratas
+            static createStackedBarChart(ctx, labels, datasets) {
+                const isTopSegment = (chart, datasetIndex, dataIndex) => {
+                    for (let i = chart.data.datasets.length - 1; i >= 0; i--) {
+                        if (!chart.isDatasetVisible(i)) continue;
+                        if ((chart.data.datasets[i].data[dataIndex] || 0) > 0) return i === datasetIndex;
+                    }
+                    return false;
+                };
+                const visibleTotal = (chart, dataIndex) => chart.data.datasets.reduce(
+                    (sum, ds, i) => sum + (chart.isDatasetVisible(i) ? (ds.data[dataIndex] || 0) : 0), 0);
+
+                return new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels,
+                        datasets: datasets.map(ds => ({
+                            label: ds.label,
+                            data: ds.data,
+                            backgroundColor: ds.color,
+                            borderRadius: 4,
+                            borderSkipped: false,
+                            maxBarThickness: 64
+                        }))
+                    },
+                    options: {
+                        maintainAspectRatio: false,
+                        clip: false,
+                        layout: { padding: { top: 28 } },
+                        interaction: { mode: 'index', intersect: false },
+                        plugins: {
+                            legend: {
+                                position: 'bottom',
+                                labels: { usePointStyle: true, pointStyle: 'rectRounded', boxWidth: 10, font: { weight: '600', size: 11 } }
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    label: c => ` ${c.dataset.label}: ${c.parsed.y.toLocaleString('id-ID')}`,
+                                    footer: items => items.length
+                                        ? `Total: ${visibleTotal(items[0].chart, items[0].dataIndex).toLocaleString('id-ID')}`
+                                        : ''
+                                }
+                            },
+                            datalabels: {
+                                display: c => isTopSegment(c.chart, c.datasetIndex, c.dataIndex),
+                                anchor: 'end',
+                                align: 'top',
+                                offset: 4,
+                                color: '#1F2937',
+                                font: { weight: 'bold', size: 11 },
+                                formatter: (_, c) => visibleTotal(c.chart, c.dataIndex).toLocaleString('id-ID')
+                            }
+                        },
+                        scales: {
+                            x: {
+                                stacked: true,
+                                grid: { display: false },
+                                ticks: { font: { weight: '600', size: 11 }, color: '#6B7280' }
+                            },
+                            y: {
+                                stacked: true,
+                                beginAtZero: true,
+                                grid: { color: '#E5E7EB', drawBorder: false },
+                                ticks: { precision: 0, font: { weight: '600', size: 11 }, color: '#6B7280' }
+                            }
+                        }
+                    }
+                });
+            }
+
             static createDonutChart(ctx, labels, data) {
                 const bgColors = this.getGradients(ctx, false);
                 const formattedLabels = labels.map((label, index) => {
@@ -3801,10 +3871,7 @@
                     TableManager.populateSelect('filter-am-claim', ams, 'Semua AM');
                     this.populateMonthFilter(months);
 
-                    this.state.filtered =
-                        [...this.state.data];
-
-                    this.processData();
+                    this.applyFilters();
 
                     this.isLoaded = true;
 
@@ -3830,10 +3897,8 @@
             // ==========================================
             // PROCESS DATA
             // ==========================================
-            getClaimMonth(row, source = 'payment') {
-                const period = Utils.getDynamicValue(row, ['bill period', 'billing period', 'claim month', 'month']);
-                const paymentDate = Utils.getDynamicValue(row, ['payment date']);
-                const text = String(source === 'payment' ? paymentDate : period || paymentDate || '').trim();
+            getClaimMonth(row) {
+                const text = String(Utils.getDynamicValue(row, ['payment date']) || '').trim();
                 let match = text.match(/^(\d{4})[-\/]?(\d{2})/);
                 if (match) return `${match[1]}-${match[2]}`;
                 match = text.match(/^(\d{1,2})[-\/](\d{1,2})[-\/](\d{4})/);
@@ -3854,48 +3919,35 @@
                 });
             }
 
+            getStatusGroup(row) {
+                const status = Utils.getDynamicValue(row, ['status klaim', 'status claim', 'claim status'])
+                    .toLowerCase()
+                    .trim();
+                if (['selesai', 'complete', 'done'].some(k => status.includes(k))) return 'selesai';
+                if (['pending', 'proses', 'progress'].some(k => status.includes(k))) return 'pending';
+                return 'belum';
+            }
+
             processData() {
-                let total = this.state.data.length;
+                // KPI & Top AM ikut semua filter; tren bulanan ikut semua filter kecuali bulan
+                const rows = this.state.filtered;
+                const trendRows = this.state.trendRows || rows;
+                let total = rows.length;
                 let selesai = 0;
                 let pending = 0;
                 let belum = 0;
                 let totalAmount = 0;
 
-                this.state.data.forEach(row => {
+                rows.forEach(row => {
                     totalAmount += Utils.parseCurrency(Utils.getDynamicValue(row, [
                         'total amount',
                         'billing amount'
                     ]));
 
-                    const status =
-                        Utils.getDynamicValue(row, [
-                            'status klaim',
-                            'status claim',
-                            'claim status'
-                        ])
-                            .toLowerCase()
-                            .trim();
-
-                    if (
-                        status.includes('selesai') ||
-                        status.includes('complete') ||
-                        status.includes('completed') ||
-                        status.includes('done')
-                    ) {
-                        selesai++;
-                    }
-
-                    else if (
-                        status.includes('pending') ||
-                        status.includes('proses') ||
-                        status.includes('progress')
-                    ) {
-                        pending++;
-                    }
-
-                    else {
-                        belum++;
-                    }
+                    const group = this.getStatusGroup(row);
+                    if (group === 'selesai') selesai++;
+                    else if (group === 'pending') pending++;
+                    else belum++;
                 });
 
                 // ==========================================
@@ -3938,13 +3990,21 @@
                 // MONTHLY CLAIM TREND
                 // ==========================================
                 const monthMap = {};
-                this.state.data.forEach(row => {
-                    const month = this.getClaimMonth(row, 'period');
-                    if (month) monthMap[month] = (monthMap[month] || 0) + 1;
+                trendRows.forEach(row => {
+                    const month = this.getClaimMonth(row);
+                    if (!month) return;
+                    if (!monthMap[month]) monthMap[month] = { selesai: 0, pending: 0, belum: 0 };
+                    monthMap[month][this.getStatusGroup(row)]++;
                 });
 
-                const monthlyClaims = Object.entries(monthMap)
-                    .sort((a, b) => a[0].localeCompare(b[0]));
+                const months = Object.keys(monthMap).sort();
+                const statusSeries = [
+                    { key: 'selesai', label: 'Selesai', color: '#16A34A' },
+                    { key: 'pending', label: 'Pending', color: '#2563EB' },
+                    { key: 'belum', label: 'Belum', color: '#DC2626' }
+                ]
+                    .map(s => ({ ...s, data: months.map(m => monthMap[m][s.key]) }))
+                    .filter(s => s.data.some(v => v > 0));
 
                 const barElement =
                     document.getElementById(
@@ -3959,14 +4019,14 @@
                         this.charts.bar.destroy();
                     }
 
-                    this.charts.bar = ChartManager.createLineChart(
+                    this.charts.bar = ChartManager.createStackedBarChart(
                         ctxBar,
-                        monthlyClaims.map(item => {
-                            const [year, month] = item[0].split('-');
+                        months.map(item => {
+                            const [year, month] = item.split('-');
                             return new Intl.DateTimeFormat('id-ID', { month: 'short', year: 'numeric' })
                                 .format(new Date(Number(year), Number(month) - 1, 1));
                         }),
-                        monthlyClaims.map(item => item[1])
+                        statusSeries
                     );
                 }
 
@@ -3974,7 +4034,7 @@
                 // TOP 5 AM BAR CHART
                 // ==========================================
                 const amMap = {};
-                this.state.data.forEach(row => {
+                rows.forEach(row => {
                     const am = Utils.getDynamicValue(row, ['nama am', 'am']).trim() || 'Tidak diketahui';
                     amMap[am] = (amMap[am] || 0) + 1;
                 });
@@ -4060,6 +4120,7 @@
                         ? servElement.value.toLowerCase()
                         : 'all';
 
+                const trendRows = [];
                 this.state.filtered =
                     this.state.data.filter(row => {
                         const searchableText = Object.values(row)
@@ -4148,18 +4209,20 @@
                             servFilter === 'all' ||
                             serv === servFilter;
 
-                        return (
+                        const matchOthers =
                             matchSearch &&
                             matchStatus &&
                             matchAM &&
-                            matchMonth &&
                             matchAgent &&
-                            matchServ
-                        );
+                            matchServ;
+
+                        if (matchOthers) trendRows.push(row);
+                        return matchOthers && matchMonth;
                     });
 
+                this.state.trendRows = trendRows;
                 this.state.page = 1;
-                this.renderTable();
+                this.processData();
             }
 
             // ==========================================
