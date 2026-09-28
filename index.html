@@ -1218,7 +1218,7 @@
                         </h3>
                     </div>
                     <div class="table-scroll overflow-x-auto w-full">
-                        <table class="w-full whitespace-nowrap min-w-[1000px]">
+                        <table class="w-full whitespace-nowrap min-w-[1250px]">
                             <thead
                                 class="bg-surfaceAlt text-left text-[11px] font-bold text-textMuted uppercase tracking-wider border-b border-borderLight">
                                 <tr>
@@ -1228,8 +1228,9 @@
                                         BELUM LUNAS</th>
                                     <th class="px-7 py-3 text-center border-b border-r border-borderLight" colspan="2">
                                         LUNAS</th>
-                                    <th class="px-7 py-3 text-center border-b border-borderLight" colspan="2">GRAND
+                                    <th class="px-7 py-3 text-center border-b border-r border-borderLight" colspan="2">GRAND
                                         TOTAL</th>
+                                    <th class="px-7 py-5 align-middle" rowspan="2">Success Rate</th>
                                 </tr>
                                 <tr>
                                     <th class="px-7 py-2 text-center border-r border-borderLight">Jumlah</th>
@@ -1237,7 +1238,7 @@
                                     <th class="px-7 py-2 text-center border-r border-borderLight">Jumlah</th>
                                     <th class="px-7 py-2 text-right border-r border-borderLight">Tagihan</th>
                                     <th class="px-7 py-2 text-center border-r border-borderLight">Jumlah</th>
-                                    <th class="px-7 py-2 text-right">Tagihan</th>
+                                    <th class="px-7 py-2 text-right border-r border-borderLight">Tagihan</th>
                                 </tr>
                             </thead>
                             <tbody id="tbody-billper-rekap"
@@ -3489,6 +3490,19 @@
                 this.renderTable();
             }
 
+            // Success rate = jumlah lunas / grand total jumlah (sama seperti Performance AM)
+            renderSuccessRate(lunasJml, totalJml) {
+                const sr = totalJml ? Math.round((lunasJml / totalJml) * 100) : 0;
+                const barColor = sr >= 80 ? 'bg-gradient-to-r from-emerald-400 to-emerald-600' : sr >= 50 ? 'bg-gradient-to-r from-amber-400 to-amber-500' : 'bg-gradient-to-r from-[#E70000] to-[#C50000]';
+                return `
+                                        <div class="flex items-center gap-3 min-w-[190px]">
+                                            <span class="w-12 text-xs font-bold bg-white border border-borderLight px-1.5 py-1 rounded-lg text-center shadow-sm">${sr}%</span>
+                                            <div class="flex-1 max-w-[200px] bg-surfaceAlt border border-borderLight rounded-full h-3 overflow-hidden p-[2px] shadow-inner">
+                                                <div class="${barColor} h-full rounded-full shadow-sm" style="width:${sr}%"></div>
+                                            </div>
+                                        </div>`;
+            }
+
             renderRekapTable(rekapMap) {
                 const tbody = document.getElementById('tbody-billper-rekap');
                 const tfoot = document.getElementById('tfoot-billper-rekap');
@@ -3518,13 +3532,14 @@
                                     <td class="px-7 py-4 text-center border-r border-borderLight">${d.lunasJml.toLocaleString('id-ID')}</td>
                                     <td class="px-7 py-4 text-right border-r border-borderLight font-semibold">Rp ${d.lunasTag.toLocaleString('id-ID')}</td>
                                     <td class="px-7 py-4 text-center border-r border-borderLight font-bold">${gtJml.toLocaleString('id-ID')}</td>
-                                    <td class="px-7 py-4 text-right font-bold text-primary">Rp ${gtTag.toLocaleString('id-ID')}</td>
+                                    <td class="px-7 py-4 text-right border-r border-borderLight font-bold text-primary">Rp ${gtTag.toLocaleString('id-ID')}</td>
+                                    <td class="px-7 py-4">${this.renderSuccessRate(d.lunasJml, gtJml)}</td>
                                 </tr>
                             `;
                 });
 
                 if (sortedDatel.length === 0) {
-                    tbody.innerHTML = `<tr><td colspan="7" class="text-center py-10 font-bold text-textMuted">Tidak ada data rekap.</td></tr>`;
+                    tbody.innerHTML = `<tr><td colspan="8" class="text-center py-10 font-bold text-textMuted">Tidak ada data rekap.</td></tr>`;
                     tfoot.innerHTML = '';
                 } else {
                     tfoot.innerHTML = `
@@ -3535,7 +3550,8 @@
                                     <td class="px-7 py-5 text-center border-r border-borderLight">${sumLunasJml.toLocaleString('id-ID')}</td>
                                     <td class="px-7 py-5 text-right border-r border-borderLight">Rp ${sumLunasTag.toLocaleString('id-ID')}</td>
                                     <td class="px-7 py-5 text-center border-r border-borderLight text-primary">${sumGtJml.toLocaleString('id-ID')}</td>
-                                    <td class="px-7 py-5 text-right text-primary">Rp ${sumGtTag.toLocaleString('id-ID')}</td>
+                                    <td class="px-7 py-5 text-right border-r border-borderLight text-primary">Rp ${sumGtTag.toLocaleString('id-ID')}</td>
+                                    <td class="px-7 py-5">${this.renderSuccessRate(sumLunasJml, sumGtJml)}</td>
                                 </tr>
                             `;
                 }
