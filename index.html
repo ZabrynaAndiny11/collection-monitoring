@@ -3585,7 +3585,7 @@
                                         <td class="px-7 py-4 font-bold">${Utils.getDynamicValue(r, ['ubis'])}</td>
                                         <td class="px-7 py-4">${Utils.getNeoBadge(paid, statusStr.toUpperCase())}</td>
                                         <td class="px-7 py-4 text-xs text-textMuted">${Utils.getDynamicValue(r, ['tgl_bayar', 'tgl bayar']) || '-'}</td>
-                                        <td class="px-7 py-4 text-right font-semibold">Rp ${this.getSaldo(r).toLocaleString('id-ID')}</td>
+                                        <td class="px-7 py-4 text-right font-semibold"> ${this.getSaldo(r).toLocaleString('id-ID')}</td>
                                         <td class="px-7 py-4 text-center"><button type="button" data-global-detail="billper:${start + index}" aria-label="Lihat detail data Billper" class="bento-btn h-9 w-9 rounded-xl bg-red-50 text-primary hover:bg-red-100"><i class="fas fa-eye text-xs"></i></button></td>
                                     </tr>
                                 `;
