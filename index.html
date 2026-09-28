@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="id">lll
+<html lang="id">
 
 <head>
     <meta charset="UTF-8">
@@ -1776,6 +1776,7 @@
                                     <th class="px-7 py-5">BA Billing</th>
                                     <th class="px-7 py-5">No. Jastel</th>
                                     <th class="px-7 py-5">Bill Period</th>
+                                    <th class="px-7 py-5">Payment Date</th>
                                     <th class="px-7 py-5">Total Amount</th>
                                     <th class="px-7 py-5">Serv</th>
                                     <th class="px-7 py-5 text-center">Detail</th>
@@ -3829,10 +3830,10 @@
             // ==========================================
             // PROCESS DATA
             // ==========================================
-            getClaimMonth(row) {
+            getClaimMonth(row, source = 'payment') {
                 const period = Utils.getDynamicValue(row, ['bill period', 'billing period', 'claim month', 'month']);
                 const paymentDate = Utils.getDynamicValue(row, ['payment date']);
-                const text = String(period || paymentDate || '').trim();
+                const text = String(source === 'payment' ? paymentDate : period || paymentDate || '').trim();
                 let match = text.match(/^(\d{4})[-\/]?(\d{2})/);
                 if (match) return `${match[1]}-${match[2]}`;
                 match = text.match(/^(\d{1,2})[-\/](\d{1,2})[-\/](\d{4})/);
@@ -3938,7 +3939,7 @@
                 // ==========================================
                 const monthMap = {};
                 this.state.data.forEach(row => {
-                    const month = this.getClaimMonth(row);
+                    const month = this.getClaimMonth(row, 'period');
                     if (month) monthMap[month] = (monthMap[month] || 0) + 1;
                 });
 
@@ -4185,7 +4186,7 @@
                     tbody.innerHTML = `
                                         <tr>
                                             <td
-                                                colspan="8"
+                                                colspan="9"
                                                 class="text-center py-10 font-bold text-textMuted">
                                                 Tidak ada data.
                                             </td>
@@ -4204,6 +4205,7 @@
                             <td class="px-7 py-4">${Utils.escapeHtml(Utils.getDynamicValue(row, ['ba billing']))}</td>
                             <td class="px-7 py-4">${Utils.escapeHtml(Utils.getDynamicValue(row, ['no.jastel', 'no jastel']))}</td>
                             <td class="px-7 py-4">${Utils.escapeHtml(Utils.getDynamicValue(row, ['bill period']))}</td>
+                            <td class="px-7 py-4">${Utils.escapeHtml(Utils.getDynamicValue(row, ['payment date']))}</td>
                             <td class="px-7 py-4 font-bold">${Utils.escapeHtml(Utils.getDynamicValue(row, ['total amount']))}</td>
                             <td class="px-7 py-4">${Utils.escapeHtml(Utils.getDynamicValue(row, ['serv']))}</td>
                             <td class="px-7 py-4 text-center">
