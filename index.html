@@ -1308,6 +1308,7 @@
                                     <th class="px-7 py-5">UBIS</th>
                                     <th class="px-7 py-5">Status Payment</th>
                                     <th class="px-7 py-5">Tgl Bayar</th>
+                                    <th class="px-7 py-5 text-right">Saldo</th>
                                     <th class="px-7 py-5 text-center">Detail</th>
                                 </tr>
                             </thead>
@@ -3397,8 +3398,10 @@
                 try {
                     const rawData = await DataService.fetchCSV(this.url, { force });
                     this.state.data = rawData;
-                    this.state.filtered = [...rawData];
-                    this.processData();
+                    // Opsi filter diambil dari seluruh data, bukan hasil filter
+                    TableManager.populateSelect('filter-ubis-billper', new Set(rawData.map(r => this.getUbis(r))), 'Semua UBIS');
+                    TableManager.populateSelect('filter-datel-billper', new Set(rawData.map(r => this.getDatel(r))), 'Semua Datel');
+                    this.applyFilters();
                     this.isLoaded = true;
                     this.app.notify.show('Data Billper Loaded');
                 } catch (e) {
@@ -3408,29 +3411,42 @@
                 }
             }
 
+            normalizeCategory(raw) {
+                const v = raw.toUpperCase();
+                return (v === '' || v === '-' || v === 'N/A' || v === '#N/A') ? 'TIDAK TERDEFINISI' : v;
+            }
+
+            getDatel(r) {
+                return this.normalizeCategory(Utils.getDynamicValue(r, ['datel', 'sto', 'witel', 'stodesc']));
+            }
+
+            getUbis(r) {
+                return this.normalizeCategory(Utils.getDynamicValue(r, ['ubis', 'sektor']));
+            }
+
+            getSaldo(r) {
+                return Utils.parseCurrency(Utils.getDynamicValue(r, ['saldo', 'tagihan', 'amount', 'biaya']));
+            }
+
+            // KPI, grafik & rekap dihitung dari data hasil filter
             processData() {
                 let lunas = 0, belumLunas = 0;
                 let datelMap = {}, ubisMap = {};
                 let rekapMap = {};
-                const datelSet = new Set(), ubisSet = new Set();
-                const total = this.state.data.length;
+                const rows = this.state.filtered;
+                const total = rows.length;
 
-                this.state.data.forEach(r => {
+                rows.forEach(r => {
                     let isPaid = Utils.isPaid(r);
                     if (isPaid) lunas++;
                     else belumLunas++;
 
-                    let dRaw = Utils.getDynamicValue(r, ['datel', 'sto', 'witel', 'stodesc']).toUpperCase();
-                    let d = (dRaw === '' || dRaw === '-' || dRaw === 'N/A' || dRaw === '#N/A') ? 'TIDAK TERDEFINISI' : dRaw;
-
-                    let uRaw = Utils.getDynamicValue(r, ['ubis', 'sektor']).toUpperCase();
-                    let u = (uRaw === '' || uRaw === '-' || uRaw === 'N/A' || uRaw === '#N/A') ? 'TIDAK TERDEFINISI' : uRaw;
-
-                    let saldo = Utils.parseCurrency(Utils.getDynamicValue(r, ['saldo', 'tagihan', 'amount', 'biaya']));
+                    const d = this.getDatel(r);
+                    const u = this.getUbis(r);
+                    const saldo = this.getSaldo(r);
 
                     datelMap[d] = (datelMap[d] || 0) + 1;
                     ubisMap[u] = (ubisMap[u] || 0) + 1;
-                    datelSet.add(d); ubisSet.add(u);
 
                     if (!rekapMap[d]) {
                         rekapMap[d] = { lunasJml: 0, lunasTag: 0, belumJml: 0, belumTag: 0 };
@@ -3459,9 +3475,6 @@
                     document.getElementById('bar-paid-b').style.width = pctL + '%';
                     document.getElementById('bar-unpaid-b').style.width = pctB + '%';
                 }, 100);
-
-                TableManager.populateSelect('filter-ubis-billper', ubisSet, 'Semua UBIS');
-                TableManager.populateSelect('filter-datel-billper', datelSet, 'Semua Datel');
 
                 const topDatel = Object.entries(datelMap).sort((a, b) => b[1] - a[1]).slice(0, 5);
                 const ctxBar = document.getElementById('barChartBillper').getContext('2d');
@@ -3537,14 +3550,8 @@
                 this.state.filtered = this.state.data.filter(r => {
                     const matchQ = q === '' || Utils.getDynamicValue(r, ['snd']).toLowerCase().includes(q) || Utils.getDynamicValue(r, ['nama']).toLowerCase().includes(q);
 
-                    let dRaw = Utils.getDynamicValue(r, ['datel', 'sto', 'witel', 'stodesc']).toUpperCase();
-                    let dtVal = (dRaw === '' || dRaw === '-' || dRaw === 'N/A' || dRaw === '#N/A') ? 'TIDAK TERDEFINISI' : dRaw;
-
-                    let uRaw = Utils.getDynamicValue(r, ['ubis', 'sektor']).toUpperCase();
-                    let ubisVal = (uRaw === '' || uRaw === '-' || uRaw === 'N/A' || uRaw === '#N/A') ? 'TIDAK TERDEFINISI' : uRaw;
-
-                    const matchU = u === 'all' || ubisVal === u;
-                    const matchD = d === 'all' || dtVal === d;
+                    const matchU = u === 'all' || this.getUbis(r) === u;
+                    const matchD = d === 'all' || this.getDatel(r) === d;
 
                     const isP = Utils.isPaid(r);
                     const matchS = s === 'all' || (s === 'lunas' ? isP : !isP);
@@ -3552,7 +3559,7 @@
                     return matchQ && matchU && matchD && matchS;
                 });
                 this.state.page = 1;
-                this.renderTable();
+                this.processData();
             }
 
             renderTable() {
@@ -3563,7 +3570,7 @@
                 const paginated = filtered.slice(start, start + limit);
 
                 if (paginated.length === 0) {
-                    tbody.innerHTML = `<tr><td colspan="8" class="text-center py-10 font-bold text-textMuted">Tidak ada data ditemukan.</td></tr>`;
+                    tbody.innerHTML = `<tr><td colspan="9" class="text-center py-10 font-bold text-textMuted">Tidak ada data ditemukan.</td></tr>`;
                 } else {
                     paginated.forEach((r, index) => {
                         const paid = Utils.isPaid(r);
@@ -3578,6 +3585,7 @@
                                         <td class="px-7 py-4 font-bold">${Utils.getDynamicValue(r, ['ubis'])}</td>
                                         <td class="px-7 py-4">${Utils.getNeoBadge(paid, statusStr.toUpperCase())}</td>
                                         <td class="px-7 py-4 text-xs text-textMuted">${Utils.getDynamicValue(r, ['tgl_bayar', 'tgl bayar']) || '-'}</td>
+                                        <td class="px-7 py-4 text-right font-semibold">Rp ${this.getSaldo(r).toLocaleString('id-ID')}</td>
                                         <td class="px-7 py-4 text-center"><button type="button" data-global-detail="billper:${start + index}" aria-label="Lihat detail data Billper" class="bento-btn h-9 w-9 rounded-xl bg-red-50 text-primary hover:bg-red-100"><i class="fas fa-eye text-xs"></i></button></td>
                                     </tr>
                                 `;
