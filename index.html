@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="id">lll
 
 <head>
     <meta charset="UTF-8">
@@ -259,9 +259,9 @@
                         class="text-[10px] font-bold text-textMuted uppercase mb-2 ml-1 tracking-wider block">Password</label>
                     <div class="relative">
                         <input type="password" id="login-password" autocomplete="current-password" required
-                            class="bento-input w-full px-4 py-3 pr-11 text-sm font-medium" placeholder="Masukkan password">
-                        <button type="button" id="login-password-toggle" tabindex="-1"
-                            aria-label="Tampilkan password"
+                            class="bento-input w-full px-4 py-3 pr-11 text-sm font-medium"
+                            placeholder="Masukkan password">
+                        <button type="button" id="login-password-toggle" tabindex="-1" aria-label="Tampilkan password"
                             class="absolute right-3 top-1/2 -translate-y-1/2 text-textMuted hover:text-textMain">
                             <i class="fas fa-eye"></i>
                         </button>
@@ -355,7 +355,8 @@
                         class="bento-input w-full px-4 py-3 text-sm font-medium cursor-pointer appearance-none"></select>
                 </div>
                 <div id="voc-edit-keterangan-wrapper">
-                    <label class="text-[10px] font-bold text-textMuted uppercase mb-2 ml-1 tracking-wider block">Keterangan</label>
+                    <label
+                        class="text-[10px] font-bold text-textMuted uppercase mb-2 ml-1 tracking-wider block">Keterangan</label>
                     <textarea id="voc-edit-keterangan" rows="3"
                         class="bento-input w-full px-4 py-3 text-sm font-medium resize-none"
                         placeholder="Tambahkan keterangan..."></textarea>
@@ -607,230 +608,7 @@
         <main class="p-6 md:p-8 max-w-[1600px] w-full mx-auto flex-1 pb-16 space-y-8">
 
             <!-- ============================================== -->
-            <!-- MODULE: DATA C3MR EGBIS                      -->
-            <!-- ============================================== -->
-            <section id="module-c3mr-dashboard" class="space-y-8 hidden-module fade-in">
-
-                <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-                    <div class="lg:col-span-8 flex flex-col gap-6">
-                        <!-- Banner -->
-                        <div
-                            class="bento-card grad-banner p-6 md:p-8 flex flex-col justify-center relative overflow-hidden h-32 border-none">
-                            <div class="absolute right-0 top-0 opacity-[0.03] -mt-10 -mr-10 transform rotate-6">
-                                <i class="fas fa-database text-[160px] text-primary"></i>
-                            </div>
-                            <h2 class="text-xl md:text-2xl font-poppins font-bold text-textMain z-10 tracking-tight">
-                                Data C3MR</h2>
-                            <p class="text-sm text-textMuted mt-1.5 z-10 max-w-lg font-medium">Pantau pencapaian data
-                                pelunasan C3MR untuk mencapai target performa bulanan dengan akurat.</p>
-                        </div>
-
-                        <!-- KPIs -->
-                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 flex-1">
-                            <div
-                                class="bento-card grad-kpi-total p-6 md:p-7 flex flex-col relative justify-center border-none overflow-hidden group">
-                                <i
-                                    class="fas fa-layer-group absolute -right-4 -bottom-4 text-[90px] text-white opacity-10 transform group-hover:scale-110 transition-transform duration-500"></i>
-                                <div
-                                    class="w-12 h-12 icon-bg-white-20 text-white rounded-xl flex items-center justify-center mb-5 z-10 shadow-inner-light">
-                                    <i class="fas fa-layer-group text-lg"></i>
-                                </div>
-                                <span class="text-[11px] font-bold text-white/80 uppercase tracking-widest z-10">Total
-                                    Data</span>
-                                <div class="text-4xl font-poppins font-extrabold text-white mt-1 z-10 tracking-tight"
-                                    id="score-c3mr-total">0</div>
-                            </div>
-
-                            <div
-                                class="bento-card grad-kpi-lunas p-6 md:p-7 flex flex-col relative justify-center border-none overflow-hidden group">
-                                <i
-                                    class="fas fa-check-circle absolute -right-4 -bottom-4 text-[90px] text-white opacity-10 transform group-hover:scale-110 transition-transform duration-500"></i>
-                                <div
-                                    class="w-12 h-12 icon-bg-white-20 text-white rounded-xl flex items-center justify-center mb-5 z-10 shadow-inner-light">
-                                    <i class="fas fa-check-circle text-lg"></i>
-                                </div>
-                                <span class="text-[11px] font-bold text-white/80 uppercase tracking-widest z-10">Total
-                                    Lunas</span>
-                                <div class="text-4xl font-poppins font-extrabold text-white mt-1 z-10 tracking-tight"
-                                    id="score-c3mr-lunas">0</div>
-                            </div>
-
-                            <div
-                                class="bento-card grad-kpi-belum p-6 md:p-7 flex flex-col relative justify-center border-none overflow-hidden group">
-                                <i
-                                    class="fas fa-wallet absolute -right-4 -bottom-4 text-[90px] text-white opacity-10 transform group-hover:scale-110 transition-transform duration-500"></i>
-                                <div
-                                    class="w-12 h-12 icon-bg-white-20 text-white rounded-xl flex items-center justify-center mb-5 z-10 shadow-inner-light">
-                                    <i class="fas fa-wallet text-lg"></i>
-                                </div>
-                                <span class="text-[11px] font-bold text-white/80 uppercase tracking-widest z-10">Belum
-                                    Lunas</span>
-                                <div class="text-4xl font-poppins font-extrabold text-white mt-1 z-10 tracking-tight"
-                                    id="score-c3mr-belum">0</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Right Column (4) -->
-                    <div id="card-pelunasan-c3mr"
-                        class="bento-card p-7 flex flex-col justify-between lg:col-span-4 min-h-[300px]">
-                        <div class="flex justify-between items-center pb-5 border-b border-borderLight">
-                            <h3 class="font-poppins font-bold text-sm text-textMain uppercase tracking-wider">Realisasi
-                                C3MR</h3>
-                            <button id="btn-export-c3mr"
-                                class="bento-btn w-9 h-9 bg-surfaceAlt border border-borderLight hover:bg-borderLight rounded-xl text-textMuted flex justify-center items-center transition-colors shadow-sm"><i
-                                    class="fas fa-download text-xs"></i></button>
-                        </div>
-                        <div class="space-y-7 py-6 flex-1 flex flex-col justify-center">
-                            <div>
-                                <div class="flex justify-between items-end mb-2.5">
-                                    <span
-                                        class="text-xs font-bold text-textMuted uppercase tracking-wider flex items-center gap-2">
-                                        <div class="w-2 h-2 rounded-full bg-emerald-500"></div> Lunas (Paid)
-                                    </span>
-                                    <span class="text-xl font-extrabold text-textMain"><span
-                                            id="pct-paid-info-c">0</span>%</span>
-                                </div>
-                                <div
-                                    class="w-full bg-surfaceAlt border border-borderLight rounded-full h-3.5 overflow-hidden p-[2px] shadow-inner">
-                                    <div id="bar-paid-c"
-                                        class="h-full bg-gradient-to-r from-emerald-400 to-emerald-600 rounded-full bar-transition w-0 shadow-sm">
-                                    </div>
-                                </div>
-                            </div>
-                            <div>
-                                <div class="flex justify-between items-end mb-2.5">
-                                    <span
-                                        class="text-xs font-bold text-textMuted uppercase tracking-wider flex items-center gap-2">
-                                        <div class="w-2 h-2 rounded-full bg-primary"></div> Belum Lunas
-                                    </span>
-                                    <span class="text-xl font-extrabold text-textMain"><span
-                                            id="pct-unpaid-info-c">0</span>%</span>
-                                </div>
-                                <div
-                                    class="w-full bg-surfaceAlt border border-borderLight rounded-full h-3.5 overflow-hidden p-[2px] shadow-inner">
-                                    <div id="bar-unpaid-c"
-                                        class="h-full bg-gradient-to-r from-[#E70000] to-[#C50000] rounded-full bar-transition w-0 shadow-sm">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div
-                            class="bg-gradient-to-r from-rose-50 to-white border border-rose-100 p-4 rounded-[16px] flex justify-between items-center mt-2 shadow-sm">
-                            <span class="font-bold text-xs uppercase text-rose-800 tracking-wider">Sisa Gap
-                                Target</span>
-                            <span class="font-extrabold text-2xl text-primary drop-shadow-sm" id="text-gap-c">0%</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Charts Row -->
-                <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-                    <div class="bento-card p-7 flex flex-col lg:col-span-8">
-                        <div class="flex items-center gap-3 mb-6 pb-4 border-b border-borderLight">
-                            <div class="w-8 h-8 rounded-lg bg-red-50 text-primary flex items-center justify-center"><i
-                                    class="fas fa-chart-bar text-sm"></i></div>
-                            <h3 class="text-sm font-poppins font-bold text-textMain uppercase tracking-wider">Sebaran
-                                Datel (Top 5)</h3>
-                        </div>
-                        <div class="relative w-full flex-1 min-h-[260px]"><canvas id="barChartC3mr"></canvas></div>
-                    </div>
-
-                    <div class="bento-card p-7 flex flex-col lg:col-span-4">
-                        <div class="flex items-center gap-3 mb-6 pb-4 border-b border-borderLight">
-                            <div class="w-8 h-8 rounded-lg bg-red-50 text-primary flex items-center justify-center"><i
-                                    class="fas fa-chart-pie text-sm"></i></div>
-                            <h3 class="text-sm font-poppins font-bold text-textMain uppercase tracking-wider">Rasio UBIS
-                            </h3>
-                        </div>
-                        <div class="relative w-full flex-1 flex justify-center min-h-[260px]"><canvas
-                                id="donutChartC3mr"></canvas></div>
-                    </div>
-                </div>
-
-                <!-- Table Container -->
-                <div class="bento-card overflow-hidden flex flex-col">
-                    <div class="p-6 md:p-8 border-b border-borderLight bg-white">
-                        <h3
-                            class="text-base font-poppins font-bold mb-6 text-textMain uppercase tracking-wider flex items-center gap-3">
-                            <div
-                                class="w-10 h-10 bg-red-50 border border-red-100 text-primary rounded-xl flex items-center justify-center shadow-sm">
-                                <i class="fas fa-table text-base"></i>
-                            </div>
-                            Detail Data C3MR
-                        </h3>
-                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5" id="filters-c3mr">
-                            <div class="flex flex-col">
-                                <label
-                                    class="text-[10px] font-bold text-textMuted uppercase mb-2 ml-1 tracking-wider">Pencarian
-                                    Global</label>
-                                <div class="relative shadow-sm rounded-xl">
-                                    <i
-                                        class="fas fa-search absolute left-4 top-1/2 transform -translate-y-1/2 text-textMuted text-xs"></i>
-                                    <input type="text" id="search-c3mr"
-                                        class="bento-input w-full pl-10 pr-4 py-3 text-sm font-medium"
-                                        placeholder="Cari SND / Nama...">
-                                </div>
-                            </div>
-                            <div class="flex flex-col"><label
-                                    class="text-[10px] font-bold text-textMuted uppercase mb-2 ml-1 tracking-wider">Filter
-                                    UBIS</label><select id="filter-ubis-c3mr"
-                                    class="bento-input w-full px-4 py-3 text-sm font-medium cursor-pointer appearance-none shadow-sm">
-                                    <option value="all">Semua UBIS</option>
-                                </select></div>
-                            <div class="flex flex-col"><label
-                                    class="text-[10px] font-bold text-textMuted uppercase mb-2 ml-1 tracking-wider">Filter
-                                    DATEL</label><select id="filter-datel-c3mr"
-                                    class="bento-input w-full px-4 py-3 text-sm font-medium cursor-pointer appearance-none shadow-sm">
-                                    <option value="all">Semua Datel</option>
-                                </select></div>
-                            <div class="flex flex-col"><label
-                                    class="text-[10px] font-bold text-primary uppercase mb-2 ml-1 tracking-wider">Status
-                                    Pelunasan</label><select id="filter-status-c3mr"
-                                    class="bento-input w-full px-4 py-3 text-sm font-bold cursor-pointer appearance-none border-primary/30 shadow-sm text-primary bg-red-50/30">
-                                    <option value="all">Semua Status</option>
-                                    <option value="lunas">Lunas</option>
-                                    <option value="belum">Belum Lunas</option>
-                                </select></div>
-                        </div>
-                    </div>
-
-                    <div class="table-scroll overflow-x-auto w-full">
-                        <table class="w-full whitespace-nowrap min-w-[800px]">
-                            <thead
-                                class="bg-surfaceAlt text-left text-[11px] font-bold text-textMuted uppercase tracking-wider border-b border-borderLight">
-                                <tr>
-                                    <th class="px-7 py-5">SND</th>
-                                    <th class="px-7 py-5">Nama Pelanggan</th>
-                                    <th class="px-7 py-5">Alamat Lengkap</th>
-                                    <th class="px-7 py-5">Datel</th>
-                                    <th class="px-7 py-5">UBIS</th>
-                                    <th class="px-7 py-5">Status</th>
-                                    <th class="px-7 py-5">Tgl Bayar</th>
-                                    <th class="px-7 py-5 text-center">Detail</th>
-                                </tr>
-                            </thead>
-                            <tbody id="tbody-c3mr" class="text-sm divide-y divide-borderLight text-textMain bg-white">
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <div class="p-5 border-t border-borderLight bg-surface flex justify-between items-center">
-                        <span id="page-info-c3mr"
-                            class="text-xs font-bold text-textMuted bg-surfaceAlt border border-borderLight px-4 py-2 rounded-xl shadow-sm">Data:
-                            0</span>
-                        <div class="flex gap-3">
-                            <button id="btn-prev-c3mr"
-                                class="bento-btn bg-white px-5 py-2.5 rounded-xl border border-borderLight hover:bg-gray-50 font-bold text-xs text-textMuted shadow-sm">Sebelumnya</button>
-                            <button id="btn-next-c3mr"
-                                class="bento-btn bg-primary hover:bg-primaryDark text-white px-5 py-2.5 rounded-xl font-bold text-xs shadow-md border border-transparent">Selanjutnya</button>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- ============================================== -->
-            <!-- MODULE: DATA CARING                     -->
+            <!-- MODULE: DATA CARING                            -->
             <!-- ============================================== -->
             <section id="module-caring-dashboard" class="space-y-8 hidden-module fade-in">
 
@@ -1063,7 +841,230 @@
             </section>
 
             <!-- ============================================== -->
-            <!-- MODULE: DATA BILLPER                         -->
+            <!-- MODULE: DATA C3MR EGBIS                        -->
+            <!-- ============================================== -->
+            <section id="module-c3mr-dashboard" class="space-y-8 hidden-module fade-in">
+
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                    <div class="lg:col-span-8 flex flex-col gap-6">
+                        <!-- Banner -->
+                        <div
+                            class="bento-card grad-banner p-6 md:p-8 flex flex-col justify-center relative overflow-hidden h-32 border-none">
+                            <div class="absolute right-0 top-0 opacity-[0.03] -mt-10 -mr-10 transform rotate-6">
+                                <i class="fas fa-database text-[160px] text-primary"></i>
+                            </div>
+                            <h2 class="text-xl md:text-2xl font-poppins font-bold text-textMain z-10 tracking-tight">
+                                Data C3MR</h2>
+                            <p class="text-sm text-textMuted mt-1.5 z-10 max-w-lg font-medium">Pantau pencapaian data
+                                pelunasan C3MR untuk mencapai target performa bulanan dengan akurat.</p>
+                        </div>
+
+                        <!-- KPIs -->
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 flex-1">
+                            <div
+                                class="bento-card grad-kpi-total p-6 md:p-7 flex flex-col relative justify-center border-none overflow-hidden group">
+                                <i
+                                    class="fas fa-layer-group absolute -right-4 -bottom-4 text-[90px] text-white opacity-10 transform group-hover:scale-110 transition-transform duration-500"></i>
+                                <div
+                                    class="w-12 h-12 icon-bg-white-20 text-white rounded-xl flex items-center justify-center mb-5 z-10 shadow-inner-light">
+                                    <i class="fas fa-layer-group text-lg"></i>
+                                </div>
+                                <span class="text-[11px] font-bold text-white/80 uppercase tracking-widest z-10">Total
+                                    Data</span>
+                                <div class="text-4xl font-poppins font-extrabold text-white mt-1 z-10 tracking-tight"
+                                    id="score-c3mr-total">0</div>
+                            </div>
+
+                            <div
+                                class="bento-card grad-kpi-lunas p-6 md:p-7 flex flex-col relative justify-center border-none overflow-hidden group">
+                                <i
+                                    class="fas fa-check-circle absolute -right-4 -bottom-4 text-[90px] text-white opacity-10 transform group-hover:scale-110 transition-transform duration-500"></i>
+                                <div
+                                    class="w-12 h-12 icon-bg-white-20 text-white rounded-xl flex items-center justify-center mb-5 z-10 shadow-inner-light">
+                                    <i class="fas fa-check-circle text-lg"></i>
+                                </div>
+                                <span class="text-[11px] font-bold text-white/80 uppercase tracking-widest z-10">Total
+                                    Lunas</span>
+                                <div class="text-4xl font-poppins font-extrabold text-white mt-1 z-10 tracking-tight"
+                                    id="score-c3mr-lunas">0</div>
+                            </div>
+
+                            <div
+                                class="bento-card grad-kpi-belum p-6 md:p-7 flex flex-col relative justify-center border-none overflow-hidden group">
+                                <i
+                                    class="fas fa-wallet absolute -right-4 -bottom-4 text-[90px] text-white opacity-10 transform group-hover:scale-110 transition-transform duration-500"></i>
+                                <div
+                                    class="w-12 h-12 icon-bg-white-20 text-white rounded-xl flex items-center justify-center mb-5 z-10 shadow-inner-light">
+                                    <i class="fas fa-wallet text-lg"></i>
+                                </div>
+                                <span class="text-[11px] font-bold text-white/80 uppercase tracking-widest z-10">Belum
+                                    Lunas</span>
+                                <div class="text-4xl font-poppins font-extrabold text-white mt-1 z-10 tracking-tight"
+                                    id="score-c3mr-belum">0</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Column (4) -->
+                    <div id="card-pelunasan-c3mr"
+                        class="bento-card p-7 flex flex-col justify-between lg:col-span-4 min-h-[300px]">
+                        <div class="flex justify-between items-center pb-5 border-b border-borderLight">
+                            <h3 class="font-poppins font-bold text-sm text-textMain uppercase tracking-wider">Realisasi
+                                C3MR</h3>
+                            <button id="btn-export-c3mr"
+                                class="bento-btn w-9 h-9 bg-surfaceAlt border border-borderLight hover:bg-borderLight rounded-xl text-textMuted flex justify-center items-center transition-colors shadow-sm"><i
+                                    class="fas fa-download text-xs"></i></button>
+                        </div>
+                        <div class="space-y-7 py-6 flex-1 flex flex-col justify-center">
+                            <div>
+                                <div class="flex justify-between items-end mb-2.5">
+                                    <span
+                                        class="text-xs font-bold text-textMuted uppercase tracking-wider flex items-center gap-2">
+                                        <div class="w-2 h-2 rounded-full bg-emerald-500"></div> Lunas (Paid)
+                                    </span>
+                                    <span class="text-xl font-extrabold text-textMain"><span
+                                            id="pct-paid-info-c">0</span>%</span>
+                                </div>
+                                <div
+                                    class="w-full bg-surfaceAlt border border-borderLight rounded-full h-3.5 overflow-hidden p-[2px] shadow-inner">
+                                    <div id="bar-paid-c"
+                                        class="h-full bg-gradient-to-r from-emerald-400 to-emerald-600 rounded-full bar-transition w-0 shadow-sm">
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between items-end mb-2.5">
+                                    <span
+                                        class="text-xs font-bold text-textMuted uppercase tracking-wider flex items-center gap-2">
+                                        <div class="w-2 h-2 rounded-full bg-primary"></div> Belum Lunas
+                                    </span>
+                                    <span class="text-xl font-extrabold text-textMain"><span
+                                            id="pct-unpaid-info-c">0</span>%</span>
+                                </div>
+                                <div
+                                    class="w-full bg-surfaceAlt border border-borderLight rounded-full h-3.5 overflow-hidden p-[2px] shadow-inner">
+                                    <div id="bar-unpaid-c"
+                                        class="h-full bg-gradient-to-r from-[#E70000] to-[#C50000] rounded-full bar-transition w-0 shadow-sm">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div
+                            class="bg-gradient-to-r from-rose-50 to-white border border-rose-100 p-4 rounded-[16px] flex justify-between items-center mt-2 shadow-sm">
+                            <span class="font-bold text-xs uppercase text-rose-800 tracking-wider">Sisa Gap
+                                Target</span>
+                            <span class="font-extrabold text-2xl text-primary drop-shadow-sm" id="text-gap-c">0%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Charts Row -->
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                    <div class="bento-card p-7 flex flex-col lg:col-span-8">
+                        <div class="flex items-center gap-3 mb-6 pb-4 border-b border-borderLight">
+                            <div class="w-8 h-8 rounded-lg bg-red-50 text-primary flex items-center justify-center"><i
+                                    class="fas fa-chart-bar text-sm"></i></div>
+                            <h3 class="text-sm font-poppins font-bold text-textMain uppercase tracking-wider">Sebaran
+                                Datel (Top 5)</h3>
+                        </div>
+                        <div class="relative w-full flex-1 min-h-[260px]"><canvas id="barChartC3mr"></canvas></div>
+                    </div>
+
+                    <div class="bento-card p-7 flex flex-col lg:col-span-4">
+                        <div class="flex items-center gap-3 mb-6 pb-4 border-b border-borderLight">
+                            <div class="w-8 h-8 rounded-lg bg-red-50 text-primary flex items-center justify-center"><i
+                                    class="fas fa-chart-pie text-sm"></i></div>
+                            <h3 class="text-sm font-poppins font-bold text-textMain uppercase tracking-wider">Rasio UBIS
+                            </h3>
+                        </div>
+                        <div class="relative w-full flex-1 flex justify-center min-h-[260px]"><canvas
+                                id="donutChartC3mr"></canvas></div>
+                    </div>
+                </div>
+
+                <!-- Table Container -->
+                <div class="bento-card overflow-hidden flex flex-col">
+                    <div class="p-6 md:p-8 border-b border-borderLight bg-white">
+                        <h3
+                            class="text-base font-poppins font-bold mb-6 text-textMain uppercase tracking-wider flex items-center gap-3">
+                            <div
+                                class="w-10 h-10 bg-red-50 border border-red-100 text-primary rounded-xl flex items-center justify-center shadow-sm">
+                                <i class="fas fa-table text-base"></i>
+                            </div>
+                            Detail Data C3MR
+                        </h3>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5" id="filters-c3mr">
+                            <div class="flex flex-col">
+                                <label
+                                    class="text-[10px] font-bold text-textMuted uppercase mb-2 ml-1 tracking-wider">Pencarian
+                                    Global</label>
+                                <div class="relative shadow-sm rounded-xl">
+                                    <i
+                                        class="fas fa-search absolute left-4 top-1/2 transform -translate-y-1/2 text-textMuted text-xs"></i>
+                                    <input type="text" id="search-c3mr"
+                                        class="bento-input w-full pl-10 pr-4 py-3 text-sm font-medium"
+                                        placeholder="Cari SND / Nama...">
+                                </div>
+                            </div>
+                            <div class="flex flex-col"><label
+                                    class="text-[10px] font-bold text-textMuted uppercase mb-2 ml-1 tracking-wider">Filter
+                                    UBIS</label><select id="filter-ubis-c3mr"
+                                    class="bento-input w-full px-4 py-3 text-sm font-medium cursor-pointer appearance-none shadow-sm">
+                                    <option value="all">Semua UBIS</option>
+                                </select></div>
+                            <div class="flex flex-col"><label
+                                    class="text-[10px] font-bold text-textMuted uppercase mb-2 ml-1 tracking-wider">Filter
+                                    DATEL</label><select id="filter-datel-c3mr"
+                                    class="bento-input w-full px-4 py-3 text-sm font-medium cursor-pointer appearance-none shadow-sm">
+                                    <option value="all">Semua Datel</option>
+                                </select></div>
+                            <div class="flex flex-col"><label
+                                    class="text-[10px] font-bold text-primary uppercase mb-2 ml-1 tracking-wider">Status
+                                    Pelunasan</label><select id="filter-status-c3mr"
+                                    class="bento-input w-full px-4 py-3 text-sm font-bold cursor-pointer appearance-none border-primary/30 shadow-sm text-primary bg-red-50/30">
+                                    <option value="all">Semua Status</option>
+                                    <option value="lunas">Lunas</option>
+                                    <option value="belum">Belum Lunas</option>
+                                </select></div>
+                        </div>
+                    </div>
+
+                    <div class="table-scroll overflow-x-auto w-full">
+                        <table class="w-full whitespace-nowrap min-w-[800px]">
+                            <thead
+                                class="bg-surfaceAlt text-left text-[11px] font-bold text-textMuted uppercase tracking-wider border-b border-borderLight">
+                                <tr>
+                                    <th class="px-7 py-5">SND</th>
+                                    <th class="px-7 py-5">Nama Pelanggan</th>
+                                    <th class="px-7 py-5">Alamat Lengkap</th>
+                                    <th class="px-7 py-5">Datel</th>
+                                    <th class="px-7 py-5">UBIS</th>
+                                    <th class="px-7 py-5">Status</th>
+                                    <th class="px-7 py-5">Tgl Bayar</th>
+                                    <th class="px-7 py-5 text-center">Detail</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbody-c3mr" class="text-sm divide-y divide-borderLight text-textMain bg-white">
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="p-5 border-t border-borderLight bg-surface flex justify-between items-center">
+                        <span id="page-info-c3mr"
+                            class="text-xs font-bold text-textMuted bg-surfaceAlt border border-borderLight px-4 py-2 rounded-xl shadow-sm">Data:
+                            0</span>
+                        <div class="flex gap-3">
+                            <button id="btn-prev-c3mr"
+                                class="bento-btn bg-white px-5 py-2.5 rounded-xl border border-borderLight hover:bg-gray-50 font-bold text-xs text-textMuted shadow-sm">Sebelumnya</button>
+                            <button id="btn-next-c3mr"
+                                class="bento-btn bg-primary hover:bg-primaryDark text-white px-5 py-2.5 rounded-xl font-bold text-xs shadow-md border border-transparent">Selanjutnya</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ============================================== -->
+            <!-- MODULE: DATA BILLPER                           -->
             <!-- ============================================== -->
             <section id="module-billper-dashboard" class="space-y-8 hidden-module fade-in">
 
@@ -1330,7 +1331,7 @@
             </section>
 
             <!-- ============================================== -->
-            <!-- MODULE: DATA PRANPC                          -->
+            <!-- MODULE: DATA PRANPC                            -->
             <!-- ============================================== -->
             <section id="module-pranpc-dashboard" class="space-y-8 hidden-module fade-in">
 
@@ -1806,7 +1807,7 @@
             </section>
 
             <!-- ============================================== -->
-            <!-- MODULE: POTS FLAGGING                         -->
+            <!-- MODULE: POTS FLAGGING                          -->
             <!-- ============================================== -->
             <section id="module-pots-flagging" class="space-y-8 hidden-module fade-in">
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -1895,159 +1896,8 @@
             </section>
 
             <!-- ============================================== -->
-            <!-- MODULE: VISIT COLLECTION                       -->
-            <!-- ============================================== -->
-            <section id="module-visit-collection" class="space-y-8 hidden-module fade-in">
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                    <div
-                        class="bento-card grad-kpi-total p-6 md:p-7 flex flex-col relative justify-center border-none overflow-hidden group">
-                        <i
-                            class="fas fa-route absolute -right-4 -bottom-4 text-[90px] text-white opacity-10 transform group-hover:scale-110 transition-transform duration-500"></i>
-                        <div
-                            class="w-12 h-12 icon-bg-white-20 text-white rounded-xl flex items-center justify-center mb-5 z-10 shadow-inner-light">
-                            <i class="fas fa-route text-lg"></i>
-                        </div>
-                        <span class="text-[11px] font-bold text-white/80 uppercase tracking-widest z-10">Total
-                            Activity</span>
-                        <div class="text-4xl font-poppins font-extrabold text-white mt-1 z-10 tracking-tight"
-                            id="score-visit-total">0</div>
-                    </div>
-                    <div
-                        class="bento-card grad-kpi-info p-6 md:p-7 flex flex-col relative justify-center border-none overflow-hidden group">
-                        <i
-                            class="fas fa-users absolute -right-4 -bottom-4 text-[90px] text-white opacity-10 transform group-hover:scale-110 transition-transform duration-500"></i>
-                        <div
-                            class="w-12 h-12 icon-bg-white-20 text-white rounded-xl flex items-center justify-center mb-5 z-10 shadow-inner-light">
-                            <i class="fas fa-users text-lg"></i>
-                        </div>
-                        <span class="text-[11px] font-bold text-white/80 uppercase tracking-widest z-10">Bertemu
-                            Pelanggan</span>
-                        <div class="text-4xl font-poppins font-extrabold text-white mt-1 z-10 tracking-tight"
-                            id="score-visit-bertemu">0</div>
-                    </div>
-                    <div
-                        class="bento-card grad-kpi-lunas p-6 md:p-7 flex flex-col relative justify-center border-none overflow-hidden group">
-                        <i
-                            class="fas fa-check-circle absolute -right-4 -bottom-4 text-[90px] text-white opacity-10 transform group-hover:scale-110 transition-transform duration-500"></i>
-                        <div
-                            class="w-12 h-12 icon-bg-white-20 text-white rounded-xl flex items-center justify-center mb-5 z-10 shadow-inner-light">
-                            <i class="fas fa-check-circle text-lg"></i>
-                        </div>
-                        <span class="text-[11px] font-bold text-white/80 uppercase tracking-widest z-10">Total
-                            Lunas</span>
-                        <div class="text-4xl font-poppins font-extrabold text-white mt-1 z-10 tracking-tight"
-                            id="score-visit-lunas">0</div>
-                    </div>
-                    <div
-                        class="bento-card grad-kpi-belum p-6 md:p-7 flex flex-col relative justify-center border-none overflow-hidden group">
-                        <i
-                            class="fas fa-wallet absolute -right-4 -bottom-4 text-[90px] text-white opacity-10 transform group-hover:scale-110 transition-transform duration-500"></i>
-                        <div
-                            class="w-12 h-12 icon-bg-white-20 text-white rounded-xl flex items-center justify-center mb-5 z-10 shadow-inner-light">
-                            <i class="fas fa-wallet text-lg"></i>
-                        </div>
-                        <span class="text-[11px] font-bold text-white/80 uppercase tracking-widest z-10">Belum
-                            Lunas</span>
-                        <div class="text-4xl font-poppins font-extrabold text-white mt-1 z-10 tracking-tight"
-                            id="score-visit-belum">0</div>
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-                    <div class="bento-card p-7 lg:col-span-8 flex flex-col">
-                        <div class="flex items-center gap-3 mb-6 pb-4 border-b border-borderLight">
-                            <div class="w-8 h-8 rounded-lg bg-red-50 text-primary flex items-center justify-center"><i
-                                    class="fas fa-chart-bar text-sm"></i></div>
-                            <h3 class="text-sm font-poppins font-bold text-textMain uppercase tracking-wider">Activity
-                                Reason</h3>
-                        </div>
-                        <div class="relative w-full flex-1 min-h-[260px]"><canvas id="barChartVisit"></canvas></div>
-                    </div>
-                    <div class="bento-card p-7 lg:col-span-4 flex flex-col">
-                        <div class="flex items-center gap-3 mb-6 pb-4 border-b border-borderLight">
-                            <div class="w-8 h-8 rounded-lg bg-red-50 text-primary flex items-center justify-center"><i
-                                    class="fas fa-chart-pie text-sm"></i></div>
-                            <h3 class="text-sm font-poppins font-bold text-textMain uppercase tracking-wider">Rasio
-                                Kunjungan</h3>
-                        </div>
-                        <div class="relative w-full flex-1 flex justify-center min-h-[260px]"><canvas
-                                id="donutChartVisit"></canvas></div>
-                    </div>
-                </div>
-
-                <div class="bento-card overflow-hidden flex flex-col bg-white">
-                    <div class="p-6 md:p-8 border-b border-borderLight">
-                        <h3
-                            class="text-base font-poppins font-bold mb-6 text-textMain uppercase tracking-wider flex items-center gap-3">
-                            <div
-                                class="w-10 h-10 bg-red-50 border border-red-100 text-primary rounded-xl flex items-center justify-center shadow-sm">
-                                <i class="fas fa-table text-base"></i>
-                            </div>
-                            Detail Data Visit Collection
-                        </h3>
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-5" id="filters-visit">
-                            <div class="flex flex-col">
-                                <label
-                                    class="text-[10px] font-bold text-textMuted uppercase mb-2 ml-1 tracking-wider">Pencarian
-                                    Global</label>
-                                <div class="relative shadow-sm rounded-xl">
-                                    <i
-                                        class="fas fa-search absolute left-4 top-1/2 transform -translate-y-1/2 text-textMuted text-xs"></i>
-                                    <input type="text" id="search-visit"
-                                        class="bento-input w-full pl-10 pr-4 py-3 text-sm font-medium"
-                                        placeholder="Cari SND / Nama...">
-                                </div>
-                            </div>
-                            <div class="flex flex-col">
-                                <label
-                                    class="text-[10px] font-bold text-primary uppercase mb-2 ml-1 tracking-wider">Filter
-                                    Alasan</label>
-                                <select id="filter-reason-visit"
-                                    class="bento-input w-full px-4 py-3 text-sm font-bold cursor-pointer appearance-none shadow-sm text-primary border-primary/30 bg-red-50/30">
-                                    <option value="all">Semua Alasan</option>
-                                    <option value="janji bayar">Janji Bayar</option>
-                                    <option value="bersedia bayar di tempat">Bersedia Bayar di Tempat</option>
-                                    <option value="cabut">Cabut</option>
-                                    <option value="layanan tidak dipakai">Layanan Tidak Dipakai</option>
-                                    <option value="terkendala biaya">Terkendala Biaya</option>
-                                    <option value="lain-lain">Lain-lain</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="table-scroll overflow-x-auto w-full">
-                        <table class="w-full whitespace-nowrap min-w-[800px]">
-                            <thead
-                                class="bg-surfaceAlt text-left text-[11px] font-bold text-textMuted uppercase tracking-wider border-b border-borderLight">
-                                <tr>
-                                    <th class="px-7 py-5">SND</th>
-                                    <th class="px-7 py-5">Nama Pelanggan</th>
-                                    <th class="px-7 py-5">Alamat Lengkap</th>
-                                    <th class="px-7 py-5">Status Pembayaran</th>
-                                    <th class="px-7 py-5">Activity Reason</th>
-                                    <th class="px-7 py-5 text-center">Detail</th>
-                                </tr>
-                            </thead>
-                            <tbody id="tbody-visit" class="text-sm divide-y divide-borderLight text-textMain bg-white">
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="p-5 border-t border-borderLight bg-surface flex justify-between items-center">
-                        <span id="page-info-visit"
-                            class="text-xs font-bold text-textMuted bg-surfaceAlt border border-borderLight px-4 py-2 rounded-xl shadow-sm">Data:
-                            0</span>
-                        <div class="flex gap-3">
-                            <button id="btn-prev-visit"
-                                class="bento-btn bg-white px-5 py-2.5 rounded-xl border border-borderLight hover:bg-gray-50 font-bold text-xs text-textMuted shadow-sm">Sebelumnya</button>
-                            <button id="btn-next-visit"
-                                class="bento-btn bg-primary hover:bg-primaryDark text-white px-5 py-2.5 rounded-xl font-bold text-xs shadow-md border border-transparent">Selanjutnya</button>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- ============================================== -->
             <!-- MODULE: NON-POTS DASHBOARD                     -->
+            <!-- JS    : class ModuleNonPots                    -->
             <!-- ============================================== -->
             <section id="module-nonpots-dashboard" class="space-y-8 hidden-module fade-in">
                 <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
@@ -2271,7 +2121,100 @@
             </section>
 
             <!-- ============================================== -->
+            <!-- MODULE: NON-POTS PERFORMANCE                   -->
+            <!-- ============================================== -->
+            <section id="module-nonpots-performance" class="space-y-8 hidden-module fade-in">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="bento-card grad-kpi-total p-7 flex items-center gap-5 border-none group">
+                        <div
+                            class="w-14 h-14 icon-bg-white-20 text-white rounded-2xl flex items-center justify-center text-xl shrink-0 shadow-inner-light">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div>
+                            <p class="text-[11px] font-bold uppercase text-white/80 tracking-widest">AM Aktif</p>
+                            <p class="text-3xl font-poppins font-extrabold text-white mt-1" id="stat-am-active">0</p>
+                        </div>
+                    </div>
+                    <div class="bento-card grad-kpi-lunas p-7 flex items-center gap-5 border-none group">
+                        <div
+                            class="w-14 h-14 icon-bg-white-20 text-white rounded-2xl flex items-center justify-center text-xl shrink-0 shadow-inner-light">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <div>
+                            <p class="text-[11px] font-bold uppercase text-white/80 tracking-widest">Realisasi Total</p>
+                            <p class="text-3xl font-poppins font-extrabold text-white mt-1" id="stat-am-average">0%</p>
+                        </div>
+                    </div>
+                    <div class="bento-card grad-kpi-info p-7 flex items-center gap-5 border-none group">
+                        <div
+                            class="w-14 h-14 icon-bg-white-20 text-white rounded-2xl flex items-center justify-center text-xl shrink-0 shadow-inner-light">
+                            <i class="fas fa-crown"></i>
+                        </div>
+                        <div class="min-w-0">
+                            <p class="text-[11px] font-bold uppercase text-white/80 tracking-widest">Peringkat Terbaik
+                            </p>
+                            <p class="text-xl font-poppins font-extrabold text-white break-words mt-1"
+                                id="stat-am-best">-
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bento-card overflow-hidden flex flex-col bg-white">
+                    <div
+                        class="p-6 md:p-8 border-b border-borderLight flex flex-col md:flex-row md:justify-between md:items-center gap-5">
+                        <h3
+                            class="text-base font-poppins font-bold text-textMain uppercase tracking-wider flex items-center gap-3">
+                            <div
+                                class="w-10 h-10 bg-red-50 border border-red-100 text-primary rounded-xl flex items-center justify-center shadow-sm">
+                                <i class="fas fa-medal text-base"></i>
+                            </div>
+                            Peringkat Account Manager
+                        </h3>
+                        <div class="relative w-full md:w-80 shadow-sm rounded-xl">
+                            <i
+                                class="fas fa-search absolute left-4 top-1/2 transform -translate-y-1/2 text-textMuted text-xs"></i>
+                            <input type="text" id="search-am"
+                                class="bento-input w-full pl-10 pr-4 py-3 text-sm font-medium"
+                                placeholder="Cari nama AM...">
+                        </div>
+                    </div>
+                    <div class="table-scroll overflow-x-auto w-full">
+                        <table class="w-full whitespace-nowrap min-w-[1550px]">
+                            <thead
+                                class="bg-surfaceAlt text-left text-[11px] font-bold text-textMuted uppercase tracking-wider border-b border-borderLight">
+                                <tr>
+                                    <th class="px-7 py-5 text-center w-24 align-middle border-r border-borderLight"
+                                        rowspan="2">Peringkat</th>
+                                    <th class="px-7 py-5 align-middle border-r border-borderLight" rowspan="2">Nama
+                                        Account Manager</th>
+                                    <th class="px-7 py-3 text-center border-b border-r border-borderLight" colspan="2">
+                                        BELUM LUNAS</th>
+                                    <th class="px-7 py-3 text-center border-b border-r border-borderLight" colspan="2">
+                                        LUNAS</th>
+                                    <th class="px-7 py-3 text-center border-b border-r border-borderLight" colspan="2">
+                                        GRAND TOTAL</th>
+                                    <th class="px-7 py-5 align-middle" rowspan="2">Success Rate</th>
+                                </tr>
+                                <tr>
+                                    <th class="px-7 py-2 text-center border-r border-borderLight">Jumlah</th>
+                                    <th class="px-7 py-2 text-right border-r border-borderLight">Tagihan</th>
+                                    <th class="px-7 py-2 text-center border-r border-borderLight">Jumlah</th>
+                                    <th class="px-7 py-2 text-right border-r border-borderLight">Tagihan</th>
+                                    <th class="px-7 py-2 text-center border-r border-borderLight">Jumlah</th>
+                                    <th class="px-7 py-2 text-right border-r border-borderLight">Tagihan</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbody-am-perf"
+                                class="text-sm divide-y divide-borderLight text-textMain bg-white"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ============================================== -->
             <!-- MODULE: NON-POTS FLAGGING                      -->
+            <!-- JS    : class ModuleNonPots                    -->
             <!-- ============================================== -->
             <section id="module-nonpots-flagging" class="space-y-8 hidden-module fade-in">
                 <div class="bento-card overflow-hidden flex flex-col bg-white mb-6">
@@ -2440,88 +2383,153 @@
             </section>
 
             <!-- ============================================== -->
-            <!-- MODULE: NON-POTS PERFORMANCE                   -->
+            <!-- MODULE: VISIT COLLECTION                       -->
             <!-- ============================================== -->
-            <section id="module-nonpots-performance" class="space-y-8 hidden-module fade-in">
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div class="bento-card grad-kpi-total p-7 flex items-center gap-5 border-none group">
+            <section id="module-visit-collection" class="space-y-8 hidden-module fade-in">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div
+                        class="bento-card grad-kpi-total p-6 md:p-7 flex flex-col relative justify-center border-none overflow-hidden group">
+                        <i
+                            class="fas fa-route absolute -right-4 -bottom-4 text-[90px] text-white opacity-10 transform group-hover:scale-110 transition-transform duration-500"></i>
                         <div
-                            class="w-14 h-14 icon-bg-white-20 text-white rounded-2xl flex items-center justify-center text-xl shrink-0 shadow-inner-light">
-                            <i class="fas fa-users"></i>
+                            class="w-12 h-12 icon-bg-white-20 text-white rounded-xl flex items-center justify-center mb-5 z-10 shadow-inner-light">
+                            <i class="fas fa-route text-lg"></i>
                         </div>
-                        <div>
-                            <p class="text-[11px] font-bold uppercase text-white/80 tracking-widest">AM Aktif</p>
-                            <p class="text-3xl font-poppins font-extrabold text-white mt-1" id="stat-am-active">0</p>
-                        </div>
+                        <span class="text-[11px] font-bold text-white/80 uppercase tracking-widest z-10">Total
+                            Activity</span>
+                        <div class="text-4xl font-poppins font-extrabold text-white mt-1 z-10 tracking-tight"
+                            id="score-visit-total">0</div>
                     </div>
-                    <div class="bento-card grad-kpi-lunas p-7 flex items-center gap-5 border-none group">
+                    <div
+                        class="bento-card grad-kpi-info p-6 md:p-7 flex flex-col relative justify-center border-none overflow-hidden group">
+                        <i
+                            class="fas fa-users absolute -right-4 -bottom-4 text-[90px] text-white opacity-10 transform group-hover:scale-110 transition-transform duration-500"></i>
                         <div
-                            class="w-14 h-14 icon-bg-white-20 text-white rounded-2xl flex items-center justify-center text-xl shrink-0 shadow-inner-light">
-                            <i class="fas fa-chart-line"></i>
+                            class="w-12 h-12 icon-bg-white-20 text-white rounded-xl flex items-center justify-center mb-5 z-10 shadow-inner-light">
+                            <i class="fas fa-users text-lg"></i>
                         </div>
-                        <div>
-                            <p class="text-[11px] font-bold uppercase text-white/80 tracking-widest">Realisasi Total</p>
-                            <p class="text-3xl font-poppins font-extrabold text-white mt-1" id="stat-am-average">0%</p>
-                        </div>
+                        <span class="text-[11px] font-bold text-white/80 uppercase tracking-widest z-10">Bertemu
+                            Pelanggan</span>
+                        <div class="text-4xl font-poppins font-extrabold text-white mt-1 z-10 tracking-tight"
+                            id="score-visit-bertemu">0</div>
                     </div>
-                    <div class="bento-card grad-kpi-info p-7 flex items-center gap-5 border-none group">
+                    <div
+                        class="bento-card grad-kpi-lunas p-6 md:p-7 flex flex-col relative justify-center border-none overflow-hidden group">
+                        <i
+                            class="fas fa-check-circle absolute -right-4 -bottom-4 text-[90px] text-white opacity-10 transform group-hover:scale-110 transition-transform duration-500"></i>
                         <div
-                            class="w-14 h-14 icon-bg-white-20 text-white rounded-2xl flex items-center justify-center text-xl shrink-0 shadow-inner-light">
-                            <i class="fas fa-crown"></i>
+                            class="w-12 h-12 icon-bg-white-20 text-white rounded-xl flex items-center justify-center mb-5 z-10 shadow-inner-light">
+                            <i class="fas fa-check-circle text-lg"></i>
                         </div>
-                        <div class="min-w-0">
-                            <p class="text-[11px] font-bold uppercase text-white/80 tracking-widest">Peringkat Terbaik
-                            </p>
-                            <p class="text-xl font-poppins font-extrabold text-white break-words mt-1"
-                                id="stat-am-best">-
-                            </p>
+                        <span class="text-[11px] font-bold text-white/80 uppercase tracking-widest z-10">Total
+                            Lunas</span>
+                        <div class="text-4xl font-poppins font-extrabold text-white mt-1 z-10 tracking-tight"
+                            id="score-visit-lunas">0</div>
+                    </div>
+                    <div
+                        class="bento-card grad-kpi-belum p-6 md:p-7 flex flex-col relative justify-center border-none overflow-hidden group">
+                        <i
+                            class="fas fa-wallet absolute -right-4 -bottom-4 text-[90px] text-white opacity-10 transform group-hover:scale-110 transition-transform duration-500"></i>
+                        <div
+                            class="w-12 h-12 icon-bg-white-20 text-white rounded-xl flex items-center justify-center mb-5 z-10 shadow-inner-light">
+                            <i class="fas fa-wallet text-lg"></i>
                         </div>
+                        <span class="text-[11px] font-bold text-white/80 uppercase tracking-widest z-10">Belum
+                            Lunas</span>
+                        <div class="text-4xl font-poppins font-extrabold text-white mt-1 z-10 tracking-tight"
+                            id="score-visit-belum">0</div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                    <div class="bento-card p-7 lg:col-span-8 flex flex-col">
+                        <div class="flex items-center gap-3 mb-6 pb-4 border-b border-borderLight">
+                            <div class="w-8 h-8 rounded-lg bg-red-50 text-primary flex items-center justify-center"><i
+                                    class="fas fa-chart-bar text-sm"></i></div>
+                            <h3 class="text-sm font-poppins font-bold text-textMain uppercase tracking-wider">Activity
+                                Reason</h3>
+                        </div>
+                        <div class="relative w-full flex-1 min-h-[260px]"><canvas id="barChartVisit"></canvas></div>
+                    </div>
+                    <div class="bento-card p-7 lg:col-span-4 flex flex-col">
+                        <div class="flex items-center gap-3 mb-6 pb-4 border-b border-borderLight">
+                            <div class="w-8 h-8 rounded-lg bg-red-50 text-primary flex items-center justify-center"><i
+                                    class="fas fa-chart-pie text-sm"></i></div>
+                            <h3 class="text-sm font-poppins font-bold text-textMain uppercase tracking-wider">Rasio
+                                Kunjungan</h3>
+                        </div>
+                        <div class="relative w-full flex-1 flex justify-center min-h-[260px]"><canvas
+                                id="donutChartVisit"></canvas></div>
                     </div>
                 </div>
 
                 <div class="bento-card overflow-hidden flex flex-col bg-white">
-                    <div
-                        class="p-6 md:p-8 border-b border-borderLight flex flex-col md:flex-row md:justify-between md:items-center gap-5">
+                    <div class="p-6 md:p-8 border-b border-borderLight">
                         <h3
-                            class="text-base font-poppins font-bold text-textMain uppercase tracking-wider flex items-center gap-3">
+                            class="text-base font-poppins font-bold mb-6 text-textMain uppercase tracking-wider flex items-center gap-3">
                             <div
                                 class="w-10 h-10 bg-red-50 border border-red-100 text-primary rounded-xl flex items-center justify-center shadow-sm">
-                                <i class="fas fa-medal text-base"></i>
+                                <i class="fas fa-table text-base"></i>
                             </div>
-                            Peringkat Account Manager
+                            Detail Data Visit Collection
                         </h3>
-                        <div class="relative w-full md:w-80 shadow-sm rounded-xl">
-                            <i
-                                class="fas fa-search absolute left-4 top-1/2 transform -translate-y-1/2 text-textMuted text-xs"></i>
-                            <input type="text" id="search-am"
-                                class="bento-input w-full pl-10 pr-4 py-3 text-sm font-medium"
-                                placeholder="Cari nama AM...">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-5" id="filters-visit">
+                            <div class="flex flex-col">
+                                <label
+                                    class="text-[10px] font-bold text-textMuted uppercase mb-2 ml-1 tracking-wider">Pencarian
+                                    Global</label>
+                                <div class="relative shadow-sm rounded-xl">
+                                    <i
+                                        class="fas fa-search absolute left-4 top-1/2 transform -translate-y-1/2 text-textMuted text-xs"></i>
+                                    <input type="text" id="search-visit"
+                                        class="bento-input w-full pl-10 pr-4 py-3 text-sm font-medium"
+                                        placeholder="Cari SND / Nama...">
+                                </div>
+                            </div>
+                            <div class="flex flex-col">
+                                <label
+                                    class="text-[10px] font-bold text-primary uppercase mb-2 ml-1 tracking-wider">Filter
+                                    Alasan</label>
+                                <select id="filter-reason-visit"
+                                    class="bento-input w-full px-4 py-3 text-sm font-bold cursor-pointer appearance-none shadow-sm text-primary border-primary/30 bg-red-50/30">
+                                    <option value="all">Semua Alasan</option>
+                                    <option value="janji bayar">Janji Bayar</option>
+                                    <option value="bersedia bayar di tempat">Bersedia Bayar di Tempat</option>
+                                    <option value="cabut">Cabut</option>
+                                    <option value="layanan tidak dipakai">Layanan Tidak Dipakai</option>
+                                    <option value="terkendala biaya">Terkendala Biaya</option>
+                                    <option value="lain-lain">Lain-lain</option>
+                                </select>
+                            </div>
                         </div>
                     </div>
                     <div class="table-scroll overflow-x-auto w-full">
-                        <table class="w-full whitespace-nowrap min-w-[1550px]">
+                        <table class="w-full whitespace-nowrap min-w-[800px]">
                             <thead
                                 class="bg-surfaceAlt text-left text-[11px] font-bold text-textMuted uppercase tracking-wider border-b border-borderLight">
                                 <tr>
-                                    <th class="px-7 py-5 text-center w-24 align-middle border-r border-borderLight" rowspan="2">Peringkat</th>
-                                    <th class="px-7 py-5 align-middle border-r border-borderLight" rowspan="2">Nama Account Manager</th>
-                                    <th class="px-7 py-3 text-center border-b border-r border-borderLight" colspan="2">BELUM LUNAS</th>
-                                    <th class="px-7 py-3 text-center border-b border-r border-borderLight" colspan="2">LUNAS</th>
-                                    <th class="px-7 py-3 text-center border-b border-r border-borderLight" colspan="2">GRAND TOTAL</th>
-                                    <th class="px-7 py-5 align-middle" rowspan="2">Success Rate</th>
-                                </tr>
-                                <tr>
-                                    <th class="px-7 py-2 text-center border-r border-borderLight">Jumlah</th>
-                                    <th class="px-7 py-2 text-right border-r border-borderLight">Tagihan</th>
-                                    <th class="px-7 py-2 text-center border-r border-borderLight">Jumlah</th>
-                                    <th class="px-7 py-2 text-right border-r border-borderLight">Tagihan</th>
-                                    <th class="px-7 py-2 text-center border-r border-borderLight">Jumlah</th>
-                                    <th class="px-7 py-2 text-right border-r border-borderLight">Tagihan</th>
+                                    <th class="px-7 py-5">SND</th>
+                                    <th class="px-7 py-5">Nama Pelanggan</th>
+                                    <th class="px-7 py-5">Alamat Lengkap</th>
+                                    <th class="px-7 py-5">Status Pembayaran</th>
+                                    <th class="px-7 py-5">Activity Reason</th>
+                                    <th class="px-7 py-5 text-center">Detail</th>
                                 </tr>
                             </thead>
-                            <tbody id="tbody-am-perf"
-                                class="text-sm divide-y divide-borderLight text-textMain bg-white"></tbody>
+                            <tbody id="tbody-visit" class="text-sm divide-y divide-borderLight text-textMain bg-white">
+                            </tbody>
                         </table>
+                    </div>
+                    <div class="p-5 border-t border-borderLight bg-surface flex justify-between items-center">
+                        <span id="page-info-visit"
+                            class="text-xs font-bold text-textMuted bg-surfaceAlt border border-borderLight px-4 py-2 rounded-xl shadow-sm">Data:
+                            0</span>
+                        <div class="flex gap-3">
+                            <button id="btn-prev-visit"
+                                class="bento-btn bg-white px-5 py-2.5 rounded-xl border border-borderLight hover:bg-gray-50 font-bold text-xs text-textMuted shadow-sm">Sebelumnya</button>
+                            <button id="btn-next-visit"
+                                class="bento-btn bg-primary hover:bg-primaryDark text-white px-5 py-2.5 rounded-xl font-bold text-xs shadow-md border border-transparent">Selanjutnya</button>
+                        </div>
                     </div>
                 </div>
             </section>
@@ -2915,157 +2923,9 @@
             hide() { this.el.classList.add('hidden-module'); }
         }
 
-        // --- C3MR MODULE ---
-        class ModuleC3MR extends BaseModule {
-            constructor(app) {
-                super('c3mr-dashboard');
-                this.app = app;
-                this.url = 'https://docs.google.com/spreadsheets/d/1tt4mo422nILl26XHb2cvtXG2wfKFOCBoxCz67YE9r34/export?format=csv&gid=2131854003';
-                this.initEvents();
-            }
-
-            initEvents() {
-                const searchHandler = Utils.debounce(() => this.applyFilters(), 300);
-                document.getElementById('search-c3mr').addEventListener('input', searchHandler);
-                ['filter-ubis-c3mr', 'filter-datel-c3mr', 'filter-status-c3mr'].forEach(id => {
-                    document.getElementById(id).addEventListener('change', () => this.applyFilters());
-                });
-                TableManager.setupPagination('c3mr', this.state, () => this.renderTable());
-
-                document.getElementById('btn-export-c3mr').addEventListener('click', () => {
-                    const el = document.getElementById('card-pelunasan-c3mr');
-                    html2canvas(el, { scale: 2, backgroundColor: '#FFFFFF' }).then(c => {
-                        const link = document.createElement('a');
-                        link.download = `C3MR_Progress.png`; link.href = c.toDataURL(); link.click();
-                        this.app.notify.show('Widget diekspor berhasil!');
-                    });
-                });
-            }
-
-            async load(force = false) {
-                if (this.isLoaded && !force) return;
-                this.app.loader.show();
-                try {
-                    const rawData = await DataService.fetchCSV(this.url, { force });
-                    this.state.data = rawData;
-                    this.state.filtered = [...rawData];
-                    this.processData();
-                    this.isLoaded = true;
-                    this.app.notify.show('C3MR Data Loaded');
-                } catch (e) {
-                    this.app.notify.show('Failed to load C3MR', 'error');
-                } finally {
-                    this.app.loader.hide();
-                }
-            }
-
-            processData() {
-                let lunas = 0, datelMap = {}, ubisMap = {};
-                const datelSet = new Set(), ubisSet = new Set();
-                const total = this.state.data.length;
-
-                this.state.data.forEach(r => {
-                    if (Utils.isPaid(r)) lunas++;
-
-                    let dRaw = Utils.getDynamicValue(r, ['datel', 'sto', 'witel', 'stodesc']).toUpperCase();
-                    let d = (dRaw === '' || dRaw === '-' || dRaw === 'N/A' || dRaw === '#N/A') ? 'TIDAK TERDEFINISI' : dRaw;
-
-                    let uRaw = Utils.getDynamicValue(r, ['ubis', 'sektor']).toUpperCase();
-                    let u = (uRaw === '' || uRaw === '-' || uRaw === 'N/A' || uRaw === '#N/A') ? 'TIDAK TERDEFINISI' : uRaw;
-
-                    datelMap[d] = (datelMap[d] || 0) + 1;
-                    ubisMap[u] = (ubisMap[u] || 0) + 1;
-                    datelSet.add(d); ubisSet.add(u);
-                });
-
-                Utils.animateValue('score-c3mr-total', 0, total, 1500);
-                Utils.animateValue('score-c3mr-lunas', 0, lunas, 1500);
-                Utils.animateValue('score-c3mr-belum', 0, total - lunas, 1500);
-
-                const pctL = total ? Math.round((lunas / total) * 100) : 0;
-                const pctB = total ? 100 - pctL : 0;
-                document.getElementById('pct-paid-info-c').innerText = pctL;
-                document.getElementById('pct-unpaid-info-c').innerText = pctB;
-                document.getElementById('text-gap-c').innerText = pctB + '%';
-
-                setTimeout(() => {
-                    document.getElementById('bar-paid-c').style.width = pctL + '%';
-                    document.getElementById('bar-unpaid-c').style.width = pctB + '%';
-                }, 100);
-
-                TableManager.populateSelect('filter-ubis-c3mr', ubisSet, 'Semua UBIS');
-                TableManager.populateSelect('filter-datel-c3mr', datelSet, 'Semua Datel');
-
-                const topDatel = Object.entries(datelMap).sort((a, b) => b[1] - a[1]).slice(0, 5);
-                const ctxBar = document.getElementById('barChartC3mr').getContext('2d');
-                if (this.charts.bar) this.charts.bar.destroy();
-                this.charts.bar = ChartManager.createBarChart(ctxBar, topDatel.map(x => x[0]), topDatel.map(x => x[1]), true);
-
-                const ctxDonut = document.getElementById('donutChartC3mr').getContext('2d');
-                if (this.charts.donut) this.charts.donut.destroy();
-                this.charts.donut = ChartManager.createDonutChart(ctxDonut, Object.keys(ubisMap), Object.values(ubisMap));
-
-                this.renderTable();
-            }
-
-            applyFilters() {
-                const q = document.getElementById('search-c3mr').value.toLowerCase();
-                const u = document.getElementById('filter-ubis-c3mr').value;
-                const d = document.getElementById('filter-datel-c3mr').value;
-                const s = document.getElementById('filter-status-c3mr').value;
-
-                this.state.filtered = this.state.data.filter(r => {
-                    const matchQ = q === '' || Utils.getDynamicValue(r, ['snd']).toLowerCase().includes(q) || Utils.getDynamicValue(r, ['nama']).toLowerCase().includes(q);
-
-                    let dRaw = Utils.getDynamicValue(r, ['datel', 'sto', 'witel', 'stodesc']).toUpperCase();
-                    let dtVal = (dRaw === '' || dRaw === '-' || dRaw === 'N/A' || dRaw === '#N/A') ? 'TIDAK TERDEFINISI' : dRaw;
-
-                    let uRaw = Utils.getDynamicValue(r, ['ubis', 'sektor']).toUpperCase();
-                    let ubisVal = (uRaw === '' || uRaw === '-' || uRaw === 'N/A' || uRaw === '#N/A') ? 'TIDAK TERDEFINISI' : uRaw;
-
-                    const matchU = u === 'all' || ubisVal === u;
-                    const matchD = d === 'all' || dtVal === d;
-
-                    const isP = Utils.isPaid(r);
-                    const matchS = s === 'all' || (s === 'lunas' ? isP : !isP);
-
-                    return matchQ && matchU && matchD && matchS;
-                });
-                this.state.page = 1;
-                this.renderTable();
-            }
-
-            renderTable() {
-                const tbody = document.getElementById('tbody-c3mr');
-                tbody.innerHTML = '';
-                const { filtered, page, limit } = this.state;
-                const start = (page - 1) * limit;
-                const paginated = filtered.slice(start, start + limit);
-
-                if (paginated.length === 0) {
-                    tbody.innerHTML = `<tr><td colspan="8" class="text-center py-10 font-bold text-textMuted">Tidak ada data ditemukan.</td></tr>`;
-                } else {
-                    paginated.forEach((r, index) => {
-                        const paid = Utils.isPaid(r);
-                        tbody.innerHTML += `
-                                    <tr class="hover:bg-surfaceAlt transition-colors font-medium">
-                                        <td class="px-7 py-4 font-bold text-primary">${Utils.getDynamicValue(r, ['snd'])}</td>
-                                        <td class="px-7 py-4" title="${Utils.escapeHtml(Utils.getDynamicValue(r, ['nama']))}"><div class="max-w-[240px] whitespace-normal break-words">${Utils.escapeHtml(Utils.getDynamicValue(r, ['nama']))}</div></td>
-                                        <td class="px-7 py-4"><div class="max-w-[220px] whitespace-normal break-words text-xs text-textMuted">${Utils.getDynamicValue(r, ['alamat'])}</div></td>
-                                        <td class="px-7 py-4">${Utils.getDynamicValue(r, ['datel'])}</td>
-                                        <td class="px-7 py-4 font-bold">${Utils.getDynamicValue(r, ['ubis'])}</td>
-                                        <td class="px-7 py-4">${Utils.getNeoBadge(paid)}</td>
-                                        <td class="px-7 py-4 text-xs text-textMuted">${Utils.getDynamicValue(r, ['tgl_bayar', 'tgl bayar']) || '-'}</td>
-                                        <td class="px-7 py-4 text-center"><button type="button" data-global-detail="c3mr:${start + index}" aria-label="Lihat detail data C3MR" class="bento-btn h-9 w-9 rounded-xl bg-red-50 text-primary hover:bg-red-100"><i class="fas fa-eye text-xs"></i></button></td>
-                                    </tr>
-                                `;
-                    });
-                }
-                TableManager.updatePaginationUI('c3mr', this.state);
-            }
-        }
-
-        // --- DATA CARING MODULE ---
+        /* ==============================================
+         * MODULE: DATA CARING
+         * ============================================== */
         class ModuleCaring extends BaseModule {
             constructor(app) {
                 super('caring-dashboard');
@@ -3279,25 +3139,33 @@
             }
         }
 
-        // --- VISIT MODULE ---
-        class ModuleVisit extends BaseModule {
+        /* ==============================================
+         * MODULE: DATA C3MR EGBIS
+         * ============================================== */
+        class ModuleC3MR extends BaseModule {
             constructor(app) {
-                super('visit-collection');
+                super('c3mr-dashboard');
                 this.app = app;
-                this.url = 'https://docs.google.com/spreadsheets/d/1piZ2Z0GFfUIaaLJdMX9jBzaHiJlScFWjPAzUSI7xFmw/export?format=csv&gid=538594182';
+                this.url = 'https://docs.google.com/spreadsheets/d/1tt4mo422nILl26XHb2cvtXG2wfKFOCBoxCz67YE9r34/export?format=csv&gid=2131854003';
                 this.initEvents();
             }
 
             initEvents() {
                 const searchHandler = Utils.debounce(() => this.applyFilters(), 300);
-                document.getElementById('search-visit').addEventListener('input', searchHandler);
-                document.getElementById('filter-reason-visit').addEventListener('change', () => this.applyFilters());
-                TableManager.setupPagination('visit', this.state, () => this.renderTable());
-            }
+                document.getElementById('search-c3mr').addEventListener('input', searchHandler);
+                ['filter-ubis-c3mr', 'filter-datel-c3mr', 'filter-status-c3mr'].forEach(id => {
+                    document.getElementById(id).addEventListener('change', () => this.applyFilters());
+                });
+                TableManager.setupPagination('c3mr', this.state, () => this.renderTable());
 
-            isTransactionRow(row) {
-                return ['activity id', 'activity scenario', 'ncli', 'snd', 'nama perusahaan', 'nama', 'activity status', 'activity reason', 'address']
-                    .some(key => Utils.getDynamicValue(row, [key]) !== '');
+                document.getElementById('btn-export-c3mr').addEventListener('click', () => {
+                    const el = document.getElementById('card-pelunasan-c3mr');
+                    html2canvas(el, { scale: 2, backgroundColor: '#FFFFFF' }).then(c => {
+                        const link = document.createElement('a');
+                        link.download = `C3MR_Progress.png`; link.href = c.toDataURL(); link.click();
+                        this.app.notify.show('Widget diekspor berhasil!');
+                    });
+                });
             }
 
             async load(force = false) {
@@ -3305,117 +3173,513 @@
                 this.app.loader.show();
                 try {
                     const rawData = await DataService.fetchCSV(this.url, { force });
-                    this.state.data = rawData.filter(row => this.isTransactionRow(row));
-                    this.state.filtered = [...this.state.data];
+                    this.state.data = rawData;
+                    this.state.filtered = [...rawData];
                     this.processData();
                     this.isLoaded = true;
-                    this.app.notify.show('Visit Data Loaded');
+                    this.app.notify.show('C3MR Data Loaded');
                 } catch (e) {
-                    this.app.notify.show('Failed to load Visit data', 'error');
+                    this.app.notify.show('Failed to load C3MR', 'error');
                 } finally {
                     this.app.loader.hide();
                 }
             }
 
             processData() {
-                let total = this.state.data.length, bertemu = 0, lunas = 0, belum = 0;
-
-                // 1. Buat object map kosong untuk menghitung alasan secara dinamis
-                let reasonMap = {};
-                const invalidValues = ['', '-', 'N/A', '#N/A', 'NULL', 'TIDAK TERDEFINISI'];
+                let lunas = 0, datelMap = {}, ubisMap = {};
+                const datelSet = new Set(), ubisSet = new Set();
+                const total = this.state.data.length;
 
                 this.state.data.forEach(r => {
-                    const act = Utils.getDynamicValue(r, ['activity status', 'status visit']).toLowerCase();
-                    const stat = Utils.getDynamicValue(r, ['status billing']).toLowerCase().replace(/\s/g, '');
+                    if (Utils.isPaid(r)) lunas++;
 
-                    // Ambil reason asli (dibuat Uppercase/Kapital agar rapi di chart)
-                    let reasonRaw = Utils.getDynamicValue(r, ['activity reason', 'reason']).trim().toUpperCase();
+                    let dRaw = Utils.getDynamicValue(r, ['datel', 'sto', 'witel', 'stodesc']).toUpperCase();
+                    let d = (dRaw === '' || dRaw === '-' || dRaw === 'N/A' || dRaw === '#N/A') ? 'TIDAK TERDEFINISI' : dRaw;
 
-                    if (act.includes('bertemu') && !act.includes('tidak')) bertemu++;
-                    if (stat === 'paid') lunas++; else if (stat === 'notpaid') belum++;
+                    let uRaw = Utils.getDynamicValue(r, ['ubis', 'sektor']).toUpperCase();
+                    let u = (uRaw === '' || uRaw === '-' || uRaw === 'N/A' || uRaw === '#N/A') ? 'TIDAK TERDEFINISI' : uRaw;
 
-                    // 2. Hitung frekuensi tiap reason (abaikan yang kosong/invalid)
-                    if (reasonRaw && !invalidValues.includes(reasonRaw)) {
-                        reasonMap[reasonRaw] = (reasonMap[reasonRaw] || 0) + 1;
-                    }
+                    datelMap[d] = (datelMap[d] || 0) + 1;
+                    ubisMap[u] = (ubisMap[u] || 0) + 1;
+                    datelSet.add(d); ubisSet.add(u);
                 });
 
-                Utils.animateValue('score-visit-total', 0, total, 1500);
-                Utils.animateValue('score-visit-bertemu', 0, bertemu, 1500);
-                Utils.animateValue('score-visit-lunas', 0, lunas, 1500);
-                Utils.animateValue('score-visit-belum', 0, belum, 1500);
+                Utils.animateValue('score-c3mr-total', 0, total, 1500);
+                Utils.animateValue('score-c3mr-lunas', 0, lunas, 1500);
+                Utils.animateValue('score-c3mr-belum', 0, total - lunas, 1500);
 
-                // 3. Mengurutkan dan mengambil Top 5
+                const pctL = total ? Math.round((lunas / total) * 100) : 0;
+                const pctB = total ? 100 - pctL : 0;
+                document.getElementById('pct-paid-info-c').innerText = pctL;
+                document.getElementById('pct-unpaid-info-c').innerText = pctB;
+                document.getElementById('text-gap-c').innerText = pctB + '%';
 
-                const topReasons = Object.entries(reasonMap)
-                    .sort((a, b) => b[1] - a[1]) // Urutkan descending (terbesar ke terkecil)
-                    .slice(0, 5); // Ambil 5 teratas
+                setTimeout(() => {
+                    document.getElementById('bar-paid-c').style.width = pctL + '%';
+                    document.getElementById('bar-unpaid-c').style.width = pctB + '%';
+                }, 100);
 
-                // 4. Update Bar Chart
-                const ctxBar = document.getElementById('barChartVisit').getContext('2d');
+                TableManager.populateSelect('filter-ubis-c3mr', ubisSet, 'Semua UBIS');
+                TableManager.populateSelect('filter-datel-c3mr', datelSet, 'Semua Datel');
+
+                const topDatel = Object.entries(datelMap).sort((a, b) => b[1] - a[1]).slice(0, 5);
+                const ctxBar = document.getElementById('barChartC3mr').getContext('2d');
                 if (this.charts.bar) this.charts.bar.destroy();
-                this.charts.bar = ChartManager.createBarChart(
-                    ctxBar,
-                    topReasons.map(x => x[0]), // Mengambil label (nama reason)
-                    topReasons.map(x => x[1]), // Mengambil value (jumlah data)
-                    true
-                );
+                this.charts.bar = ChartManager.createBarChart(ctxBar, topDatel.map(x => x[0]), topDatel.map(x => x[1]), true);
 
-                const ctxDonut = document.getElementById('donutChartVisit').getContext('2d');
+                const ctxDonut = document.getElementById('donutChartC3mr').getContext('2d');
                 if (this.charts.donut) this.charts.donut.destroy();
-                this.charts.donut = ChartManager.createDonutChart(ctxDonut, ['Bertemu', 'Tidak Bertemu'], [bertemu, total - bertemu]);
+                this.charts.donut = ChartManager.createDonutChart(ctxDonut, Object.keys(ubisMap), Object.values(ubisMap));
 
                 this.renderTable();
             }
 
             applyFilters() {
-                const q = document.getElementById('search-visit').value.toLowerCase();
-                const r = document.getElementById('filter-reason-visit').value.toLowerCase();
-                this.state.filtered = this.state.data.filter(row => {
-                    const s = Utils.getDynamicValue(row, ['snd']).toLowerCase();
-                    const n = Utils.getDynamicValue(row, ['nama perusahaan', 'nama']).toLowerCase();
-                    const reason = Utils.getDynamicValue(row, ['activity reason']).toLowerCase();
-                    const mQ = q === '' || s.includes(q) || n.includes(q);
-                    let mR = true;
-                    if (r !== 'all') {
-                        if (r === 'lain-lain') mR = !['janji', 'tempat', 'cabut', 'tidak dipakai', 'biaya'].some(x => reason.includes(x)) && reason !== '';
-                        else mR = reason.includes(r);
-                    }
-                    return mQ && mR;
+                const q = document.getElementById('search-c3mr').value.toLowerCase();
+                const u = document.getElementById('filter-ubis-c3mr').value;
+                const d = document.getElementById('filter-datel-c3mr').value;
+                const s = document.getElementById('filter-status-c3mr').value;
+
+                this.state.filtered = this.state.data.filter(r => {
+                    const matchQ = q === '' || Utils.getDynamicValue(r, ['snd']).toLowerCase().includes(q) || Utils.getDynamicValue(r, ['nama']).toLowerCase().includes(q);
+
+                    let dRaw = Utils.getDynamicValue(r, ['datel', 'sto', 'witel', 'stodesc']).toUpperCase();
+                    let dtVal = (dRaw === '' || dRaw === '-' || dRaw === 'N/A' || dRaw === '#N/A') ? 'TIDAK TERDEFINISI' : dRaw;
+
+                    let uRaw = Utils.getDynamicValue(r, ['ubis', 'sektor']).toUpperCase();
+                    let ubisVal = (uRaw === '' || uRaw === '-' || uRaw === 'N/A' || uRaw === '#N/A') ? 'TIDAK TERDEFINISI' : uRaw;
+
+                    const matchU = u === 'all' || ubisVal === u;
+                    const matchD = d === 'all' || dtVal === d;
+
+                    const isP = Utils.isPaid(r);
+                    const matchS = s === 'all' || (s === 'lunas' ? isP : !isP);
+
+                    return matchQ && matchU && matchD && matchS;
                 });
-                this.state.page = 1; this.renderTable();
+                this.state.page = 1;
+                this.renderTable();
             }
 
             renderTable() {
-                const tbody = document.getElementById('tbody-visit'); tbody.innerHTML = '';
-                const paginated = this.state.filtered.slice((this.state.page - 1) * this.state.limit, this.state.page * this.state.limit);
+                const tbody = document.getElementById('tbody-c3mr');
+                tbody.innerHTML = '';
+                const { filtered, page, limit } = this.state;
+                const start = (page - 1) * limit;
+                const paginated = filtered.slice(start, start + limit);
 
                 if (paginated.length === 0) {
-                    tbody.innerHTML = `<tr><td colspan="6" class="text-center py-10 font-bold text-textMuted">Tidak ada data.</td></tr>`;
+                    tbody.innerHTML = `<tr><td colspan="8" class="text-center py-10 font-bold text-textMuted">Tidak ada data ditemukan.</td></tr>`;
                 } else {
                     paginated.forEach((r, index) => {
-                        const stat = Utils.getDynamicValue(r, ['status billing']).toLowerCase().replace(/\s/g, '');
-                        let badge = '<span class="px-2.5 py-1 rounded-full text-[10px] font-bold tracking-wider bg-gray-50 text-textMuted border border-gray-100 shadow-sm">-</span>';
-                        if (stat === 'paid') badge = Utils.getNeoBadge(true);
-                        else if (stat === 'notpaid') badge = Utils.getNeoBadge(false);
-
+                        const paid = Utils.isPaid(r);
                         tbody.innerHTML += `
                                     <tr class="hover:bg-surfaceAlt transition-colors font-medium">
                                         <td class="px-7 py-4 font-bold text-primary">${Utils.getDynamicValue(r, ['snd'])}</td>
-                                        <td class="px-7 py-4" title="${Utils.getDynamicValue(r, ['nama perusahaan', 'nama'])}">${Utils.getDynamicValue(r, ['nama perusahaan', 'nama'])}</td>
-                                        <td class="px-7 py-4"><div class="max-w-[220px] whitespace-normal break-words text-xs text-textMuted">${Utils.getDynamicValue(r, ['address'])}</div></td>
-                                        <td class="px-7 py-4">${badge}</td>
-                                        <td class="px-7 py-4 font-semibold text-textMain">${Utils.getDynamicValue(r, ['activity reason'])}</td>
-                                        <td class="px-7 py-4 text-center"><button type="button" data-global-detail="visit:${(this.state.page - 1) * this.state.limit + index}" aria-label="Lihat detail data Visit Collection" class="bento-btn h-9 w-9 rounded-xl bg-red-50 text-primary hover:bg-red-100"><i class="fas fa-eye text-xs"></i></button></td>
+                                        <td class="px-7 py-4" title="${Utils.escapeHtml(Utils.getDynamicValue(r, ['nama']))}"><div class="max-w-[240px] whitespace-normal break-words">${Utils.escapeHtml(Utils.getDynamicValue(r, ['nama']))}</div></td>
+                                        <td class="px-7 py-4"><div class="max-w-[220px] whitespace-normal break-words text-xs text-textMuted">${Utils.getDynamicValue(r, ['alamat'])}</div></td>
+                                        <td class="px-7 py-4">${Utils.getDynamicValue(r, ['datel'])}</td>
+                                        <td class="px-7 py-4 font-bold">${Utils.getDynamicValue(r, ['ubis'])}</td>
+                                        <td class="px-7 py-4">${Utils.getNeoBadge(paid)}</td>
+                                        <td class="px-7 py-4 text-xs text-textMuted">${Utils.getDynamicValue(r, ['tgl_bayar', 'tgl bayar']) || '-'}</td>
+                                        <td class="px-7 py-4 text-center"><button type="button" data-global-detail="c3mr:${start + index}" aria-label="Lihat detail data C3MR" class="bento-btn h-9 w-9 rounded-xl bg-red-50 text-primary hover:bg-red-100"><i class="fas fa-eye text-xs"></i></button></td>
                                     </tr>
                                 `;
                     });
                 }
-                TableManager.updatePaginationUI('visit', this.state);
+                TableManager.updatePaginationUI('c3mr', this.state);
             }
         }
 
-        // --- CLAIM MODULE ---
+        /* ==============================================
+         * MODULE: DATA BILLPER
+         * ============================================== */
+        class ModuleBillper extends BaseModule {
+            constructor(app) {
+                super('billper-dashboard');
+                this.app = app;
+                this.url = 'https://docs.google.com/spreadsheets/d/1UoPJQxCljgfHNHGjDxkLh7LmQ0o1FbeqPPXDy9jEHY8/export?format=csv&gid=696435857';
+                this.initEvents();
+            }
+
+            initEvents() {
+                const searchHandler = Utils.debounce(() => this.applyFilters(), 300);
+                document.getElementById('search-billper').addEventListener('input', searchHandler);
+                ['filter-ubis-billper', 'filter-datel-billper', 'filter-status-billper'].forEach(id => {
+                    document.getElementById(id).addEventListener('change', () => this.applyFilters());
+                });
+                TableManager.setupPagination('billper', this.state, () => this.renderTable());
+
+                document.getElementById('btn-export-billper').addEventListener('click', () => {
+                    const el = document.getElementById('card-pelunasan-billper');
+                    html2canvas(el, { scale: 2, backgroundColor: '#FFFFFF' }).then(c => {
+                        const link = document.createElement('a');
+                        link.download = `Billper_Progress.png`; link.href = c.toDataURL(); link.click();
+                        this.app.notify.show('Widget diekspor berhasil!');
+                    });
+                });
+            }
+
+            async load(force = false) {
+                if (this.isLoaded && !force) return;
+                this.app.loader.show();
+                try {
+                    const rawData = await DataService.fetchCSV(this.url, { force });
+                    this.state.data = rawData;
+                    this.state.filtered = [...rawData];
+                    this.processData();
+                    this.isLoaded = true;
+                    this.app.notify.show('Data Billper Loaded');
+                } catch (e) {
+                    this.app.notify.show('Failed to load Billper', 'error');
+                } finally {
+                    this.app.loader.hide();
+                }
+            }
+
+            processData() {
+                let lunas = 0, belumLunas = 0;
+                let datelMap = {}, ubisMap = {};
+                let rekapMap = {};
+                const datelSet = new Set(), ubisSet = new Set();
+                const total = this.state.data.length;
+
+                this.state.data.forEach(r => {
+                    let isPaid = Utils.isPaid(r);
+                    if (isPaid) lunas++;
+                    else belumLunas++;
+
+                    let dRaw = Utils.getDynamicValue(r, ['datel', 'sto', 'witel', 'stodesc']).toUpperCase();
+                    let d = (dRaw === '' || dRaw === '-' || dRaw === 'N/A' || dRaw === '#N/A') ? 'TIDAK TERDEFINISI' : dRaw;
+
+                    let uRaw = Utils.getDynamicValue(r, ['ubis', 'sektor']).toUpperCase();
+                    let u = (uRaw === '' || uRaw === '-' || uRaw === 'N/A' || uRaw === '#N/A') ? 'TIDAK TERDEFINISI' : uRaw;
+
+                    let saldo = Utils.parseCurrency(Utils.getDynamicValue(r, ['saldo', 'tagihan', 'amount', 'biaya']));
+
+                    datelMap[d] = (datelMap[d] || 0) + 1;
+                    ubisMap[u] = (ubisMap[u] || 0) + 1;
+                    datelSet.add(d); ubisSet.add(u);
+
+                    if (!rekapMap[d]) {
+                        rekapMap[d] = { lunasJml: 0, lunasTag: 0, belumJml: 0, belumTag: 0 };
+                    }
+
+                    if (isPaid) {
+                        rekapMap[d].lunasJml++;
+                        rekapMap[d].lunasTag += saldo;
+                    } else {
+                        rekapMap[d].belumJml++;
+                        rekapMap[d].belumTag += saldo;
+                    }
+                });
+
+                Utils.animateValue('score-billper-total', 0, total, 1500);
+                Utils.animateValue('score-billper-lunas', 0, lunas, 1500);
+                Utils.animateValue('score-billper-belum', 0, belumLunas, 1500);
+
+                const pctL = total ? Math.round((lunas / total) * 100) : 0;
+                const pctB = total ? 100 - pctL : 0;
+                document.getElementById('pct-paid-info-b').innerText = pctL;
+                document.getElementById('pct-unpaid-info-b').innerText = pctB;
+                document.getElementById('text-gap-b').innerText = pctB + '%';
+
+                setTimeout(() => {
+                    document.getElementById('bar-paid-b').style.width = pctL + '%';
+                    document.getElementById('bar-unpaid-b').style.width = pctB + '%';
+                }, 100);
+
+                TableManager.populateSelect('filter-ubis-billper', ubisSet, 'Semua UBIS');
+                TableManager.populateSelect('filter-datel-billper', datelSet, 'Semua Datel');
+
+                const topDatel = Object.entries(datelMap).sort((a, b) => b[1] - a[1]).slice(0, 5);
+                const ctxBar = document.getElementById('barChartBillper').getContext('2d');
+                if (this.charts.bar) this.charts.bar.destroy();
+                this.charts.bar = ChartManager.createBarChart(ctxBar, topDatel.map(x => x[0]), topDatel.map(x => x[1]), true);
+
+                const ctxDonut = document.getElementById('donutChartBillper').getContext('2d');
+                if (this.charts.donut) this.charts.donut.destroy();
+                this.charts.donut = ChartManager.createDonutChart(ctxDonut, Object.keys(ubisMap), Object.values(ubisMap));
+
+                this.renderRekapTable(rekapMap);
+                this.renderTable();
+            }
+
+            renderRekapTable(rekapMap) {
+                const tbody = document.getElementById('tbody-billper-rekap');
+                const tfoot = document.getElementById('tfoot-billper-rekap');
+                tbody.innerHTML = '';
+
+                let sumBelumJml = 0, sumBelumTag = 0, sumLunasJml = 0, sumLunasTag = 0, sumGtJml = 0, sumGtTag = 0;
+
+                const sortedDatel = Object.keys(rekapMap).sort();
+
+                sortedDatel.forEach(datel => {
+                    const d = rekapMap[datel];
+                    const gtJml = d.belumJml + d.lunasJml;
+                    const gtTag = d.belumTag + d.lunasTag;
+
+                    sumBelumJml += d.belumJml;
+                    sumBelumTag += d.belumTag;
+                    sumLunasJml += d.lunasJml;
+                    sumLunasTag += d.lunasTag;
+                    sumGtJml += gtJml;
+                    sumGtTag += gtTag;
+
+                    tbody.innerHTML += `
+                                <tr class="hover:bg-surfaceAlt transition-colors font-medium">
+                                    <td class="px-7 py-4 font-bold text-primary border-r border-borderLight">${datel}</td>
+                                    <td class="px-7 py-4 text-center border-r border-borderLight">${d.belumJml.toLocaleString('id-ID')}</td>
+                                    <td class="px-7 py-4 text-right border-r border-borderLight font-semibold">Rp ${d.belumTag.toLocaleString('id-ID')}</td>
+                                    <td class="px-7 py-4 text-center border-r border-borderLight">${d.lunasJml.toLocaleString('id-ID')}</td>
+                                    <td class="px-7 py-4 text-right border-r border-borderLight font-semibold">Rp ${d.lunasTag.toLocaleString('id-ID')}</td>
+                                    <td class="px-7 py-4 text-center border-r border-borderLight font-bold">${gtJml.toLocaleString('id-ID')}</td>
+                                    <td class="px-7 py-4 text-right font-bold text-primary">Rp ${gtTag.toLocaleString('id-ID')}</td>
+                                </tr>
+                            `;
+                });
+
+                if (sortedDatel.length === 0) {
+                    tbody.innerHTML = `<tr><td colspan="7" class="text-center py-10 font-bold text-textMuted">Tidak ada data rekap.</td></tr>`;
+                    tfoot.innerHTML = '';
+                } else {
+                    tfoot.innerHTML = `
+                                <tr>
+                                    <td class="px-7 py-5 uppercase tracking-wider text-primary border-r border-borderLight">Grand Total</td>
+                                    <td class="px-7 py-5 text-center border-r border-borderLight">${sumBelumJml.toLocaleString('id-ID')}</td>
+                                    <td class="px-7 py-5 text-right border-r border-borderLight">Rp ${sumBelumTag.toLocaleString('id-ID')}</td>
+                                    <td class="px-7 py-5 text-center border-r border-borderLight">${sumLunasJml.toLocaleString('id-ID')}</td>
+                                    <td class="px-7 py-5 text-right border-r border-borderLight">Rp ${sumLunasTag.toLocaleString('id-ID')}</td>
+                                    <td class="px-7 py-5 text-center border-r border-borderLight text-primary">${sumGtJml.toLocaleString('id-ID')}</td>
+                                    <td class="px-7 py-5 text-right text-primary">Rp ${sumGtTag.toLocaleString('id-ID')}</td>
+                                </tr>
+                            `;
+                }
+            }
+
+            applyFilters() {
+                const q = document.getElementById('search-billper').value.toLowerCase();
+                const u = document.getElementById('filter-ubis-billper').value;
+                const d = document.getElementById('filter-datel-billper').value;
+                const s = document.getElementById('filter-status-billper').value;
+
+                this.state.filtered = this.state.data.filter(r => {
+                    const matchQ = q === '' || Utils.getDynamicValue(r, ['snd']).toLowerCase().includes(q) || Utils.getDynamicValue(r, ['nama']).toLowerCase().includes(q);
+
+                    let dRaw = Utils.getDynamicValue(r, ['datel', 'sto', 'witel', 'stodesc']).toUpperCase();
+                    let dtVal = (dRaw === '' || dRaw === '-' || dRaw === 'N/A' || dRaw === '#N/A') ? 'TIDAK TERDEFINISI' : dRaw;
+
+                    let uRaw = Utils.getDynamicValue(r, ['ubis', 'sektor']).toUpperCase();
+                    let ubisVal = (uRaw === '' || uRaw === '-' || uRaw === 'N/A' || uRaw === '#N/A') ? 'TIDAK TERDEFINISI' : uRaw;
+
+                    const matchU = u === 'all' || ubisVal === u;
+                    const matchD = d === 'all' || dtVal === d;
+
+                    const isP = Utils.isPaid(r);
+                    const matchS = s === 'all' || (s === 'lunas' ? isP : !isP);
+
+                    return matchQ && matchU && matchD && matchS;
+                });
+                this.state.page = 1;
+                this.renderTable();
+            }
+
+            renderTable() {
+                const tbody = document.getElementById('tbody-billper');
+                tbody.innerHTML = '';
+                const { filtered, page, limit } = this.state;
+                const start = (page - 1) * limit;
+                const paginated = filtered.slice(start, start + limit);
+
+                if (paginated.length === 0) {
+                    tbody.innerHTML = `<tr><td colspan="8" class="text-center py-10 font-bold text-textMuted">Tidak ada data ditemukan.</td></tr>`;
+                } else {
+                    paginated.forEach((r, index) => {
+                        const paid = Utils.isPaid(r);
+                        const statusStr = Utils.getDynamicValue(r, ['status payment', 'status_payment', 'cek lunas', 'lunas', 'status billing']) || (paid ? 'LUNAS' : 'BELUM LUNAS');
+
+                        tbody.innerHTML += `
+                                    <tr class="hover:bg-surfaceAlt transition-colors font-medium">
+                                        <td class="px-7 py-4 font-bold text-primary">${Utils.getDynamicValue(r, ['snd'])}</td>
+                                        <td class="px-7 py-4" title="${Utils.escapeHtml(Utils.getDynamicValue(r, ['nama']))}"><div class="max-w-[240px] whitespace-normal break-words">${Utils.escapeHtml(Utils.getDynamicValue(r, ['nama']))}</div></td>
+                                        <td class="px-7 py-4"><div class="max-w-[220px] whitespace-normal break-words text-xs text-textMuted">${Utils.getDynamicValue(r, ['alamat'])}</div></td>
+                                        <td class="px-7 py-4">${Utils.getDynamicValue(r, ['datel'])}</td>
+                                        <td class="px-7 py-4 font-bold">${Utils.getDynamicValue(r, ['ubis'])}</td>
+                                        <td class="px-7 py-4">${Utils.getNeoBadge(paid, statusStr.toUpperCase())}</td>
+                                        <td class="px-7 py-4 text-xs text-textMuted">${Utils.getDynamicValue(r, ['tgl_bayar', 'tgl bayar']) || '-'}</td>
+                                        <td class="px-7 py-4 text-center"><button type="button" data-global-detail="billper:${start + index}" aria-label="Lihat detail data Billper" class="bento-btn h-9 w-9 rounded-xl bg-red-50 text-primary hover:bg-red-100"><i class="fas fa-eye text-xs"></i></button></td>
+                                    </tr>
+                                `;
+                    });
+                }
+                TableManager.updatePaginationUI('billper', this.state);
+            }
+        }
+
+        /* ==============================================
+         * MODULE: DATA PRANPC
+         * ============================================== */
+        class ModulePRANPC extends BaseModule {
+            constructor(app) {
+                super('pranpc-dashboard');
+                this.app = app;
+                this.url = 'https://docs.google.com/spreadsheets/d/1piZ2Z0GFfUIaaLJdMX9jBzaHiJlScFWjPAzUSI7xFmw/export?format=csv&gid=1823076653';
+                this.initEvents();
+            }
+
+            initEvents() {
+                const searchHandler = Utils.debounce(() => this.applyFilters(), 300);
+                document.getElementById('search-pranpc').addEventListener('input', searchHandler);
+                ['filter-ubis-pranpc', 'filter-datel-pranpc', 'filter-status-pranpc'].forEach(id => {
+                    document.getElementById(id).addEventListener('change', () => this.applyFilters());
+                });
+
+                TableManager.setupPagination('pranpc', this.state, () => this.renderTable());
+                document.getElementById('btn-export-pranpc').addEventListener('click', () => {
+                    const el = document.getElementById('card-pelunasan-pranpc');
+                    html2canvas(el, { scale: 2, backgroundColor: '#FFFFFF' }).then(c => {
+                        const link = document.createElement('a');
+                        link.download = `PRANPC_Progress.png`; link.href = c.toDataURL(); link.click();
+                        this.app.notify.show('Widget diekspor berhasil!');
+                    });
+                });
+            }
+
+            async load(force = false) {
+                if (this.isLoaded && !force) return;
+                this.app.loader.show();
+                try {
+                    const rawData = await DataService.fetchCSV(this.url, { force });
+                    this.state.data = rawData;
+                    this.state.filtered = [...rawData];
+                    this.processData();
+                    this.isLoaded = true;
+                    this.app.notify.show('Data PRANPC Loaded');
+                } catch (e) {
+                    this.app.notify.show('Failed to load PRANPC', 'error');
+                } finally {
+                    this.app.loader.hide();
+                }
+            }
+
+            processData() {
+                let lunas = 0, datelMap = {}, ubisMap = {};
+                const datelSet = new Set(), ubisSet = new Set();
+                const total = this.state.data.length;
+
+                this.state.data.forEach(r => {
+                    if (Utils.isPaid(r)) lunas++;
+
+                    let dRaw = Utils.getDynamicValue(r, ['datel', 'sto', 'witel', 'stodesc']).toUpperCase().trim();
+                    const invalid = ['', '-', 'N/A', '#N/A', 'NULL', 'TIDAK TERDEFINISI'];
+                    let d = invalid.includes(dRaw) ? 'TIDAK TERDEFINISI' : dRaw;
+
+                    let uRaw = Utils.getDynamicValue(r, ['ubis', 'sektor']).toUpperCase().trim();
+                    let u = invalid.includes(uRaw) ? 'TIDAK TERDEFINISI' : uRaw;
+
+                    // Menghindari datel tidak valid masuk ke diagram batang (sesuai instruksi)
+                    if (d !== 'TIDAK TERDEFINISI') {
+                        datelMap[d] = (datelMap[d] || 0) + 1;
+                    }
+                    datelSet.add(d);
+
+                    ubisMap[u] = (ubisMap[u] || 0) + 1;
+                    ubisSet.add(u);
+                });
+
+                Utils.animateValue('score-pranpc-total', 0, total, 1500);
+                Utils.animateValue('score-pranpc-lunas', 0, lunas, 1500);
+                Utils.animateValue('score-pranpc-belum', 0, total - lunas, 1500);
+
+                const pctL = total ? Math.round((lunas / total) * 100) : 0;
+                const pctB = total ? 100 - pctL : 0;
+                document.getElementById('pct-paid-info-p').innerText = pctL;
+                document.getElementById('pct-unpaid-info-p').innerText = pctB;
+                document.getElementById('text-gap-p').innerText = pctB + '%';
+
+                setTimeout(() => {
+                    document.getElementById('bar-paid-p').style.width = pctL + '%';
+                    document.getElementById('bar-unpaid-p').style.width = pctB + '%';
+                }, 100);
+
+                TableManager.populateSelect('filter-ubis-pranpc', ubisSet, 'Semua UBIS');
+                TableManager.populateSelect('filter-datel-pranpc', datelSet, 'Semua Datel');
+
+                const topDatel = Object.entries(datelMap).sort((a, b) => b[1] - a[1]).slice(0, 5);
+                const ctxBar = document.getElementById('barChartPranpc').getContext('2d');
+                if (this.charts.bar) this.charts.bar.destroy();
+                this.charts.bar = ChartManager.createBarChart(ctxBar, topDatel.map(x => x[0]), topDatel.map(x => x[1]), true);
+
+                const ctxDonut = document.getElementById('donutChartPranpc').getContext('2d');
+                if (this.charts.donut) this.charts.donut.destroy();
+                this.charts.donut = ChartManager.createDonutChart(ctxDonut, Object.keys(ubisMap), Object.values(ubisMap));
+
+                this.renderTable();
+            }
+
+            applyFilters() {
+                const q = document.getElementById('search-pranpc').value.toLowerCase();
+                const u = document.getElementById('filter-ubis-pranpc').value;
+                const d = document.getElementById('filter-datel-pranpc').value;
+                const s = document.getElementById('filter-status-pranpc').value;
+                const invalid = ['', '-', 'N/A', '#N/A', 'NULL', 'TIDAK TERDEFINISI'];
+
+                this.state.filtered = this.state.data.filter(r => {
+                    const matchQ = q === '' || Utils.getDynamicValue(r, ['snd']).toLowerCase().includes(q) || Utils.getDynamicValue(r, ['nama']).toLowerCase().includes(q);
+
+                    let dRaw = Utils.getDynamicValue(r, ['datel', 'sto', 'witel', 'stodesc']).toUpperCase().trim();
+                    let dtVal = invalid.includes(dRaw) ? 'TIDAK TERDEFINISI' : dRaw;
+
+                    let uRaw = Utils.getDynamicValue(r, ['ubis', 'sektor']).toUpperCase().trim();
+                    let ubisVal = invalid.includes(uRaw) ? 'TIDAK TERDEFINISI' : uRaw;
+
+                    const matchU = u === 'all' || ubisVal === u;
+                    const matchD = d === 'all' || dtVal === d;
+
+                    const isP = Utils.isPaid(r);
+                    const matchS = s === 'all' || (s === 'lunas' ? isP : !isP);
+
+                    return matchQ && matchU && matchD && matchS;
+                });
+                this.state.page = 1;
+                this.renderTable();
+            }
+
+            renderTable() {
+                const tbody = document.getElementById('tbody-pranpc');
+                tbody.innerHTML = '';
+                const { filtered, page, limit } = this.state;
+                const start = (page - 1) * limit;
+                const paginated = filtered.slice(start, start + limit);
+
+                if (paginated.length === 0) {
+                    tbody.innerHTML = `<tr><td colspan="8" class="text-center py-10 font-bold text-textMuted">Tidak ada data ditemukan.</td></tr>`;
+                } else {
+                    paginated.forEach((r, index) => {
+                        const paid = Utils.isPaid(r);
+                        const statusStr = Utils.getDynamicValue(r, ['status payment', 'status_payment']) || (paid ? 'LUNAS' : 'BELUM LUNAS');
+
+                        tbody.innerHTML += `
+                                    <tr class="hover:bg-surfaceAlt transition-colors font-medium">
+                                        <td class="px-7 py-4 font-bold text-primary">${Utils.getDynamicValue(r, ['snd'])}</td>
+                                        <td class="px-7 py-4" title="${Utils.escapeHtml(Utils.getDynamicValue(r, ['nama']))}"><div class="max-w-[240px] whitespace-normal break-words">${Utils.escapeHtml(Utils.getDynamicValue(r, ['nama']))}</div></td>
+                                        <td class="px-7 py-4"><div class="max-w-[220px] whitespace-normal break-words text-xs text-textMuted">${Utils.getDynamicValue(r, ['alamat'])}</div></td>
+                                        <td class="px-7 py-4">${Utils.getDynamicValue(r, ['datel'])}</td>
+                                        <td class="px-7 py-4 font-bold">${Utils.getDynamicValue(r, ['ubis'])}</td>
+                                        <td class="px-7 py-4">${Utils.getNeoBadge(paid, statusStr.toUpperCase())}</td>
+                                        <td class="px-7 py-4 text-xs text-textMuted">${Utils.getDynamicValue(r, ['tgl_bayar', 'tgl bayar']) || '-'}</td>
+                                        <td class="px-7 py-4 text-center"><button type="button" data-global-detail="pranpc:${start + index}" aria-label="Lihat detail data PRANPC" class="bento-btn h-9 w-9 rounded-xl bg-red-50 text-primary hover:bg-red-100"><i class="fas fa-eye text-xs"></i></button></td>
+                                    </tr>
+                                `;
+                    });
+                }
+                TableManager.updatePaginationUI('pranpc', this.state);
+            }
+        }
+
+        /* ==============================================
+         * MODULE: CLAIM
+         * ============================================== */
         class ModuleClaim extends BaseModule {
             constructor(app) {
                 super('claim');
@@ -3982,7 +4246,9 @@
             }
         }
 
-        // --- POTS FLAGGING MODULE ---
+        /* ==============================================
+         * MODULE: POTS FLAGGING
+         * ============================================== */
         class ModulePotsFlagging extends BaseModule {
             constructor(app) {
                 super('pots-flagging');
@@ -4093,391 +4359,9 @@
             }
         }
 
-        // --- BILLPER MODULE ---
-        class ModuleBillper extends BaseModule {
-            constructor(app) {
-                super('billper-dashboard');
-                this.app = app;
-                this.url = 'https://docs.google.com/spreadsheets/d/1UoPJQxCljgfHNHGjDxkLh7LmQ0o1FbeqPPXDy9jEHY8/export?format=csv&gid=696435857';
-                this.initEvents();
-            }
-
-            initEvents() {
-                const searchHandler = Utils.debounce(() => this.applyFilters(), 300);
-                document.getElementById('search-billper').addEventListener('input', searchHandler);
-                ['filter-ubis-billper', 'filter-datel-billper', 'filter-status-billper'].forEach(id => {
-                    document.getElementById(id).addEventListener('change', () => this.applyFilters());
-                });
-                TableManager.setupPagination('billper', this.state, () => this.renderTable());
-
-                document.getElementById('btn-export-billper').addEventListener('click', () => {
-                    const el = document.getElementById('card-pelunasan-billper');
-                    html2canvas(el, { scale: 2, backgroundColor: '#FFFFFF' }).then(c => {
-                        const link = document.createElement('a');
-                        link.download = `Billper_Progress.png`; link.href = c.toDataURL(); link.click();
-                        this.app.notify.show('Widget diekspor berhasil!');
-                    });
-                });
-            }
-
-            async load(force = false) {
-                if (this.isLoaded && !force) return;
-                this.app.loader.show();
-                try {
-                    const rawData = await DataService.fetchCSV(this.url, { force });
-                    this.state.data = rawData;
-                    this.state.filtered = [...rawData];
-                    this.processData();
-                    this.isLoaded = true;
-                    this.app.notify.show('Data Billper Loaded');
-                } catch (e) {
-                    this.app.notify.show('Failed to load Billper', 'error');
-                } finally {
-                    this.app.loader.hide();
-                }
-            }
-
-            processData() {
-                let lunas = 0, belumLunas = 0;
-                let datelMap = {}, ubisMap = {};
-                let rekapMap = {};
-                const datelSet = new Set(), ubisSet = new Set();
-                const total = this.state.data.length;
-
-                this.state.data.forEach(r => {
-                    let isPaid = Utils.isPaid(r);
-                    if (isPaid) lunas++;
-                    else belumLunas++;
-
-                    let dRaw = Utils.getDynamicValue(r, ['datel', 'sto', 'witel', 'stodesc']).toUpperCase();
-                    let d = (dRaw === '' || dRaw === '-' || dRaw === 'N/A' || dRaw === '#N/A') ? 'TIDAK TERDEFINISI' : dRaw;
-
-                    let uRaw = Utils.getDynamicValue(r, ['ubis', 'sektor']).toUpperCase();
-                    let u = (uRaw === '' || uRaw === '-' || uRaw === 'N/A' || uRaw === '#N/A') ? 'TIDAK TERDEFINISI' : uRaw;
-
-                    let saldo = Utils.parseCurrency(Utils.getDynamicValue(r, ['saldo', 'tagihan', 'amount', 'biaya']));
-
-                    datelMap[d] = (datelMap[d] || 0) + 1;
-                    ubisMap[u] = (ubisMap[u] || 0) + 1;
-                    datelSet.add(d); ubisSet.add(u);
-
-                    if (!rekapMap[d]) {
-                        rekapMap[d] = { lunasJml: 0, lunasTag: 0, belumJml: 0, belumTag: 0 };
-                    }
-
-                    if (isPaid) {
-                        rekapMap[d].lunasJml++;
-                        rekapMap[d].lunasTag += saldo;
-                    } else {
-                        rekapMap[d].belumJml++;
-                        rekapMap[d].belumTag += saldo;
-                    }
-                });
-
-                Utils.animateValue('score-billper-total', 0, total, 1500);
-                Utils.animateValue('score-billper-lunas', 0, lunas, 1500);
-                Utils.animateValue('score-billper-belum', 0, belumLunas, 1500);
-
-                const pctL = total ? Math.round((lunas / total) * 100) : 0;
-                const pctB = total ? 100 - pctL : 0;
-                document.getElementById('pct-paid-info-b').innerText = pctL;
-                document.getElementById('pct-unpaid-info-b').innerText = pctB;
-                document.getElementById('text-gap-b').innerText = pctB + '%';
-
-                setTimeout(() => {
-                    document.getElementById('bar-paid-b').style.width = pctL + '%';
-                    document.getElementById('bar-unpaid-b').style.width = pctB + '%';
-                }, 100);
-
-                TableManager.populateSelect('filter-ubis-billper', ubisSet, 'Semua UBIS');
-                TableManager.populateSelect('filter-datel-billper', datelSet, 'Semua Datel');
-
-                const topDatel = Object.entries(datelMap).sort((a, b) => b[1] - a[1]).slice(0, 5);
-                const ctxBar = document.getElementById('barChartBillper').getContext('2d');
-                if (this.charts.bar) this.charts.bar.destroy();
-                this.charts.bar = ChartManager.createBarChart(ctxBar, topDatel.map(x => x[0]), topDatel.map(x => x[1]), true);
-
-                const ctxDonut = document.getElementById('donutChartBillper').getContext('2d');
-                if (this.charts.donut) this.charts.donut.destroy();
-                this.charts.donut = ChartManager.createDonutChart(ctxDonut, Object.keys(ubisMap), Object.values(ubisMap));
-
-                this.renderRekapTable(rekapMap);
-                this.renderTable();
-            }
-
-            renderRekapTable(rekapMap) {
-                const tbody = document.getElementById('tbody-billper-rekap');
-                const tfoot = document.getElementById('tfoot-billper-rekap');
-                tbody.innerHTML = '';
-
-                let sumBelumJml = 0, sumBelumTag = 0, sumLunasJml = 0, sumLunasTag = 0, sumGtJml = 0, sumGtTag = 0;
-
-                const sortedDatel = Object.keys(rekapMap).sort();
-
-                sortedDatel.forEach(datel => {
-                    const d = rekapMap[datel];
-                    const gtJml = d.belumJml + d.lunasJml;
-                    const gtTag = d.belumTag + d.lunasTag;
-
-                    sumBelumJml += d.belumJml;
-                    sumBelumTag += d.belumTag;
-                    sumLunasJml += d.lunasJml;
-                    sumLunasTag += d.lunasTag;
-                    sumGtJml += gtJml;
-                    sumGtTag += gtTag;
-
-                    tbody.innerHTML += `
-                                <tr class="hover:bg-surfaceAlt transition-colors font-medium">
-                                    <td class="px-7 py-4 font-bold text-primary border-r border-borderLight">${datel}</td>
-                                    <td class="px-7 py-4 text-center border-r border-borderLight">${d.belumJml.toLocaleString('id-ID')}</td>
-                                    <td class="px-7 py-4 text-right border-r border-borderLight font-semibold">Rp ${d.belumTag.toLocaleString('id-ID')}</td>
-                                    <td class="px-7 py-4 text-center border-r border-borderLight">${d.lunasJml.toLocaleString('id-ID')}</td>
-                                    <td class="px-7 py-4 text-right border-r border-borderLight font-semibold">Rp ${d.lunasTag.toLocaleString('id-ID')}</td>
-                                    <td class="px-7 py-4 text-center border-r border-borderLight font-bold">${gtJml.toLocaleString('id-ID')}</td>
-                                    <td class="px-7 py-4 text-right font-bold text-primary">Rp ${gtTag.toLocaleString('id-ID')}</td>
-                                </tr>
-                            `;
-                });
-
-                if (sortedDatel.length === 0) {
-                    tbody.innerHTML = `<tr><td colspan="7" class="text-center py-10 font-bold text-textMuted">Tidak ada data rekap.</td></tr>`;
-                    tfoot.innerHTML = '';
-                } else {
-                    tfoot.innerHTML = `
-                                <tr>
-                                    <td class="px-7 py-5 uppercase tracking-wider text-primary border-r border-borderLight">Grand Total</td>
-                                    <td class="px-7 py-5 text-center border-r border-borderLight">${sumBelumJml.toLocaleString('id-ID')}</td>
-                                    <td class="px-7 py-5 text-right border-r border-borderLight">Rp ${sumBelumTag.toLocaleString('id-ID')}</td>
-                                    <td class="px-7 py-5 text-center border-r border-borderLight">${sumLunasJml.toLocaleString('id-ID')}</td>
-                                    <td class="px-7 py-5 text-right border-r border-borderLight">Rp ${sumLunasTag.toLocaleString('id-ID')}</td>
-                                    <td class="px-7 py-5 text-center border-r border-borderLight text-primary">${sumGtJml.toLocaleString('id-ID')}</td>
-                                    <td class="px-7 py-5 text-right text-primary">Rp ${sumGtTag.toLocaleString('id-ID')}</td>
-                                </tr>
-                            `;
-                }
-            }
-
-            applyFilters() {
-                const q = document.getElementById('search-billper').value.toLowerCase();
-                const u = document.getElementById('filter-ubis-billper').value;
-                const d = document.getElementById('filter-datel-billper').value;
-                const s = document.getElementById('filter-status-billper').value;
-
-                this.state.filtered = this.state.data.filter(r => {
-                    const matchQ = q === '' || Utils.getDynamicValue(r, ['snd']).toLowerCase().includes(q) || Utils.getDynamicValue(r, ['nama']).toLowerCase().includes(q);
-
-                    let dRaw = Utils.getDynamicValue(r, ['datel', 'sto', 'witel', 'stodesc']).toUpperCase();
-                    let dtVal = (dRaw === '' || dRaw === '-' || dRaw === 'N/A' || dRaw === '#N/A') ? 'TIDAK TERDEFINISI' : dRaw;
-
-                    let uRaw = Utils.getDynamicValue(r, ['ubis', 'sektor']).toUpperCase();
-                    let ubisVal = (uRaw === '' || uRaw === '-' || uRaw === 'N/A' || uRaw === '#N/A') ? 'TIDAK TERDEFINISI' : uRaw;
-
-                    const matchU = u === 'all' || ubisVal === u;
-                    const matchD = d === 'all' || dtVal === d;
-
-                    const isP = Utils.isPaid(r);
-                    const matchS = s === 'all' || (s === 'lunas' ? isP : !isP);
-
-                    return matchQ && matchU && matchD && matchS;
-                });
-                this.state.page = 1;
-                this.renderTable();
-            }
-
-            renderTable() {
-                const tbody = document.getElementById('tbody-billper');
-                tbody.innerHTML = '';
-                const { filtered, page, limit } = this.state;
-                const start = (page - 1) * limit;
-                const paginated = filtered.slice(start, start + limit);
-
-                if (paginated.length === 0) {
-                    tbody.innerHTML = `<tr><td colspan="8" class="text-center py-10 font-bold text-textMuted">Tidak ada data ditemukan.</td></tr>`;
-                } else {
-                    paginated.forEach((r, index) => {
-                        const paid = Utils.isPaid(r);
-                        const statusStr = Utils.getDynamicValue(r, ['status payment', 'status_payment', 'cek lunas', 'lunas', 'status billing']) || (paid ? 'LUNAS' : 'BELUM LUNAS');
-
-                        tbody.innerHTML += `
-                                    <tr class="hover:bg-surfaceAlt transition-colors font-medium">
-                                        <td class="px-7 py-4 font-bold text-primary">${Utils.getDynamicValue(r, ['snd'])}</td>
-                                        <td class="px-7 py-4" title="${Utils.escapeHtml(Utils.getDynamicValue(r, ['nama']))}"><div class="max-w-[240px] whitespace-normal break-words">${Utils.escapeHtml(Utils.getDynamicValue(r, ['nama']))}</div></td>
-                                        <td class="px-7 py-4"><div class="max-w-[220px] whitespace-normal break-words text-xs text-textMuted">${Utils.getDynamicValue(r, ['alamat'])}</div></td>
-                                        <td class="px-7 py-4">${Utils.getDynamicValue(r, ['datel'])}</td>
-                                        <td class="px-7 py-4 font-bold">${Utils.getDynamicValue(r, ['ubis'])}</td>
-                                        <td class="px-7 py-4">${Utils.getNeoBadge(paid, statusStr.toUpperCase())}</td>
-                                        <td class="px-7 py-4 text-xs text-textMuted">${Utils.getDynamicValue(r, ['tgl_bayar', 'tgl bayar']) || '-'}</td>
-                                        <td class="px-7 py-4 text-center"><button type="button" data-global-detail="billper:${start + index}" aria-label="Lihat detail data Billper" class="bento-btn h-9 w-9 rounded-xl bg-red-50 text-primary hover:bg-red-100"><i class="fas fa-eye text-xs"></i></button></td>
-                                    </tr>
-                                `;
-                    });
-                }
-                TableManager.updatePaginationUI('billper', this.state);
-            }
-        }
-
-        // --- PRANPC MODULE ---
-        class ModulePRANPC extends BaseModule {
-            constructor(app) {
-                super('pranpc-dashboard');
-                this.app = app;
-                this.url = 'https://docs.google.com/spreadsheets/d/1piZ2Z0GFfUIaaLJdMX9jBzaHiJlScFWjPAzUSI7xFmw/export?format=csv&gid=1823076653';
-                this.initEvents();
-            }
-
-            initEvents() {
-                const searchHandler = Utils.debounce(() => this.applyFilters(), 300);
-                document.getElementById('search-pranpc').addEventListener('input', searchHandler);
-                ['filter-ubis-pranpc', 'filter-datel-pranpc', 'filter-status-pranpc'].forEach(id => {
-                    document.getElementById(id).addEventListener('change', () => this.applyFilters());
-                });
-
-                TableManager.setupPagination('pranpc', this.state, () => this.renderTable());
-                document.getElementById('btn-export-pranpc').addEventListener('click', () => {
-                    const el = document.getElementById('card-pelunasan-pranpc');
-                    html2canvas(el, { scale: 2, backgroundColor: '#FFFFFF' }).then(c => {
-                        const link = document.createElement('a');
-                        link.download = `PRANPC_Progress.png`; link.href = c.toDataURL(); link.click();
-                        this.app.notify.show('Widget diekspor berhasil!');
-                    });
-                });
-            }
-
-            async load(force = false) {
-                if (this.isLoaded && !force) return;
-                this.app.loader.show();
-                try {
-                    const rawData = await DataService.fetchCSV(this.url, { force });
-                    this.state.data = rawData;
-                    this.state.filtered = [...rawData];
-                    this.processData();
-                    this.isLoaded = true;
-                    this.app.notify.show('Data PRANPC Loaded');
-                } catch (e) {
-                    this.app.notify.show('Failed to load PRANPC', 'error');
-                } finally {
-                    this.app.loader.hide();
-                }
-            }
-
-            processData() {
-                let lunas = 0, datelMap = {}, ubisMap = {};
-                const datelSet = new Set(), ubisSet = new Set();
-                const total = this.state.data.length;
-
-                this.state.data.forEach(r => {
-                    if (Utils.isPaid(r)) lunas++;
-
-                    let dRaw = Utils.getDynamicValue(r, ['datel', 'sto', 'witel', 'stodesc']).toUpperCase().trim();
-                    const invalid = ['', '-', 'N/A', '#N/A', 'NULL', 'TIDAK TERDEFINISI'];
-                    let d = invalid.includes(dRaw) ? 'TIDAK TERDEFINISI' : dRaw;
-
-                    let uRaw = Utils.getDynamicValue(r, ['ubis', 'sektor']).toUpperCase().trim();
-                    let u = invalid.includes(uRaw) ? 'TIDAK TERDEFINISI' : uRaw;
-
-                    // Menghindari datel tidak valid masuk ke diagram batang (sesuai instruksi)
-                    if (d !== 'TIDAK TERDEFINISI') {
-                        datelMap[d] = (datelMap[d] || 0) + 1;
-                    }
-                    datelSet.add(d);
-
-                    ubisMap[u] = (ubisMap[u] || 0) + 1;
-                    ubisSet.add(u);
-                });
-
-                Utils.animateValue('score-pranpc-total', 0, total, 1500);
-                Utils.animateValue('score-pranpc-lunas', 0, lunas, 1500);
-                Utils.animateValue('score-pranpc-belum', 0, total - lunas, 1500);
-
-                const pctL = total ? Math.round((lunas / total) * 100) : 0;
-                const pctB = total ? 100 - pctL : 0;
-                document.getElementById('pct-paid-info-p').innerText = pctL;
-                document.getElementById('pct-unpaid-info-p').innerText = pctB;
-                document.getElementById('text-gap-p').innerText = pctB + '%';
-
-                setTimeout(() => {
-                    document.getElementById('bar-paid-p').style.width = pctL + '%';
-                    document.getElementById('bar-unpaid-p').style.width = pctB + '%';
-                }, 100);
-
-                TableManager.populateSelect('filter-ubis-pranpc', ubisSet, 'Semua UBIS');
-                TableManager.populateSelect('filter-datel-pranpc', datelSet, 'Semua Datel');
-
-                const topDatel = Object.entries(datelMap).sort((a, b) => b[1] - a[1]).slice(0, 5);
-                const ctxBar = document.getElementById('barChartPranpc').getContext('2d');
-                if (this.charts.bar) this.charts.bar.destroy();
-                this.charts.bar = ChartManager.createBarChart(ctxBar, topDatel.map(x => x[0]), topDatel.map(x => x[1]), true);
-
-                const ctxDonut = document.getElementById('donutChartPranpc').getContext('2d');
-                if (this.charts.donut) this.charts.donut.destroy();
-                this.charts.donut = ChartManager.createDonutChart(ctxDonut, Object.keys(ubisMap), Object.values(ubisMap));
-
-                this.renderTable();
-            }
-
-            applyFilters() {
-                const q = document.getElementById('search-pranpc').value.toLowerCase();
-                const u = document.getElementById('filter-ubis-pranpc').value;
-                const d = document.getElementById('filter-datel-pranpc').value;
-                const s = document.getElementById('filter-status-pranpc').value;
-                const invalid = ['', '-', 'N/A', '#N/A', 'NULL', 'TIDAK TERDEFINISI'];
-
-                this.state.filtered = this.state.data.filter(r => {
-                    const matchQ = q === '' || Utils.getDynamicValue(r, ['snd']).toLowerCase().includes(q) || Utils.getDynamicValue(r, ['nama']).toLowerCase().includes(q);
-
-                    let dRaw = Utils.getDynamicValue(r, ['datel', 'sto', 'witel', 'stodesc']).toUpperCase().trim();
-                    let dtVal = invalid.includes(dRaw) ? 'TIDAK TERDEFINISI' : dRaw;
-
-                    let uRaw = Utils.getDynamicValue(r, ['ubis', 'sektor']).toUpperCase().trim();
-                    let ubisVal = invalid.includes(uRaw) ? 'TIDAK TERDEFINISI' : uRaw;
-
-                    const matchU = u === 'all' || ubisVal === u;
-                    const matchD = d === 'all' || dtVal === d;
-
-                    const isP = Utils.isPaid(r);
-                    const matchS = s === 'all' || (s === 'lunas' ? isP : !isP);
-
-                    return matchQ && matchU && matchD && matchS;
-                });
-                this.state.page = 1;
-                this.renderTable();
-            }
-
-            renderTable() {
-                const tbody = document.getElementById('tbody-pranpc');
-                tbody.innerHTML = '';
-                const { filtered, page, limit } = this.state;
-                const start = (page - 1) * limit;
-                const paginated = filtered.slice(start, start + limit);
-
-                if (paginated.length === 0) {
-                    tbody.innerHTML = `<tr><td colspan="8" class="text-center py-10 font-bold text-textMuted">Tidak ada data ditemukan.</td></tr>`;
-                } else {
-                    paginated.forEach((r, index) => {
-                        const paid = Utils.isPaid(r);
-                        const statusStr = Utils.getDynamicValue(r, ['status payment', 'status_payment']) || (paid ? 'LUNAS' : 'BELUM LUNAS');
-
-                        tbody.innerHTML += `
-                                    <tr class="hover:bg-surfaceAlt transition-colors font-medium">
-                                        <td class="px-7 py-4 font-bold text-primary">${Utils.getDynamicValue(r, ['snd'])}</td>
-                                        <td class="px-7 py-4" title="${Utils.escapeHtml(Utils.getDynamicValue(r, ['nama']))}"><div class="max-w-[240px] whitespace-normal break-words">${Utils.escapeHtml(Utils.getDynamicValue(r, ['nama']))}</div></td>
-                                        <td class="px-7 py-4"><div class="max-w-[220px] whitespace-normal break-words text-xs text-textMuted">${Utils.getDynamicValue(r, ['alamat'])}</div></td>
-                                        <td class="px-7 py-4">${Utils.getDynamicValue(r, ['datel'])}</td>
-                                        <td class="px-7 py-4 font-bold">${Utils.getDynamicValue(r, ['ubis'])}</td>
-                                        <td class="px-7 py-4">${Utils.getNeoBadge(paid, statusStr.toUpperCase())}</td>
-                                        <td class="px-7 py-4 text-xs text-textMuted">${Utils.getDynamicValue(r, ['tgl_bayar', 'tgl bayar']) || '-'}</td>
-                                        <td class="px-7 py-4 text-center"><button type="button" data-global-detail="pranpc:${start + index}" aria-label="Lihat detail data PRANPC" class="bento-btn h-9 w-9 rounded-xl bg-red-50 text-primary hover:bg-red-100"><i class="fas fa-eye text-xs"></i></button></td>
-                                    </tr>
-                                `;
-                    });
-                }
-                TableManager.updatePaginationUI('pranpc', this.state);
-            }
-        }
-
-        // --- NON-POTS MODULE (Combines Dashboard & Performance) ---
-        // Edit VOC writes back to the Google Sheet through an Apps Script Web App bridge.
-        // Deploy the Apps Script (see project notes), then fill in the URL + secret below.
+        /* ==============================================
+         * MODULE: NON-POTS
+         * ============================================== */
         const VOC_EDIT_CONFIG = {
             webAppUrl: 'https://script.google.com/macros/s/AKfycbzJbQdRXSi_iVMnQkMjVJNpEu-hQPf3gJGXEu1lScNFsse3RntTkfBfmPTyB_-JvCNn/exec',
             secret: 'akhlak'
@@ -4926,10 +4810,6 @@
                 TableManager.updatePaginationUI('nonpots', this.state);
             }
 
-            // Di sheet, kolom keterangan tiap bulan selalu persis di sebelah kanan
-            // kolom "UPDATE VOC <bulan>"-nya (namanya sendiri bisa beda-beda tiap bulan,
-            // mis. "KETERANGAN VOC AGUSTUS 2026" atau cuma "KETERANGAN"), jadi dicari
-            // berdasarkan posisi kolom, bukan nama persis.
             getVocKeteranganColumn(row, vocColumn) {
                 if (!vocColumn) return null;
                 const keys = Object.keys(row);
@@ -5016,9 +4896,6 @@
                 saveBtn.innerText = 'Menyimpan...';
 
                 try {
-                    // Apps Script Web App tidak mengirim header CORS, jadi respons tidak bisa dibaca
-                    // dari sini (browser akan menolaknya walau request sebenarnya sukses di server).
-                    // Kirim dengan mode no-cors, lalu verifikasi dengan membaca ulang sheet-nya.
                     const sendUpdate = (col, val) => {
                         const params = new URLSearchParams({
                             secret: VOC_EDIT_CONFIG.secret,
@@ -5095,6 +4972,144 @@
                                 </tr>
                             `;
                 });
+            }
+        }
+
+        /* ==============================================
+         * MODULE: VISIT COLLECTION
+         * ============================================== */
+        class ModuleVisit extends BaseModule {
+            constructor(app) {
+                super('visit-collection');
+                this.app = app;
+                this.url = 'https://docs.google.com/spreadsheets/d/1piZ2Z0GFfUIaaLJdMX9jBzaHiJlScFWjPAzUSI7xFmw/export?format=csv&gid=538594182';
+                this.initEvents();
+            }
+
+            initEvents() {
+                const searchHandler = Utils.debounce(() => this.applyFilters(), 300);
+                document.getElementById('search-visit').addEventListener('input', searchHandler);
+                document.getElementById('filter-reason-visit').addEventListener('change', () => this.applyFilters());
+                TableManager.setupPagination('visit', this.state, () => this.renderTable());
+            }
+
+            isTransactionRow(row) {
+                return ['activity id', 'activity scenario', 'ncli', 'snd', 'nama perusahaan', 'nama', 'activity status', 'activity reason', 'address']
+                    .some(key => Utils.getDynamicValue(row, [key]) !== '');
+            }
+
+            async load(force = false) {
+                if (this.isLoaded && !force) return;
+                this.app.loader.show();
+                try {
+                    const rawData = await DataService.fetchCSV(this.url, { force });
+                    this.state.data = rawData.filter(row => this.isTransactionRow(row));
+                    this.state.filtered = [...this.state.data];
+                    this.processData();
+                    this.isLoaded = true;
+                    this.app.notify.show('Visit Data Loaded');
+                } catch (e) {
+                    this.app.notify.show('Failed to load Visit data', 'error');
+                } finally {
+                    this.app.loader.hide();
+                }
+            }
+
+            processData() {
+                let total = this.state.data.length, bertemu = 0, lunas = 0, belum = 0;
+
+                // 1. Buat object map kosong untuk menghitung alasan secara dinamis
+                let reasonMap = {};
+                const invalidValues = ['', '-', 'N/A', '#N/A', 'NULL', 'TIDAK TERDEFINISI'];
+
+                this.state.data.forEach(r => {
+                    const act = Utils.getDynamicValue(r, ['activity status', 'status visit']).toLowerCase();
+                    const stat = Utils.getDynamicValue(r, ['status billing']).toLowerCase().replace(/\s/g, '');
+
+                    // Ambil reason asli (dibuat Uppercase/Kapital agar rapi di chart)
+                    let reasonRaw = Utils.getDynamicValue(r, ['activity reason', 'reason']).trim().toUpperCase();
+
+                    if (act.includes('bertemu') && !act.includes('tidak')) bertemu++;
+                    if (stat === 'paid') lunas++; else if (stat === 'notpaid') belum++;
+
+                    // 2. Hitung frekuensi tiap reason (abaikan yang kosong/invalid)
+                    if (reasonRaw && !invalidValues.includes(reasonRaw)) {
+                        reasonMap[reasonRaw] = (reasonMap[reasonRaw] || 0) + 1;
+                    }
+                });
+
+                Utils.animateValue('score-visit-total', 0, total, 1500);
+                Utils.animateValue('score-visit-bertemu', 0, bertemu, 1500);
+                Utils.animateValue('score-visit-lunas', 0, lunas, 1500);
+                Utils.animateValue('score-visit-belum', 0, belum, 1500);
+
+                // 3. Mengurutkan dan mengambil Top 5
+
+                const topReasons = Object.entries(reasonMap)
+                    .sort((a, b) => b[1] - a[1]) // Urutkan descending (terbesar ke terkecil)
+                    .slice(0, 5); // Ambil 5 teratas
+
+                // 4. Update Bar Chart
+                const ctxBar = document.getElementById('barChartVisit').getContext('2d');
+                if (this.charts.bar) this.charts.bar.destroy();
+                this.charts.bar = ChartManager.createBarChart(
+                    ctxBar,
+                    topReasons.map(x => x[0]), // Mengambil label (nama reason)
+                    topReasons.map(x => x[1]), // Mengambil value (jumlah data)
+                    true
+                );
+
+                const ctxDonut = document.getElementById('donutChartVisit').getContext('2d');
+                if (this.charts.donut) this.charts.donut.destroy();
+                this.charts.donut = ChartManager.createDonutChart(ctxDonut, ['Bertemu', 'Tidak Bertemu'], [bertemu, total - bertemu]);
+
+                this.renderTable();
+            }
+
+            applyFilters() {
+                const q = document.getElementById('search-visit').value.toLowerCase();
+                const r = document.getElementById('filter-reason-visit').value.toLowerCase();
+                this.state.filtered = this.state.data.filter(row => {
+                    const s = Utils.getDynamicValue(row, ['snd']).toLowerCase();
+                    const n = Utils.getDynamicValue(row, ['nama perusahaan', 'nama']).toLowerCase();
+                    const reason = Utils.getDynamicValue(row, ['activity reason']).toLowerCase();
+                    const mQ = q === '' || s.includes(q) || n.includes(q);
+                    let mR = true;
+                    if (r !== 'all') {
+                        if (r === 'lain-lain') mR = !['janji', 'tempat', 'cabut', 'tidak dipakai', 'biaya'].some(x => reason.includes(x)) && reason !== '';
+                        else mR = reason.includes(r);
+                    }
+                    return mQ && mR;
+                });
+                this.state.page = 1; this.renderTable();
+            }
+
+            renderTable() {
+                const tbody = document.getElementById('tbody-visit'); tbody.innerHTML = '';
+                const paginated = this.state.filtered.slice((this.state.page - 1) * this.state.limit, this.state.page * this.state.limit);
+
+                if (paginated.length === 0) {
+                    tbody.innerHTML = `<tr><td colspan="6" class="text-center py-10 font-bold text-textMuted">Tidak ada data.</td></tr>`;
+                } else {
+                    paginated.forEach((r, index) => {
+                        const stat = Utils.getDynamicValue(r, ['status billing']).toLowerCase().replace(/\s/g, '');
+                        let badge = '<span class="px-2.5 py-1 rounded-full text-[10px] font-bold tracking-wider bg-gray-50 text-textMuted border border-gray-100 shadow-sm">-</span>';
+                        if (stat === 'paid') badge = Utils.getNeoBadge(true);
+                        else if (stat === 'notpaid') badge = Utils.getNeoBadge(false);
+
+                        tbody.innerHTML += `
+                                    <tr class="hover:bg-surfaceAlt transition-colors font-medium">
+                                        <td class="px-7 py-4 font-bold text-primary">${Utils.getDynamicValue(r, ['snd'])}</td>
+                                        <td class="px-7 py-4" title="${Utils.getDynamicValue(r, ['nama perusahaan', 'nama'])}">${Utils.getDynamicValue(r, ['nama perusahaan', 'nama'])}</td>
+                                        <td class="px-7 py-4"><div class="max-w-[220px] whitespace-normal break-words text-xs text-textMuted">${Utils.getDynamicValue(r, ['address'])}</div></td>
+                                        <td class="px-7 py-4">${badge}</td>
+                                        <td class="px-7 py-4 font-semibold text-textMain">${Utils.getDynamicValue(r, ['activity reason'])}</td>
+                                        <td class="px-7 py-4 text-center"><button type="button" data-global-detail="visit:${(this.state.page - 1) * this.state.limit + index}" aria-label="Lihat detail data Visit Collection" class="bento-btn h-9 w-9 rounded-xl bg-red-50 text-primary hover:bg-red-100"><i class="fas fa-eye text-xs"></i></button></td>
+                                    </tr>
+                                `;
+                    });
+                }
+                TableManager.updatePaginationUI('visit', this.state);
             }
         }
 
@@ -5352,7 +5367,7 @@
                     if (profileName) profileName.innerText = displayName;
 
                     const profileRole = document.getElementById('sidebar-profile-role');
-                   if (profileRole) profileRole.innerText = roleLabel;
+                    if (profileRole) profileRole.innerText = roleLabel;
 
                     const profileInitial = document.getElementById('sidebar-profile-initial');
                     if (profileInitial) {
