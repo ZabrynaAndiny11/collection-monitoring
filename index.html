@@ -499,6 +499,13 @@
                 <span class="sidebar-text truncate">Data Flaging Non-POTS</span>
             </a>
 
+            <a href="#" data-target="isolir-dashboard"
+                class="nav-item flex items-center gap-3 px-3 py-3 rounded-xl font-medium text-sm text-[#7A828A] hover:text-white hover:bg-white/5 transition-all">
+                <div class="flex items-center justify-center w-5"><i class="fas fa-plug-circle-xmark text-base"></i>
+                </div>
+                <span class="sidebar-text truncate">Potensi Isolir</span>
+            </a>
+
             <div class="pt-4">
                 <p class="text-[10px] font-bold text-[#7A828A] uppercase tracking-widest px-3 mb-3 sidebar-text">
                     Visit Collection </p>
@@ -1228,7 +1235,8 @@
                                         BELUM LUNAS</th>
                                     <th class="px-7 py-3 text-center border-b border-r border-borderLight" colspan="2">
                                         LUNAS</th>
-                                    <th class="px-7 py-3 text-center border-b border-r border-borderLight" colspan="2">GRAND
+                                    <th class="px-7 py-3 text-center border-b border-r border-borderLight" colspan="2">
+                                        GRAND
                                         TOTAL</th>
                                     <th class="px-7 py-5 align-middle" rowspan="2">Success Rate</th>
                                 </tr>
@@ -2220,7 +2228,19 @@
             <!-- JS    : class ModuleNonPots                    -->
             <!-- ============================================== -->
             <section id="module-nonpots-flagging" class="space-y-8 hidden-module fade-in">
-                <div class="bento-card overflow-hidden flex flex-col bg-white mb-6">
+                <div
+                    class="bento-card grad-banner p-6 md:p-8 flex flex-col justify-center relative overflow-hidden h-32 border-none">
+                    <div class="absolute right-0 top-0 opacity-[0.03] -mt-10 -mr-10 transform rotate-6">
+                        <i class="fas fa-flag text-[160px] text-primary"></i>
+                    </div>
+                    <h2 class="text-xl md:text-2xl font-poppins font-bold text-textMain z-10 tracking-tight">
+                        Data Flaging Non-POTS</h2>
+                    <p class="text-sm text-textMuted mt-1.5 z-10 max-w-lg font-medium">
+                        Pantau status flagging dan pelunasan pelanggan Non-POTS per collection agent dan AM.
+                    </p>
+                </div>
+
+                <div class="bento-card overflow-hidden flex flex-col bg-white">
                     <div class="p-5 md:p-6 border-b border-borderLight">
                         <div class="max-w-md">
                             <label class="text-[10px] font-bold text-primary uppercase mb-2 ml-1 tracking-wider">Filter
@@ -2379,6 +2399,215 @@
                         <div class="flex gap-3"><button id="btn-prev-nonpots-flag"
                                 class="bento-btn bg-white px-5 py-2.5 rounded-xl border border-borderLight hover:bg-gray-50 font-bold text-xs text-textMuted shadow-sm">Sebelumnya</button><button
                                 id="btn-next-nonpots-flag"
+                                class="bento-btn bg-primary hover:bg-primaryDark text-white px-5 py-2.5 rounded-xl font-bold text-xs shadow-md border border-transparent">Selanjutnya</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ============================================== -->
+            <!-- MODULE: POTENSI ISOLIR                         -->
+            <!-- JS    : class ModuleIsolir                     -->
+            <!-- ============================================== -->
+            <section id="module-isolir-dashboard" class="space-y-8 hidden-module fade-in">
+
+                <div
+                    class="bento-card grad-banner p-6 md:p-8 flex flex-col justify-center relative overflow-hidden h-32 border-none">
+                    <div class="absolute right-0 top-0 opacity-[0.03] -mt-10 -mr-10 transform rotate-6">
+                        <i class="fas fa-plug-circle-xmark text-[160px] text-primary"></i>
+                    </div>
+                    <h2 class="text-xl md:text-2xl font-poppins font-bold text-textMain z-10 tracking-tight">
+                        Potensi Isolir</h2>
+                    <p class="text-sm text-textMuted mt-1.5 z-10 max-w-lg font-medium">
+                        Pantau saldo tunggakan, umur piutang, collection rate, dan tindak lanjut pelanggan
+                        berpotensi isolir.
+                    </p>
+                </div>
+
+                <!-- KPI CARDS -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div
+                        class="bento-card grad-kpi-total p-6 md:p-7 flex flex-col relative justify-center border-none overflow-hidden group">
+                        <i
+                            class="fas fa-building absolute -right-4 -bottom-4 text-[90px] text-white opacity-10 transform group-hover:scale-110 transition-transform duration-500"></i>
+                        <div
+                            class="w-12 h-12 icon-bg-white-20 text-white rounded-xl flex items-center justify-center mb-5 z-10 shadow-inner-light">
+                            <i class="fas fa-building text-lg"></i>
+                        </div>
+                        <span class="text-[11px] font-bold text-white/80 uppercase tracking-widest z-10">Total
+                            Pelanggan</span>
+                        <div id="score-isolir-total"
+                            class="text-4xl font-poppins font-extrabold text-white mt-1 z-10 tracking-tight">0</div>
+                    </div>
+
+                    <div
+                        class="bento-card grad-kpi-belum p-6 md:p-7 flex flex-col relative justify-center border-none overflow-hidden group">
+                        <i
+                            class="fas fa-wallet absolute -right-4 -bottom-4 text-[90px] text-white opacity-10 transform group-hover:scale-110 transition-transform duration-500"></i>
+                        <div
+                            class="w-12 h-12 icon-bg-white-20 text-white rounded-xl flex items-center justify-center mb-5 z-10 shadow-inner-light">
+                            <i class="fas fa-wallet text-lg"></i>
+                        </div>
+                        <span class="text-[11px] font-bold text-white/80 uppercase tracking-widest z-10">Total Saldo
+                            Akhir</span>
+                        <div id="score-isolir-saldo"
+                            class="text-2xl md:text-3xl font-poppins font-extrabold text-white mt-1 z-10 tracking-tight">
+                            Rp 0</div>
+                    </div>
+
+                    <div
+                        class="bento-card grad-kpi-info p-6 md:p-7 flex flex-col relative justify-center border-none overflow-hidden group">
+                        <i
+                            class="fas fa-hourglass-half absolute -right-4 -bottom-4 text-[90px] text-white opacity-10 transform group-hover:scale-110 transition-transform duration-500"></i>
+                        <div
+                            class="w-12 h-12 icon-bg-white-20 text-white rounded-xl flex items-center justify-center mb-5 z-10 shadow-inner-light">
+                            <i class="fas fa-hourglass-half text-lg"></i>
+                        </div>
+                        <span class="text-[11px] font-bold text-white/80 uppercase tracking-widest z-10">Tunggakan
+                            &gt; 3 Bulan</span>
+                        <div id="score-isolir-pu3"
+                            class="text-2xl md:text-3xl font-poppins font-extrabold text-white mt-1 z-10 tracking-tight">
+                            Rp 0</div>
+                        <span id="score-isolir-pu3-count" class="text-[11px] font-semibold text-white/80 z-10 mt-1">0
+                            pelanggan</span>
+                    </div>
+
+                    <div
+                        class="bento-card grad-kpi-lunas p-6 md:p-7 flex flex-col relative justify-center border-none overflow-hidden group">
+                        <i
+                            class="fas fa-percent absolute -right-4 -bottom-4 text-[90px] text-white opacity-10 transform group-hover:scale-110 transition-transform duration-500"></i>
+                        <div
+                            class="w-12 h-12 icon-bg-white-20 text-white rounded-xl flex items-center justify-center mb-5 z-10 shadow-inner-light">
+                            <i class="fas fa-percent text-lg"></i>
+                        </div>
+                        <span class="text-[11px] font-bold text-white/80 uppercase tracking-widest z-10">Collection
+                            Rate</span>
+                        <div id="score-isolir-cr"
+                            class="text-4xl font-poppins font-extrabold text-white mt-1 z-10 tracking-tight">0%</div>
+                    </div>
+                </div>
+
+                <!-- CHARTS: UMUR TUNGGAKAN + TINDAK LANJUT -->
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                    <div class="bento-card p-7 lg:col-span-7 flex flex-col">
+                        <div class="flex items-center gap-3 mb-6 pb-4 border-b border-borderLight">
+                            <div class="w-8 h-8 rounded-lg bg-red-50 text-primary flex items-center justify-center">
+                                <i class="fas fa-chart-column text-sm"></i>
+                            </div>
+                            <h3 class="text-sm font-poppins font-bold text-textMain uppercase tracking-wider">
+                                Saldo per Umur Tunggakan <span class="normal-case font-semibold text-textMuted">(Rp
+                                    Juta)</span>
+                            </h3>
+                        </div>
+                        <div class="relative w-full flex-1 min-h-[260px]">
+                            <canvas id="barChartIsolirAging"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="bento-card p-7 lg:col-span-5 flex flex-col">
+                        <div class="flex items-center gap-3 mb-6 pb-4 border-b border-borderLight">
+                            <div class="w-8 h-8 rounded-lg bg-red-50 text-primary flex items-center justify-center">
+                                <i class="fas fa-list-check text-sm"></i>
+                            </div>
+                            <h3 class="text-sm font-poppins font-bold text-textMain uppercase tracking-wider">
+                                Tindak Lanjut</h3>
+                        </div>
+                        <div id="isolir-tindak-lanjut" class="space-y-6 flex-1 flex flex-col justify-center"></div>
+                    </div>
+                </div>
+
+                <!-- CHART: TOP 10 SALDO -->
+                <div class="bento-card p-7 flex flex-col">
+                    <div class="flex items-center gap-3 mb-6 pb-4 border-b border-borderLight">
+                        <div class="w-8 h-8 rounded-lg bg-red-50 text-primary flex items-center justify-center">
+                            <i class="fas fa-ranking-star text-sm"></i>
+                        </div>
+                        <h3 class="text-sm font-poppins font-bold text-textMain uppercase tracking-wider">
+                            Top 10 Pelanggan Saldo Terbesar <span class="normal-case font-semibold text-textMuted">(Rp
+                                Juta)</span></h3>
+                    </div>
+                    <div class="relative w-full h-[340px]">
+                        <canvas id="barChartIsolirTop"></canvas>
+                    </div>
+                </div>
+
+                <!-- DETAIL TABLE -->
+                <div class="bento-card overflow-hidden flex flex-col">
+                    <div class="p-6 md:p-8 border-b border-borderLight bg-white">
+                        <h3
+                            class="text-base font-poppins font-bold mb-6 text-textMain uppercase tracking-wider flex items-center gap-3">
+                            <div
+                                class="w-10 h-10 bg-red-50 border border-red-100 text-primary rounded-xl flex items-center justify-center shadow-sm">
+                                <i class="fas fa-list text-base"></i>
+                            </div>
+                            Detail Potensi Isolir
+                        </h3>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+                            <div class="flex flex-col">
+                                <label
+                                    class="text-[10px] font-bold text-textMuted uppercase mb-2 ml-1 tracking-wider">Pencarian
+                                    Global</label>
+                                <div class="relative shadow-sm rounded-xl">
+                                    <i
+                                        class="fas fa-search absolute left-4 top-1/2 transform -translate-y-1/2 text-textMuted text-xs"></i>
+                                    <input type="text" id="search-isolir"
+                                        class="bento-input w-full pl-10 pr-4 py-3 text-sm font-medium"
+                                        placeholder="Cari ID Number / Nama / Respon...">
+                                </div>
+                            </div>
+                            <div class="flex flex-col"><label
+                                    class="text-[10px] font-bold text-textMuted uppercase mb-2 ml-1 tracking-wider">Business
+                                    Share</label><select id="filter-share-isolir"
+                                    class="bento-input w-full px-4 py-3 text-sm font-medium cursor-pointer appearance-none shadow-sm">
+                                    <option value="all">All</option>
+                                </select></div>
+                            <div class="flex flex-col"><label
+                                    class="text-[10px] font-bold text-textMuted uppercase mb-2 ml-1 tracking-wider">Umur
+                                    Tunggakan</label><select id="filter-aging-isolir"
+                                    class="bento-input w-full px-4 py-3 text-sm font-medium cursor-pointer appearance-none shadow-sm">
+                                    <option value="all">All</option>
+                                    <option value="lebih3">Ada Tunggakan &gt; 3 Bulan</option>
+                                    <option value="maks3">Hanya 0-3 Bulan</option>
+                                </select></div>
+                            <div class="flex flex-col"><label
+                                    class="text-[10px] font-bold text-primary uppercase mb-2 ml-1 tracking-wider">Tindak
+                                    Lanjut</label><select id="filter-tl-isolir"
+                                    class="bento-input w-full px-4 py-3 text-sm font-bold cursor-pointer appearance-none border-primary/30 shadow-sm text-primary bg-red-50/30">
+                                    <option value="all">All</option>
+                                </select></div>
+                        </div>
+                    </div>
+
+                    <div class="table-scroll overflow-x-auto w-full">
+                        <table class="w-full whitespace-nowrap min-w-[1300px]">
+                            <thead
+                                class="bg-surfaceAlt text-left text-[11px] font-bold text-textMuted uppercase tracking-wider border-b border-borderLight">
+                                <tr>
+                                    <th class="px-7 py-5">ID Number</th>
+                                    <th class="px-7 py-5">Nama Pelanggan</th>
+                                    <th class="px-7 py-5">Business Share</th>
+                                    <th class="px-7 py-5 text-right">Total Tagihan</th>
+                                    <th class="px-7 py-5 text-right">Saldo Akhir</th>
+                                    <th class="px-7 py-5 text-right">Tunggakan &gt; 3 Bln</th>
+                                    <th class="px-7 py-5 text-center">CR</th>
+                                    <th class="px-7 py-5">Tindak Lanjut</th>
+                                    <th class="px-7 py-5">Respon Witel</th>
+                                    <th class="px-7 py-5 text-center">Detail</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbody-isolir" class="text-sm divide-y divide-borderLight text-textMain bg-white">
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="p-5 border-t border-borderLight bg-surface flex justify-between items-center">
+                        <span id="page-info-isolir"
+                            class="text-xs font-bold text-textMuted bg-surfaceAlt border border-borderLight px-4 py-2 rounded-xl shadow-sm">Data:
+                            0</span>
+                        <div class="flex gap-3">
+                            <button id="btn-prev-isolir"
+                                class="bento-btn bg-white px-5 py-2.5 rounded-xl border border-borderLight hover:bg-gray-50 font-bold text-xs text-textMuted shadow-sm">Sebelumnya</button>
+                            <button id="btn-next-isolir"
                                 class="bento-btn bg-primary hover:bg-primaryDark text-white px-5 py-2.5 rounded-xl font-bold text-xs shadow-md border border-transparent">Selanjutnya</button>
                         </div>
                     </div>
@@ -5202,6 +5431,217 @@
             }
         }
 
+        /* ==============================================
+         * MODULE: POTENSI ISOLIR
+         * ============================================== */
+        class ModuleIsolir extends BaseModule {
+            constructor(app) {
+                super('isolir-dashboard');
+                this.app = app;
+                this.url = 'https://docs.google.com/spreadsheets/d/1TMKjo9DfSph26J4HlAVUF1wowMxf9439GgJbokHIKo0/export?format=csv&gid=0';
+                this.agingBuckets = ['0-3 Bln', '4-6 Bln', '7-12 Bln', '13-24 Bln', '> 24 Bln'];
+                this.tindakLanjutStyles = {
+                    'LANJUT EKSEPSI': { bar: 'bg-gradient-to-r from-blue-400 to-blue-600', badge: 'bg-blue-50 text-blue-600 border border-blue-100' },
+                    'TIDAK LANJUT': { bar: 'bg-gradient-to-r from-amber-400 to-amber-500', badge: 'bg-amber-50 text-amber-600 border border-amber-100' },
+                    'BELUM DITENTUKAN': { bar: 'bg-gradient-to-r from-gray-300 to-gray-400', badge: 'bg-gray-50 text-gray-500 border border-gray-200' }
+                };
+                this.initEvents();
+            }
+
+            initEvents() {
+                const searchHandler = Utils.debounce(() => this.applyFilters(), 300);
+                document.getElementById('search-isolir').addEventListener('input', searchHandler);
+                ['filter-share-isolir', 'filter-aging-isolir', 'filter-tl-isolir'].forEach(id => {
+                    document.getElementById(id).addEventListener('change', () => this.applyFilters());
+                });
+                TableManager.setupPagination('isolir', this.state, () => this.renderTable());
+            }
+
+            async load(force = false) {
+                if (this.isLoaded && !force) return;
+                this.app.loader.show();
+                try {
+                    const rawData = await DataService.fetchCSV(this.url, { force });
+                    // Urutan baris mengikuti sheet
+                    this.state.data = rawData;
+                    TableManager.populateSelect('filter-share-isolir', new Set(rawData.map(r => this.val(r, 'business share')).filter(Boolean)), 'All');
+                    TableManager.populateSelect('filter-tl-isolir', new Set(rawData.map(r => this.getTindakLanjut(r))), 'All');
+                    this.applyFilters();
+                    this.isLoaded = true;
+                    this.app.notify.show('Data Potensi Isolir Loaded');
+                } catch (e) {
+                    console.error('Potensi Isolir Error:', e);
+                    this.app.notify.show('Failed to load Potensi Isolir', 'error');
+                } finally {
+                    this.app.loader.hide();
+                }
+            }
+
+            // Pencocokan nama kolom persis (tanpa fallback "includes"), karena ada
+            // kolom bernama mirip seperti CR / CR Cash / CR R1 dan Saldo Akhir / Saldo Akhir N-1
+            val(row, name) {
+                const key = Object.keys(row).find(k => k.toLowerCase().trim() === name);
+                return key && row[key] != null ? String(row[key]).trim() : '';
+            }
+
+            num(row, name) {
+                return Utils.parseCurrency(this.val(row, name));
+            }
+
+            getCR(row) {
+                const cr = parseFloat(this.val(row, 'cr').replace(',', '.'));
+                return isNaN(cr) ? null : cr;
+            }
+
+            getTindakLanjut(row) {
+                return this.val(row, 'tindak lanjut').toUpperCase() || 'BELUM DITENTUKAN';
+            }
+
+            formatJuta(value) {
+                return Math.round(value / 1e5) / 10;
+            }
+
+            applyFilters() {
+                const q = document.getElementById('search-isolir').value.toLowerCase().trim();
+                const share = document.getElementById('filter-share-isolir').value;
+                const aging = document.getElementById('filter-aging-isolir').value;
+                const tl = document.getElementById('filter-tl-isolir').value;
+
+                this.state.filtered = this.state.data.filter(r => {
+                    const matchQ = q === '' || ['idnumber', 'bpname', 'respon witel'].some(k => this.val(r, k).toLowerCase().includes(q));
+                    const matchShare = share === 'all' || this.val(r, 'business share') === share;
+                    const pu3 = this.num(r, 'pu >3 bln');
+                    const matchAging = aging === 'all' || (aging === 'lebih3' ? pu3 > 0 : pu3 <= 0);
+                    const matchTl = tl === 'all' || this.getTindakLanjut(r) === tl;
+                    return matchQ && matchShare && matchAging && matchTl;
+                });
+                this.state.page = 1;
+                this.processData();
+            }
+
+            // KPI, grafik & tabel dihitung dari data hasil filter
+            processData() {
+                const rows = this.state.filtered;
+                let saldo = 0, pu3 = 0, pu3Count = 0, collection = 0, billing = 0;
+                const agingSum = this.agingBuckets.map(() => 0);
+                const tlMap = {};
+
+                rows.forEach(r => {
+                    const rowSaldo = this.num(r, 'saldo akhir');
+                    const rowPu3 = this.num(r, 'pu >3 bln');
+                    saldo += rowSaldo;
+                    // Nilai negatif = lebih bayar yang mengurangi bucket lama, bukan tunggakan
+                    if (rowPu3 > 0) {
+                        pu3 += rowPu3;
+                        pu3Count++;
+                    }
+                    // Rumus sama dengan kolom CR di sheet: tagihan belum jatuh tempo (BJT) tidak dihitung
+                    collection += this.num(r, 'total collection') - this.num(r, 'coll bjt');
+                    billing += this.num(r, 'total billing') - this.num(r, 'bill bjt');
+                    this.agingBuckets.forEach((b, i) => { agingSum[i] += this.num(r, b.toLowerCase()); });
+
+                    const tl = this.getTindakLanjut(r);
+                    if (!tlMap[tl]) tlMap[tl] = { count: 0, saldo: 0 };
+                    tlMap[tl].count++;
+                    tlMap[tl].saldo += rowSaldo;
+                });
+
+                const cr = billing > 0 ? (collection / billing) * 100 : 0;
+
+                Utils.animateValue('score-isolir-total', 0, rows.length, 1500);
+                document.getElementById('score-isolir-saldo').innerText = `Rp ${saldo.toLocaleString('id-ID')}`;
+                document.getElementById('score-isolir-pu3').innerText = `Rp ${pu3.toLocaleString('id-ID')}`;
+                document.getElementById('score-isolir-pu3-count').innerText = `${pu3Count.toLocaleString('id-ID')} pelanggan`;
+                document.getElementById('score-isolir-cr').innerText = `${cr.toLocaleString('id-ID', { maximumFractionDigits: 1 })}%`;
+
+                // Saldo per umur tunggakan
+                const ctxAging = document.getElementById('barChartIsolirAging').getContext('2d');
+                if (this.charts.aging) this.charts.aging.destroy();
+                this.charts.aging = ChartManager.createBarChart(ctxAging, this.agingBuckets, agingSum.map(v => this.formatJuta(v)));
+
+                // Top 10 saldo
+                const top = [...rows]
+                    .sort((a, b) => this.num(b, 'saldo akhir') - this.num(a, 'saldo akhir'))
+                    .slice(0, 10);
+                const ctxTop = document.getElementById('barChartIsolirTop').getContext('2d');
+                if (this.charts.top) this.charts.top.destroy();
+                this.charts.top = ChartManager.createBarChart(
+                    ctxTop,
+                    top.map(r => this.val(r, 'bpname')),
+                    top.map(r => this.formatJuta(this.num(r, 'saldo akhir'))),
+                    true
+                );
+
+                this.renderTindakLanjut(tlMap, rows.length);
+                this.renderTable();
+            }
+
+            renderTindakLanjut(tlMap, total) {
+                const container = document.getElementById('isolir-tindak-lanjut');
+                const order = ['LANJUT EKSEPSI', 'TIDAK LANJUT', 'BELUM DITENTUKAN'];
+                const keys = Object.keys(tlMap).sort((a, b) => {
+                    const ia = order.indexOf(a), ib = order.indexOf(b);
+                    return (ia === -1 ? 99 : ia) - (ib === -1 ? 99 : ib);
+                });
+
+                if (keys.length === 0) {
+                    container.innerHTML = '<p class="text-center text-sm font-bold text-textMuted">Tidak ada data.</p>';
+                    return;
+                }
+
+                container.innerHTML = keys.map(k => {
+                    const item = tlMap[k];
+                    const pct = total ? Math.round((item.count / total) * 100) : 0;
+                    const style = this.tindakLanjutStyles[k] || this.tindakLanjutStyles['BELUM DITENTUKAN'];
+                    return `
+                        <div>
+                            <div class="flex justify-between items-end mb-2.5">
+                                <span class="text-xs font-bold text-textMuted uppercase tracking-wider">${Utils.escapeHtml(k)}</span>
+                                <span class="text-xl font-extrabold text-textMain">${item.count.toLocaleString('id-ID')} <span class="text-xs font-bold text-textMuted">(${pct}%)</span></span>
+                            </div>
+                            <div class="w-full bg-surfaceAlt border border-borderLight rounded-full h-3.5 overflow-hidden p-[2px] shadow-inner">
+                                <div class="${style.bar} h-full rounded-full shadow-sm" style="width:${pct}%"></div>
+                            </div>
+                            <p class="mt-1.5 text-[11px] font-semibold text-textMuted">Saldo: Rp ${item.saldo.toLocaleString('id-ID')}</p>
+                        </div>`;
+                }).join('');
+            }
+
+            renderTable() {
+                const tbody = document.getElementById('tbody-isolir');
+                const { filtered, page, limit } = this.state;
+                const start = (page - 1) * limit;
+                const paginated = filtered.slice(start, start + limit);
+
+                if (paginated.length === 0) {
+                    tbody.innerHTML = `<tr><td colspan="10" class="text-center py-10 font-bold text-textMuted">Tidak ada data ditemukan.</td></tr>`;
+                } else {
+                    tbody.innerHTML = paginated.map((r, index) => {
+                        const cr = this.getCR(r);
+                        const crColor = cr === null ? 'text-textMuted' : cr >= 80 ? 'text-emerald-600' : cr >= 50 ? 'text-amber-600' : 'text-primary';
+                        const tl = this.getTindakLanjut(r);
+                        const style = this.tindakLanjutStyles[tl] || this.tindakLanjutStyles['BELUM DITENTUKAN'];
+                        const respon = this.val(r, 'respon witel');
+                        const pu3 = this.num(r, 'pu >3 bln');
+                        return `
+                                    <tr class="hover:bg-surfaceAlt transition-colors font-medium">
+                                        <td class="px-7 py-4 font-bold text-primary">${Utils.escapeHtml(this.val(r, 'idnumber'))}</td>
+                                        <td class="px-7 py-4" title="${Utils.escapeHtml(this.val(r, 'bpname'))}"><div class="min-w-[220px] max-w-[280px] whitespace-normal break-words font-semibold">${Utils.escapeHtml(this.val(r, 'bpname'))}</div></td>
+                                        <td class="px-7 py-4">${Utils.escapeHtml(this.val(r, 'business share'))}</td>
+                                        <td class="px-7 py-4 text-right">Rp ${this.num(r, 'total tagihan').toLocaleString('id-ID')}</td>
+                                        <td class="px-7 py-4 text-right font-bold">Rp ${this.num(r, 'saldo akhir').toLocaleString('id-ID')}</td>
+                                        <td class="px-7 py-4 text-right ${pu3 > 0 ? 'font-bold text-primary' : 'text-textMuted'}">Rp ${pu3.toLocaleString('id-ID')}</td>
+                                        <td class="px-7 py-4 text-center font-bold ${crColor}">${cr === null ? '-' : cr.toLocaleString('id-ID') + '%'}</td>
+                                        <td class="px-7 py-4"><span class="px-3 py-1 rounded-full text-[10px] font-bold tracking-wider shadow-sm ${style.badge}">${Utils.escapeHtml(tl)}</span></td>
+                                        <td class="px-7 py-4" title="${Utils.escapeHtml(respon)}"><div class="max-w-[240px] whitespace-normal break-words text-xs text-textMuted">${Utils.escapeHtml(respon) || '-'}</div></td>
+                                        <td class="px-7 py-4 text-center"><button type="button" data-global-detail="isolir:${start + index}" aria-label="Lihat detail data Potensi Isolir" class="bento-btn h-9 w-9 rounded-xl bg-red-50 text-primary hover:bg-red-100"><i class="fas fa-eye text-xs"></i></button></td>
+                                    </tr>`;
+                    }).join('');
+                }
+                TableManager.updatePaginationUI('isolir', this.state);
+            }
+        }
+
         /**
          * APP CONTROLLER (Orchestrator)
          */
@@ -5219,7 +5659,8 @@
                     'visit-collection': new ModuleVisit(this),
                     'claim': new ModuleClaim(this),
                     'pots-flagging': new ModulePotsFlagging(this),
-                    'nonpots': new ModuleNonPots(this)
+                    'nonpots': new ModuleNonPots(this),
+                    'isolir-dashboard': new ModuleIsolir(this)
                 };
 
                 this.initSidebar();
@@ -5306,7 +5747,8 @@
                     billper: 'billper-dashboard',
                     pranpc: 'pranpc-dashboard',
                     visit: 'visit-collection',
-                    nonpots: 'nonpots'
+                    nonpots: 'nonpots',
+                    isolir: 'isolir-dashboard'
                 };
                 const module = this.modules[moduleKeys[moduleId]];
                 const row = module && module.state.filtered[index];
@@ -5320,7 +5762,8 @@
                     billper: 'Detail Billper',
                     pranpc: 'Detail PRANPC',
                     visit: 'Detail Visit Collection',
-                    nonpots: 'Detail Non-POTS'
+                    nonpots: 'Detail Non-POTS',
+                    isolir: 'Detail Potensi Isolir'
                 };
                 document.getElementById('data-detail-module').innerText = labels[moduleId] || 'Detail Data';
                 content.innerHTML = Object.entries(row).map(([key, value]) => `
@@ -5356,7 +5799,7 @@
                     if (el.getAttribute('data-target') === targetId) el.classList.add('nav-item-active');
                 });
 
-                ['module-c3mr-dashboard', 'module-caring-dashboard', 'module-billper-dashboard', 'module-pranpc-dashboard', 'module-visit-collection', 'module-claim', 'module-pots-flagging', 'module-nonpots-dashboard', 'module-nonpots-performance', 'module-nonpots-flagging'].forEach(id => {
+                ['module-c3mr-dashboard', 'module-caring-dashboard', 'module-billper-dashboard', 'module-pranpc-dashboard', 'module-visit-collection', 'module-claim', 'module-pots-flagging', 'module-nonpots-dashboard', 'module-nonpots-performance', 'module-nonpots-flagging', 'module-isolir-dashboard'].forEach(id => {
                     document.getElementById(id).classList.add('hidden-module');
                 });
 
@@ -5370,7 +5813,8 @@
                     'visit-collection': 'Monitoring Visit Collection',
                     'nonpots-dashboard': 'Monitoring Non-POTS',
                     'nonpots-performance': 'Performance AM Non-POTS',
-                    'nonpots-flagging': 'Data Flaging Non-POTS'
+                    'nonpots-flagging': 'Data Flaging Non-POTS',
+                    'isolir-dashboard': 'Potensi Isolir'
                 };
                 document.getElementById('main-header-title').innerText = titleMap[targetId];
 
@@ -5385,6 +5829,7 @@
                 if (targetId === 'visit-collection') logicModule = this.modules['visit-collection'];
                 if (targetId === 'claim') logicModule = this.modules['claim'];
                 if (targetId === 'pots-flagging') logicModule = this.modules['pots-flagging'];
+                if (targetId === 'isolir-dashboard') logicModule = this.modules['isolir-dashboard'];
                 if (targetId === 'nonpots-dashboard' || targetId === 'nonpots-performance') logicModule = this.modules['nonpots'];
 
                 if (targetId === 'nonpots-flagging') {
